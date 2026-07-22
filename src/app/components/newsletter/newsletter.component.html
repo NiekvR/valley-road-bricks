@@ -1,0 +1,24 @@
+<section class="newsletter-section">
+  <div class="max-width">
+    <div class="newsletter-content">
+      <h2>Blijf op de hoogte</h2>
+      <p>Ontvang je eerste updates over nieuwe sets, exclusieve aanbiedingen en LEGO®-nieuws.</p>
+
+      <form class="newsletter-form" (ngSubmit)="onSubscribe()">
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="Jouw e-mailadres"
+          required
+          class="newsletter-input"
+        />
+        <button type="submit" class="btn-primary">Aanmelden</button>
+      </form>
+
+      <div *ngIf="submitted" class="success-message">
+        ✓ Bedankt voor je aanmelding!
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+<footer>
+  <div class="footer-content">
+    <div class="footer-about">
+      <div class="logo">
+        <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+          <path d="M10 30V15L20 8L30 15V30" stroke="#4a7c59" stroke-width="2" fill="none"/>
+          <rect x="14" y="18" width="5" height="8" fill="#4a7c59"/>
+          <rect x="21" y="18" width="5" height="8" fill="#4a7c59"/>
+        </svg>
+        <span>Valley Road Bricks</span>
+      </div>
+      <p>De mooiste LEGO®-sets huren is makkelijk, voordelig en voordelig en verantwoord en voordelig.</p>
+
+      <div class="payment-methods">
+        <span *ngFor="let method of paymentMethods" title="{{ method.name }}">{{ method.icon }}</span>
+      </div>
+    </div>
+
+    <div class="footer-section" *ngFor="let section of sections">
+      <h4>{{ section.title }}</h4>
+      <ul>
+        <li *ngFor="let link of section.links">
+          <a [href]="link.link">{{ link.label }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="copyright">
+      <p>&copy; {{ currentYear }} Valley Road Bricks. Alle rechten voorbehouden.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#">Algemene voorwaarden</a>
+      <span class="separator">|</span>
+      <a href="#">Privacybeleid</a>
+    </div>
+  </div>
+</footer>

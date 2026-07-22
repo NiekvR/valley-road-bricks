@@ -1,0 +1,76 @@
+@import 'src/styles/variables';
+
+.newsletter-section {
+  background: linear-gradient(135deg, rgba($primary-green, 0.1) 0%, rgba($secondary-dark, 0.05) 100%);
+  padding: $spacing-3xl $spacing-xl;
+  margin: $spacing-3xl 0;
+  border-radius: $radius-lg;
+
+  .newsletter-content {
+    text-align: center;
+
+    h2 {
+      margin-bottom: $spacing-md;
+    }
+
+    p {
+      font-size: $font-size-lg;
+      color: $text-gray;
+      margin-bottom: $spacing-2xl;
+    }
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: $spacing-md;
+    max-width: 600px;
+    margin: 0 auto $spacing-xl;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    @media (max-width: $breakpoint-md) {
+      flex-direction: column;
+    }
+  }
+
+  .newsletter-input {
+    flex: 1;
+    min-width: 250px;
+    padding: $spacing-md $spacing-lg;
+    border: 1px solid $border-gray;
+    border-radius: $radius-md;
+    font-size: $font-size-base;
+    font-family: $font-family-primary;
+    transition: all $transition-base;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-green;
+      box-shadow: 0 0 0 3px rgba($primary-green, 0.1);
+    }
+  }
+
+  .btn-primary {
+    padding: $spacing-md $spacing-2xl;
+    font-size: $font-size-base;
+    white-space: nowrap;
+  }
+
+  .success-message {
+    color: $success-green;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-base;
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

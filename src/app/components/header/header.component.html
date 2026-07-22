@@ -1,0 +1,33 @@
+<header>
+  <div class="header-container">
+    <div class="logo">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+        <path d="M10 30V15L20 8L30 15V30" stroke="#4a7c59" stroke-width="2" fill="none"/>
+        <rect x="14" y="18" width="5" height="8" fill="#4a7c59"/>
+        <rect x="21" y="18" width="5" height="8" fill="#4a7c59"/>
+      </svg>
+      <span>Valley Road Bricks</span>
+    </div>
+
+    <nav>
+      <ul>
+        <li *ngFor="let item of menuItems">
+          <a [href]="item.link">{{ item.label }}</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <button class="search-icon" (click)="onSearch()" title="Search">
+        🔍
+      </button>
+      <button class="account-icon" (click)="onAccount()" title="Account">
+        👤
+      </button>
+      <button class="cart-icon" (click)="onCart()" title="Cart">
+        🛒
+        <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </button>
+    </div>
+  </div>
+</header>

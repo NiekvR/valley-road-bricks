@@ -1,0 +1,13 @@
+<section class="process-section">
+  <div class="max-width">
+    <h2>Zo werkt huren</h2>
+    <div class="process-steps">
+      <div class="process-step" *ngFor="let step of steps">
+        <div class="step-number">{{ step.number }}</div>
+        <div class="step-icon">{{ step.icon }}</div>
+        <h4>{{ step.title }}</h4>
+        <p>{{ step.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>

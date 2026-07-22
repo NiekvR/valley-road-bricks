@@ -1,0 +1,73 @@
+<section class="hero">
+  <div class="hero-content">
+    <h1>Ontdek de mooiste LEGO®-sets</h1>
+    <div class="hero-subtitle">zonder ze te kopen.</div>
+    <p>Bouw iconische sets van LEGO® Technic, Icons, Star Wars™ en meer. Professioneel gecontroleerd, altijd compleet en gemakkelijk te retourneren.</p>
+
+    <div class="hero-actions">
+      <button class="btn-primary" (click)="onBrowseCollection()">
+        Bekijk de collectie →
+      </button>
+      <button class="btn-secondary" (click)="onHowItWorks()">
+        Hoe werkt het?
+      </button>
+    </div>
+
+    <div class="hero-reviews">
+      <div class="review-avatars">
+        <span *ngFor="let review of reviews" class="avatar">{{ review.avatar }}</span>
+      </div>
+      <div class="review-info">
+        <div class="stars">
+          <span *ngFor="let star of stars">★</span>
+        </div>
+        <div class="review-count">{{ rating }}/5 uit {{ reviewCount }}+ reviews</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <svg width="300" height="300" viewBox="0 0 300 300" fill="none">
+      <!-- Titanic ship simplified -->
+      <rect x="50" y="150" width="200" height="80" fill="#8b4513" stroke="#333" stroke-width="2"/>
+      <polygon points="100,150 120,80 180,80 200,150" fill="#c0c0c0" stroke="#333" stroke-width="2"/>
+      <circle cx="110" cy="100" r="8" fill="#FFD700" stroke="#333" stroke-width="1"/>
+      <circle cx="150" cy="95" r="8" fill="#FFD700" stroke="#333" stroke-width="1"/>
+      <circle cx="190" cy="100" r="8" fill="#FFD700" stroke="#333" stroke-width="1"/>
+    </svg>
+  </div>
+</section>
+
+<div class="info-bars">
+  <div class="info-bar">
+    <div class="info-icon">🚚</div>
+    <div class="info-content">
+      <div class="info-title">Gratis verzending</div>
+      <div class="info-text">vanaf €75</div>
+    </div>
+  </div>
+
+  <div class="info-bar">
+    <div class="info-icon">✓</div>
+    <div class="info-content">
+      <div class="info-title">100% compleet</div>
+      <div class="info-text">& gecontroleerd</div>
+    </div>
+  </div>
+
+  <div class="info-bar">
+    <div class="info-icon">⏱️</div>
+    <div class="info-content">
+      <div class="info-title">Duurzaam</div>
+      <div class="info-text">en voordelig</div>
+    </div>
+  </div>
+
+  <div class="info-bar">
+    <div class="info-icon">⭐</div>
+    <div class="info-content">
+      <div class="info-title">Klantenboarding</div>
+      <div class="info-text">4.9/5</div>
+    </div>
+  </div>
+</div>
