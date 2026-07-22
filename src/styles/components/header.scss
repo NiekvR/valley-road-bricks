@@ -1,0 +1,137 @@
+/* Header & Navigation Styles */
+header {
+  background-color: $secondary-dark;
+  color: $bg-white;
+  padding: $spacing-lg $spacing-xl;
+  box-shadow: $shadow-md;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .header-container {
+    @include flex-between;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: $spacing-xl;
+  }
+
+  .logo {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $bg-white;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    img {
+      height: 50px;
+      width: auto;
+    }
+  }
+
+  nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: $spacing-2xl;
+
+    ul {
+      list-style: none;
+      display: flex;
+      gap: $spacing-2xl;
+      align-items: center;
+
+      li {
+        position: relative;
+
+        a {
+          color: $bg-white;
+          font-weight: $font-weight-medium;
+          padding: $spacing-sm $spacing-md;
+          border-radius: $radius-md;
+          transition: all $transition-base;
+          display: block;
+
+          &:hover {
+            background-color: rgba($bg-white, 0.1);
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    gap: $spacing-lg;
+    align-items: center;
+
+    .search-icon,
+    .account-icon {
+      @include button-reset;
+      color: $bg-white;
+      font-size: $font-size-lg;
+      transition: all $transition-base;
+
+      &:hover {
+        color: $primary-green-light;
+      }
+    }
+
+    .cart-icon {
+      position: relative;
+      @include button-reset;
+      color: $bg-white;
+      font-size: $font-size-lg;
+      transition: all $transition-base;
+
+      &:hover {
+        color: $primary-green-light;
+      }
+
+      .cart-badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: $primary-green;
+        color: $bg-white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        @include flex-center;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    padding: $spacing-md $spacing-lg;
+
+    nav {
+      gap: $spacing-lg;
+
+      ul {
+        gap: $spacing-lg;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    .header-container {
+      flex-wrap: wrap;
+      gap: $spacing-md;
+    }
+
+    nav {
+      order: 3;
+      flex-basis: 100%;
+      justify-content: flex-start;
+
+      ul {
+        flex-wrap: wrap;
+        gap: $spacing-md;
+      }
+    }
+  }
+}

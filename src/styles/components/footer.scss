@@ -1,0 +1,115 @@
+/* Footer Styles */
+footer {
+  background-color: $secondary-dark;
+  color: $bg-white;
+  padding: $spacing-3xl $spacing-xl $spacing-xl;
+  margin-top: auto;
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $spacing-2xl;
+    max-width: 1400px;
+    margin: 0 auto;
+    margin-bottom: $spacing-2xl;
+    padding-bottom: $spacing-2xl;
+    border-bottom: 1px solid rgba($bg-white, 0.1);
+
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .footer-section {
+    h4 {
+      color: $bg-white;
+      font-size: $font-size-base;
+      margin-bottom: $spacing-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    ul {
+      list-style: none;
+
+      li {
+        margin-bottom: $spacing-md;
+
+        a {
+          color: rgba($bg-white, 0.7);
+          font-size: $font-size-sm;
+          transition: all $transition-base;
+
+          &:hover {
+            color: $primary-green-light;
+          }
+        }
+      }
+    }
+  }
+
+  .footer-about {
+    .logo {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-bold;
+      margin-bottom: $spacing-md;
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+
+      img {
+        height: 40px;
+        width: auto;
+      }
+    }
+
+    p {
+      color: rgba($bg-white, 0.7);
+      font-size: $font-size-sm;
+      line-height: 1.8;
+      margin-bottom: $spacing-md;
+    }
+  }
+
+  .payment-methods {
+    display: flex;
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+
+    img {
+      height: 30px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: $spacing-xl;
+    border-top: 1px solid rgba($bg-white, 0.1);
+    font-size: $font-size-sm;
+    color: rgba($bg-white, 0.6);
+
+    a {
+      color: rgba($bg-white, 0.6);
+      transition: color $transition-base;
+
+      &:hover {
+        color: $primary-green-light;
+      }
+    }
+
+    @media (max-width: $breakpoint-md) {
+      flex-direction: column;
+      gap: $spacing-md;
+      text-align: center;
+    }
+  }
+}

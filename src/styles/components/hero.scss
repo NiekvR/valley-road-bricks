@@ -1,0 +1,194 @@
+/* Hero Section Styles */
+.hero {
+  background: linear-gradient(135deg, rgba($secondary-dark, 0.8) 0%, rgba($primary-green-dark, 0.8) 100%),
+              url('assets/hero-bg.jpg') center/cover;
+  background-attachment: fixed;
+  color: $bg-white;
+  padding: $spacing-3xl $spacing-xl;
+  display: flex;
+  align-items: center;
+  gap: $spacing-3xl;
+  min-height: 500px;
+  margin-bottom: $spacing-3xl;
+
+  .hero-content {
+    flex: 1;
+    z-index: 1;
+
+    h1 {
+      font-size: $font-size-3xl;
+      color: $bg-white;
+      margin-bottom: $spacing-lg;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: $font-size-xl;
+      color: $primary-green-light;
+      margin-bottom: $spacing-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    p {
+      color: rgba($bg-white, 0.9);
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-2xl;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: $spacing-lg;
+      flex-wrap: wrap;
+
+      .btn-primary {
+        @include button-primary;
+        font-size: $font-size-base;
+        padding: $spacing-sm $spacing-xl;
+      }
+
+      .btn-secondary {
+        @include button-reset;
+        border: 2px solid $bg-white;
+        color: $bg-white;
+        padding: $spacing-sm $spacing-xl;
+        border-radius: $radius-md;
+        font-weight: $font-weight-semibold;
+        transition: all $transition-base;
+
+        &:hover {
+          background-color: rgba($bg-white, 0.1);
+        }
+      }
+    }
+
+    .hero-reviews {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      margin-top: $spacing-2xl;
+
+      .review-avatars {
+        display: flex;
+        margin-right: $spacing-md;
+
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-left: -12px;
+          border: 3px solid $bg-white;
+
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+      }
+
+      .review-info {
+        .stars {
+          color: $warning-orange;
+          font-size: $font-size-base;
+          margin-bottom: 2px;
+        }
+
+        .review-count {
+          font-size: $font-size-sm;
+          color: rgba($bg-white, 0.8);
+        }
+      }
+    }
+  }
+
+  .hero-image {
+    flex: 1;
+    @include flex-center;
+    z-index: 1;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+    }
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    flex-direction: column;
+    min-height: auto;
+    padding: $spacing-2xl $spacing-lg;
+
+    .hero-content {
+      h1 {
+        font-size: $font-size-2xl;
+      }
+
+      p {
+        font-size: $font-size-base;
+      }
+    }
+  }
+}
+
+/* Info Bars */
+.info-bars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-xl;
+  margin-bottom: $spacing-3xl;
+  margin-top: -$spacing-2xl;
+  position: relative;
+  z-index: 10;
+
+  .info-bar {
+    background: $bg-white;
+    padding: $spacing-xl $spacing-lg;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+    text-align: center;
+    transition: all $transition-base;
+
+    &:hover {
+      box-shadow: $shadow-lg;
+    }
+
+    .info-icon {
+      font-size: $font-size-2xl;
+      color: $primary-green;
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      @include flex-center;
+      background-color: rgba($primary-green, 0.1);
+      border-radius: $radius-lg;
+    }
+
+    .info-content {
+      flex: 1;
+      text-align: left;
+
+      .info-title {
+        font-weight: $font-weight-semibold;
+        color: $text-dark;
+        margin-bottom: 4px;
+      }
+
+      .info-text {
+        font-size: $font-size-sm;
+        color: $text-gray;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-lg;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+  }
+}
