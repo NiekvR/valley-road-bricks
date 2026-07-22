@@ -1,0 +1,127 @@
+@import 'src/styles/variables';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $bg-light;
+}
+
+.page-content {
+  flex: 1;
+  padding: $spacing-xl;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: $spacing-3xl;
+
+  h1 {
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    font-size: $font-size-lg;
+    color: $text-gray;
+  }
+}
+
+.content-section {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: $spacing-xl;
+  margin-bottom: $spacing-3xl;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.step-card {
+  background: $bg-white;
+  padding: $spacing-xl;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  text-align: center;
+  transition: all $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-4px);
+  }
+
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: $primary-green;
+    color: $bg-white;
+    border-radius: 50%;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-lg;
+  }
+
+  h3 {
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    font-size: $font-size-sm;
+    color: $text-gray;
+  }
+}
+
+.benefits-section {
+  h2 {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+  }
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-xl;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.benefit-card {
+  background: $bg-white;
+  padding: $spacing-xl;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+  text-align: center;
+  border-top: 4px solid $primary-green;
+
+  .benefit-icon {
+    font-size: $font-size-3xl;
+    margin-bottom: $spacing-lg;
+  }
+
+  h4 {
+    margin-bottom: $spacing-md;
+    color: $text-dark;
+  }
+
+  p {
+    font-size: $font-size-sm;
+    color: $text-gray;
+  }
+}
