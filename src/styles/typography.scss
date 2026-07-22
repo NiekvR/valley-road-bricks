@@ -1,0 +1,65 @@
+/* Typography Styles */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-primary;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  margin-bottom: $spacing-md;
+  color: $text-dark;
+}
+
+h1 {
+  font-size: $font-size-3xl;
+}
+
+h2 {
+  font-size: $font-size-2xl;
+}
+
+h3 {
+  font-size: $font-size-xl;
+}
+
+h4 {
+  font-size: $font-size-lg;
+}
+
+h5, h6 {
+  font-size: $font-size-base;
+}
+
+p {
+  font-size: $font-size-base;
+  color: $text-gray;
+  line-height: 1.6;
+  margin-bottom: $spacing-md;
+}
+
+small {
+  font-size: $font-size-sm;
+  color: $text-light;
+}
+
+.text-primary {
+  color: $primary-green;
+}
+
+.text-secondary {
+  color: $secondary-dark;
+}
+
+.text-muted {
+  color: $text-light;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-bold {
+  font-weight: $font-weight-bold;
+}
+
+.text-semibold {
+  font-weight: $font-weight-semibold;
+}
