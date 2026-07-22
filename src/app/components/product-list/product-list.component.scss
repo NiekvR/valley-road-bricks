@@ -1,0 +1,204 @@
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
+
+.product-list-container {
+  flex: 1;
+}
+
+.results-header {
+  margin-bottom: $spacing-xl;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-xl;
+
+  @media (max-width: $breakpoint-xl) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.product-card {
+  @include card;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: all $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-4px);
+  }
+
+  .product-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: $bg-light;
+    overflow: hidden;
+    @include flex-center;
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+
+    .wishlist-btn {
+      @include button-reset;
+      position: absolute;
+      top: $spacing-md;
+      right: $spacing-md;
+      width: 40px;
+      height: 40px;
+      background-color: rgba($bg-white, 0.9);
+      border-radius: 50%;
+      @include flex-center;
+      font-size: $font-size-lg;
+      color: $text-gray;
+      transition: all $transition-base;
+
+      &:hover {
+        background-color: $bg-white;
+        color: $error-red;
+        transform: scale(1.1);
+      }
+    }
+
+    .out-of-stock {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      color: $bg-white;
+      padding: $spacing-md $spacing-lg;
+      border-radius: $radius-md;
+      font-weight: $font-weight-semibold;
+      font-size: $font-size-base;
+    }
+  }
+
+  .product-info {
+    padding: $spacing-lg;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .product-category {
+      font-size: $font-size-sm;
+      color: $primary-green;
+      font-weight: $font-weight-semibold;
+      margin-bottom: $spacing-sm;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .product-name {
+      font-size: $font-size-base;
+      font-weight: $font-weight-semibold;
+      color: $text-dark;
+      margin-bottom: $spacing-md;
+      @include line-clamp(2);
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      margin-bottom: $spacing-md;
+
+      .stars {
+        color: $warning-orange;
+        font-size: $font-size-sm;
+        letter-spacing: 2px;
+      }
+
+      .rating-text {
+        font-size: $font-size-sm;
+        color: $text-light;
+      }
+    }
+
+    .product-meta {
+      display: flex;
+      gap: $spacing-lg;
+      font-size: $font-size-sm;
+      color: $text-light;
+      margin-bottom: $spacing-md;
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+
+    .product-price {
+      margin-bottom: $spacing-md;
+      margin-top: auto;
+
+      .price {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $primary-green;
+      }
+
+      .original-price {
+        font-size: $font-size-sm;
+        color: $text-light;
+        text-decoration: line-through;
+        margin-left: $spacing-sm;
+      }
+    }
+
+    .btn-add-to-cart {
+      @include button-primary;
+      width: 100%;
+      text-align: center;
+      padding: $spacing-md;
+      margin-top: $spacing-md;
+
+      &:disabled {
+        background-color: $border-gray;
+        cursor: not-allowed;
+        opacity: 0.6;
+
+        &:hover {
+          background-color: $border-gray;
+          transform: none;
+        }
+      }
+    }
+  }
+}
+
+.no-products {
+  text-align: center;
+  padding: $spacing-3xl $spacing-xl;
+  background-color: $bg-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-md;
+
+  .no-products-icon {
+    font-size: $font-size-3xl;
+    margin-bottom: $spacing-lg;
+  }
+
+  h3 {
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: $text-light;
+    margin: 0;
+  }
+}

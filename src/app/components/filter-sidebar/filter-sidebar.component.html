@@ -1,0 +1,124 @@
+<aside class="filter-sidebar">
+  <div class="filter-section">
+    <div class="filter-header">
+      <h3>Filters</h3>
+      <button class="reset-btn" (click)="onResetFilters()">Reset</button>
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <h4 class="filter-title">Sorteren</h4>
+    <select [(ngModel)]="sortBy" (change)="onSortChange()" class="sort-select">
+      <option value="popularity">Populairste</option>
+      <option value="newest">Nieuwste</option>
+      <option value="price-asc">Prijs: laag naar hoog</option>
+      <option value="price-desc">Prijs: hoog naar laag</option>
+    </select>
+  </div>
+
+  <div class="filter-section">
+    <h4 class="filter-title">Categorie</h4>
+    <div class="filter-options">
+      <label *ngFor="let category of categories" class="checkbox-label">
+        <input
+          type="checkbox"
+          [checked]="selectedCategories.includes(category)"
+          (change)="onCategoryChange(category, $event)"
+          class="checkbox-input"
+        />
+        <span>{{ category }}</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <h4 class="filter-title">Prijs</h4>
+    <div class="range-inputs">
+      <input
+        type="number"
+        [(ngModel)]="priceRange[0]"
+        (change)="onPriceRangeChange()"
+        min="0"
+        [max]="priceRange[1]"
+        class="range-input"
+        placeholder="Min"
+      />
+      <span class="range-separator">-</span>
+      <input
+        type="number"
+        [(ngModel)]="priceRange[1]"
+        (change)="onPriceRangeChange()"
+        [min]="priceRange[0]"
+        max="100"
+        class="range-input"
+        placeholder="Max"
+      />
+    </div>
+    <input
+      type="range"
+      [(ngModel)]="priceRange[0]"
+      (change)="onPriceRangeChange()"
+      min="0"
+      [max]="priceRange[1]"
+      class="slider"
+    />
+    <input
+      type="range"
+      [(ngModel)]="priceRange[1]"
+      (change)="onPriceRangeChange()"
+      [min]="priceRange[0]"
+      max="100"
+      class="slider"
+    />
+  </div>
+
+  <div class="filter-section">
+    <h4 class="filter-title">Aantal stukjes</h4>
+    <div class="range-inputs">
+      <input
+        type="number"
+        [(ngModel)]="piecesRange[0]"
+        (change)="onPiecesRangeChange()"
+        min="0"
+        [max]="piecesRange[1]"
+        class="range-input"
+        placeholder="Min"
+      />
+      <span class="range-separator">-</span>
+      <input
+        type="number"
+        [(ngModel)]="piecesRange[1]"
+        (change)="onPiecesRangeChange()"
+        [min]="piecesRange[0]"
+        max="10000"
+        class="range-input"
+        placeholder="Max"
+      />
+    </div>
+  </div>
+
+  <div class="filter-section">
+    <h4 class="filter-title">Bouwduur (dagen)</h4>
+    <div class="range-inputs">
+      <input
+        type="number"
+        [(ngModel)]="buildTimeRange[0]"
+        (change)="onBuildTimeRangeChange()"
+        min="0"
+        [max]="buildTimeRange[1]"
+        class="range-input"
+        placeholder="Min"
+      />
+      <span class="range-separator">-</span>
+      <input
+        type="number"
+        [(ngModel)]="buildTimeRange[1]"
+        (change)="onBuildTimeRangeChange()"
+        [min]="buildTimeRange[0]"
+        max="25"
+        class="range-input"
+        placeholder="Max"
+      />
+    </div>
+  </div>
+</aside>
