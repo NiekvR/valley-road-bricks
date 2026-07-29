@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { CommonModule, FormsModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import {FormsModule} from "@angular/forms";
+
 
 @Component({
   selector: 'app-newsletter',

@@ -1,12 +1,15 @@
 /* Header & Navigation Styles */
 header {
-  background-color: $secondary-dark;
-  color: $bg-white;
   padding: $spacing-lg $spacing-xl;
   box-shadow: $shadow-md;
   position: sticky;
   top: 0;
   z-index: 1000;
+
+  .top-header {
+    background-color: $secondary-dark;
+    color: $bg-white;
+  }
 
   .header-container {
     @include flex-between;
@@ -16,13 +19,6 @@ header {
   }
 
   .logo {
-    font-size: $font-size-2xl;
-    font-weight: $font-weight-bold;
-    color: $bg-white;
-    display: flex;
-    align-items: center;
-    gap: $spacing-md;
-
     img {
       height: 50px;
       width: auto;

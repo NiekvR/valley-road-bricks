@@ -1,7 +1,7 @@
 /* Hero Section Styles */
 .hero {
-  background: linear-gradient(135deg, rgba($secondary-dark, 0.8) 0%, rgba($primary-green-dark, 0.8) 100%),
-              url('assets/hero-bg.jpg') center/cover;
+  background: linear-gradient(135deg, rgba($bg-white, 1.0) 0%, rgba($bg-white, 1.0) 40%, rgba($bg-white, 0.0) 60%),
+              url('../../assets/img/VRB - Hogwarts castle.png') center/cover;
   background-attachment: fixed;
   color: $bg-white;
   padding: $spacing-3xl $spacing-xl;
@@ -17,7 +17,7 @@
 
     h1 {
       font-size: $font-size-3xl;
-      color: $bg-white;
+      color: $primary-green;
       margin-bottom: $spacing-lg;
       line-height: 1.2;
     }
@@ -30,7 +30,7 @@
     }
 
     p {
-      color: rgba($bg-white, 0.9);
+      color: rgba($secondary-dark, 0.9);
       font-size: $font-size-lg;
       margin-bottom: $spacing-2xl;
       line-height: 1.8;
@@ -49,15 +49,15 @@
 
       .btn-secondary {
         @include button-reset;
-        border: 2px solid $bg-white;
-        color: $bg-white;
+        border: 2px solid $primary-green;
+        color: $primary-green;
         padding: $spacing-sm $spacing-xl;
         border-radius: $radius-md;
         font-weight: $font-weight-semibold;
         transition: all $transition-base;
 
         &:hover {
-          background-color: rgba($bg-white, 0.1);
+          background-color: rgba($primary-green, 0.1);
         }
       }
     }
