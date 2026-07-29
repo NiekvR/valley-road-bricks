@@ -5,11 +5,10 @@ import { CatalogueService } from '../../services/catalogue.service';
 import { FilterOptions } from '../../models/product.model';
 
 @Component({
-  selector: 'app-filter-sidebar',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './filter-sidebar.component.html',
-  styleUrls: ['./filter-sidebar.component.scss']
+    selector: 'app-filter-sidebar',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './filter-sidebar.component.html',
+    styleUrls: ['./filter-sidebar.component.scss']
 })
 export class FilterSidebarComponent implements OnInit {
   categories: string[] = [];

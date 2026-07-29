@@ -4,11 +4,10 @@ import { Product } from '../../models/product.model';
 import { CatalogueService } from '../../services/catalogue.service';
 
 @Component({
-  selector: 'app-product-list',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss']
+    selector: 'app-product-list',
+    imports: [CommonModule],
+    templateUrl: './product-list.component.html',
+    styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];

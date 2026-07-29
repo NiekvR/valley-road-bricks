@@ -9,11 +9,10 @@ interface ProcessStep {
 }
 
 @Component({
-  selector: 'app-process',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './process.component.html',
-  styleUrls: ['./process.component.scss']
+    selector: 'app-process',
+    imports: [CommonModule],
+    templateUrl: './process.component.html',
+    styleUrls: ['./process.component.scss']
 })
 export class ProcessComponent {
   steps: ProcessStep[] = [

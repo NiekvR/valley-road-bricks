@@ -6,16 +6,15 @@ import { FilterSidebarComponent } from '../filter-sidebar/filter-sidebar.compone
 import { ProductListComponent } from '../product-list/product-list.component';
 
 @Component({
-  selector: 'app-catalogue',
-  standalone: true,
-  imports: [
-    CommonModule,
-    HeaderComponent,
-    FooterComponent,
-    FilterSidebarComponent,
-    ProductListComponent
-  ],
-  templateUrl: './catalogue.component.html',
-  styleUrls: ['./catalogue.component.scss']
+    selector: 'app-catalogue',
+    imports: [
+        CommonModule,
+        HeaderComponent,
+        FooterComponent,
+        FilterSidebarComponent,
+        ProductListComponent
+    ],
+    templateUrl: './catalogue.component.html',
+    styleUrls: ['./catalogue.component.scss']
 })
 export class CatalogueComponent {}

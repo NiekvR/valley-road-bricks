@@ -8,19 +8,18 @@ import { NewsletterComponent } from '../../components/newsletter/newsletter.comp
 import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    CommonModule,
-    HeaderComponent,
-    HeroComponent,
-    ProductsComponent,
-    ProcessComponent,
-    NewsletterComponent,
-    FooterComponent
-  ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    imports: [
+        CommonModule,
+        HeaderComponent,
+        HeroComponent,
+        ProductsComponent,
+        ProcessComponent,
+        NewsletterComponent,
+        FooterComponent
+    ],
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
   cartCount: number = 0;
