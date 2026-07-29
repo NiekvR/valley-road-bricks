@@ -12,18 +12,24 @@
       <p>De mooiste LEGO®-sets huren is makkelijk, voordelig en voordelig en verantwoord en voordelig.</p>
 
       <div class="payment-methods">
-        <span *ngFor="let method of paymentMethods" title="{{ method.name }}">{{ method.icon }}</span>
+        @for (method of paymentMethods; track method) {
+          <span title="{{ method.name }}">{{ method.icon }}</span>
+        }
       </div>
     </div>
 
-    <div class="footer-section" *ngFor="let section of sections">
-      <h4>{{ section.title }}</h4>
-      <ul>
-        <li *ngFor="let link of section.links">
-          <a [href]="link.link">{{ link.label }}</a>
-        </li>
-      </ul>
-    </div>
+    @for (section of sections; track section) {
+      <div class="footer-section">
+        <h4>{{ section.title }}</h4>
+        <ul>
+          @for (link of section.links; track link) {
+            <li>
+              <a [href]="link.link">{{ link.label }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
   </div>
 
   <div class="footer-bottom">

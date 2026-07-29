@@ -12,13 +12,15 @@
           placeholder="Jouw e-mailadres"
           required
           class="newsletter-input"
-        />
+          />
         <button type="submit" class="btn-primary">Aanmelden</button>
       </form>
 
-      <div *ngIf="submitted" class="success-message">
-        ✓ Bedankt voor je aanmelding!
-      </div>
+      @if (submitted) {
+        <div class="success-message">
+          ✓ Bedankt voor je aanmelding!
+        </div>
+      }
     </div>
   </div>
 </section>

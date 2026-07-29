@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 interface FooterLink {
   label: string;
@@ -13,7 +13,7 @@ interface FooterSection {
 
 @Component({
     selector: 'app-footer',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss']
 })

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {FormsModule} from "@angular/forms";
 
 
 @Component({
     selector: 'app-newsletter',
-    imports: [CommonModule, FormsModule],
+    imports: [FormsModule],
     templateUrl: './newsletter.component.html',
     styleUrls: ['./newsletter.component.scss']
 })

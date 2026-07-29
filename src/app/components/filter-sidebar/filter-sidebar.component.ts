@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { CatalogueService } from '../../services/catalogue.service';
 import { FilterOptions } from '../../models/product.model';
 
 @Component({
     selector: 'app-filter-sidebar',
-    imports: [CommonModule, FormsModule],
+    imports: [FormsModule],
     templateUrl: './filter-sidebar.component.html',
     styleUrls: ['./filter-sidebar.component.scss']
 })

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 interface ProcessStep {
   number: number;
@@ -10,7 +10,7 @@ interface ProcessStep {
 
 @Component({
     selector: 'app-process',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './process.component.html',
     styleUrls: ['./process.component.scss']
 })

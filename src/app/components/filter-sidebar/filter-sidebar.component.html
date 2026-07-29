@@ -19,15 +19,17 @@
   <div class="filter-section">
     <h4 class="filter-title">Categorie</h4>
     <div class="filter-options">
-      <label *ngFor="let category of categories" class="checkbox-label">
-        <input
-          type="checkbox"
-          [checked]="selectedCategories.includes(category)"
-          (change)="onCategoryChange(category, $event)"
-          class="checkbox-input"
-        />
-        <span>{{ category }}</span>
-      </label>
+      @for (category of categories; track category) {
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="selectedCategories.includes(category)"
+            (change)="onCategoryChange(category, $event)"
+            class="checkbox-input"
+            />
+          <span>{{ category }}</span>
+        </label>
+      }
     </div>
   </div>
 
@@ -42,7 +44,7 @@
         [max]="priceRange[1]"
         class="range-input"
         placeholder="Min"
-      />
+        />
       <span class="range-separator">-</span>
       <input
         type="number"
@@ -52,7 +54,7 @@
         max="100"
         class="range-input"
         placeholder="Max"
-      />
+        />
     </div>
     <input
       type="range"
@@ -61,7 +63,7 @@
       min="0"
       [max]="priceRange[1]"
       class="slider"
-    />
+      />
     <input
       type="range"
       [(ngModel)]="priceRange[1]"
@@ -69,7 +71,7 @@
       [min]="priceRange[0]"
       max="100"
       class="slider"
-    />
+      />
   </div>
 
   <div class="filter-section">
@@ -83,7 +85,7 @@
         [max]="piecesRange[1]"
         class="range-input"
         placeholder="Min"
-      />
+        />
       <span class="range-separator">-</span>
       <input
         type="number"
@@ -93,7 +95,7 @@
         max="10000"
         class="range-input"
         placeholder="Max"
-      />
+        />
     </div>
   </div>
 
@@ -108,7 +110,7 @@
         [max]="buildTimeRange[1]"
         class="range-input"
         placeholder="Min"
-      />
+        />
       <span class="range-separator">-</span>
       <input
         type="number"
@@ -118,7 +120,7 @@
         max="25"
         class="range-input"
         placeholder="Max"
-      />
+        />
     </div>
   </div>
 </aside>

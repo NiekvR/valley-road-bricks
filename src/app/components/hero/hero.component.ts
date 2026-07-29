@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 interface Review {
   id: number;
@@ -9,7 +9,7 @@ interface Review {
 
 @Component({
     selector: 'app-hero',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './hero.component.html',
     styleUrls: ['./hero.component.scss']
 })

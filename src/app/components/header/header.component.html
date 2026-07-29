@@ -2,14 +2,16 @@
   <div class="top-header"></div>
   <div class="header-container">
     <div class="logo">
-        <img src="assets/logo/Logo%20Valley%20Road%20Bricks.svg" alt="Valley Road Bricks">
+      <img src="assets/logo/Logo%20Valley%20Road%20Bricks.svg" alt="Valley Road Bricks">
     </div>
 
     <nav>
       <ul>
-        <li *ngFor="let item of menuItems">
-          <a [href]="item.link">{{ item.label }}</a>
-        </li>
+        @for (item of menuItems; track item) {
+          <li>
+            <a [href]="item.link">{{ item.label }}</a>
+          </li>
+        }
       </ul>
     </nav>
 
@@ -22,7 +24,9 @@
       </button>
       <button class="cart-icon" (click)="onCart()" title="Cart">
         🛒
-        <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+        @if (cartCount > 0) {
+          <span class="cart-badge">{{ cartCount }}</span>
+        }
       </button>
     </div>
   </div>
