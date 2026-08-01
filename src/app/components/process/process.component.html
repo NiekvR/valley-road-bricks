@@ -5,7 +5,7 @@
       @for (step of steps; track step) {
         <div class="process-step">
           <div class="step-number">{{ step.number }}</div>
-          <div class="step-icon">{{ step.icon }}</div>
+          <img [srcset]="step.icon" [alt]="step.description">
           <h4>{{ step.title }}</h4>
           <p>{{ step.description }}</p>
         </div>

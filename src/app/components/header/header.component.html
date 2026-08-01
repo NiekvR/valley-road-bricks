@@ -1,33 +1,8 @@
 <header>
-  <div class="top-header"></div>
-  <div class="header-container">
-    <div class="logo">
-      <img src="assets/logo/Logo%20Valley%20Road%20Bricks.svg" alt="Valley Road Bricks">
-    </div>
-
-    <nav>
-      <ul>
-        @for (item of menuItems; track item) {
-          <li>
-            <a [href]="item.link">{{ item.label }}</a>
-          </li>
-        }
-      </ul>
-    </nav>
-
-    <div class="header-actions">
-      <button class="search-icon" (click)="onSearch()" title="Search">
-        🔍
-      </button>
-      <button class="account-icon" (click)="onAccount()" title="Account">
-        👤
-      </button>
-      <button class="cart-icon" (click)="onCart()" title="Cart">
-        🛒
-        @if (cartCount > 0) {
-          <span class="cart-badge">{{ cartCount }}</span>
-        }
-      </button>
-    </div>
+  <div class="top-header flex-center">
+    <span><fa-icon [icon]="faCircleCheck"></fa-icon>100% compleet en gecontroleerd</span>
+    <span><fa-icon [icon]="faLeaf"></fa-icon>Duurzaam & voordelig</span>
+    <span><fa-icon [icon]="faHouseChimneyCrack"></fa-icon>Afbreekservice</span>
   </div>
+  <app-navbar></app-navbar>
 </header>

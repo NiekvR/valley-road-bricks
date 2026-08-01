@@ -1,4 +1,7 @@
 /* Process Steps Styles */
+@use 'src/styles/variables' as *;
+@use "src/styles/mixins" as *;
+
 .process-section {
   background: linear-gradient(135deg, rgba($primary-green, 0.05) 0%, rgba($secondary-dark, 0.05) 100%);
   padding: $spacing-3xl $spacing-xl;
@@ -33,6 +36,9 @@
   .process-step {
     text-align: center;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     .step-number {
       display: inline-flex;
@@ -48,10 +54,8 @@
       margin-bottom: $spacing-lg;
     }
 
-    .step-icon {
-      font-size: $font-size-3xl;
-      color: $primary-green;
-      margin-bottom: $spacing-lg;
+    img{
+      height: 80px;
     }
 
     h4 {

@@ -1,10 +1,9 @@
-@import 'src/styles/variables';
-
+@use 'src/styles/variables' as *;
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: $bg-light;
+  background-color: $bg-white;
 }
 
 .page-content {

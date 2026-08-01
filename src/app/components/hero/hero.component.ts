@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import {faCircleCheck} from "@fortawesome/free-regular-svg-icons";
+import {faLeaf, faHouseChimneyCrack} from "@fortawesome/free-solid-svg-icons";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {NgOptimizedImage} from "@angular/common";
 
 
 interface Review {
@@ -9,11 +13,17 @@ interface Review {
 
 @Component({
     selector: 'app-hero',
-    imports: [],
+    imports: [
+        FaIconComponent,
+        NgOptimizedImage
+    ],
     templateUrl: './hero.component.html',
     styleUrls: ['./hero.component.scss']
 })
 export class HeroComponent {
+    faCircleCheck = faCircleCheck;
+    faLeaf = faLeaf;
+    faHouseChimneyCrack = faHouseChimneyCrack;
   reviews: Review[] = [
     { id: 1, avatar: '👨', name: 'User 1' },
     { id: 2, avatar: '👩', name: 'User 2' },

@@ -1,0 +1,54 @@
+<nav class="navbar">
+  <a class="logo full-width" routerLink="/">
+    <img ngSrc="assets/logo/Logo%20Valley%20Road%20Bricks.svg"
+         height="75"
+         width="125"
+         alt="Valley Road Bricks" priority>
+  </a>
+
+  <button
+      class="menu-button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Toggle navigation">
+    ☰
+  </button>
+
+  <ul class="nav-links" [class.open]="menuOpen()">
+    @for (link of links; track link.link) {
+      <li>
+        <a
+            [routerLink]="link.link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeMenu()">
+          {{ link.label }}
+        </a>
+      </li>
+    }
+  </ul>
+
+  <a class="logo mobile" routerLink="/">
+    <img
+        ngSrc="assets/logo/Logo%20Valley%20Road%20Bricks.svg"
+        alt="Valley Road Bricks"
+        height="75"
+        width="125"
+        priority>
+  </a>
+
+  <div class="header-actions">
+    <button class="search-icon" (click)="onSearch()" title="Search">
+      <fa-icon [icon]="faSearch"></fa-icon>
+    </button>
+    <button class="account-icon" (click)="onAccount()" title="Account">
+      <fa-icon [icon]="faUser"></fa-icon>
+    </button>
+    <button class="cart-icon" (click)="onCart()" title="Cart">
+      <fa-icon [icon]="faCartShopping"></fa-icon>
+      <!--        @if (cartCount > 0) {-->
+      <span class="cart-badge">{{ cartCount }}</span>
+      <!--        }-->
+    </button>
+  </div>
+</nav>

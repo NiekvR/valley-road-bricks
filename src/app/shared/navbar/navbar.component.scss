@@ -1,0 +1,139 @@
+@use 'src/styles/variables' as *;
+@use "src/styles/mixins" as *;
+
+:host {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1rem 2rem;
+    background: $bg-white;
+    color: $secondary-dark;
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    .logo {
+      &.mobile {
+        display: none;
+      }
+
+      img {
+        height: 75px;
+        width: auto;
+      }
+    }
+    .menu-button {
+      display: none;
+      border: none;
+      background: transparent;
+      color: inherit;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      a {
+        color: $secondary-dark;
+        text-decoration: none;
+      }
+
+      .active {
+        font-weight: bold;
+        border-bottom: 2px solid $primary-green;
+        color: $primary-green;
+      }
+    }
+
+    .header-actions {
+      display: flex;
+      gap: $spacing-lg;
+      align-items: center;
+
+      .search-icon,
+      .account-icon {
+        @include button-reset;
+        color: $secondary-dark;
+        font-size: $font-size-lg;
+        transition: all $transition-base;
+
+        &:hover {
+          color: $primary-green-light;
+        }
+      }
+
+      .cart-icon {
+        position: relative;
+        @include button-reset;
+        color: $secondary-dark;
+        font-size: $font-size-lg;
+        transition: all $transition-base;
+
+        &:hover {
+          color: $primary-green-light;
+        }
+
+        .cart-badge {
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: $primary-green;
+          color: $bg-white;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          @include flex-center;
+          font-size: $font-size-sm;
+          font-weight: $font-weight-bold;
+        }
+      }
+    }
+
+    @media (max-width: $breakpoint-md) {
+      .logo {
+        &.full-width {
+          display: none;
+        }
+
+        &.mobile {
+          display: flex;
+        }
+      }
+      .menu-button {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+
+        flex-direction: column;
+        background: $bg-white;
+        padding: 1rem;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+      .header-actions {
+        .search-icon,
+        .account-icon {
+          display: none;
+        }
+      }
+    }
+  }
+}

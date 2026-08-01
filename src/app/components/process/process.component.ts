@@ -18,31 +18,31 @@ export class ProcessComponent {
   steps: ProcessStep[] = [
     {
       number: 1,
-      icon: '👆',
+      icon: 'assets/icons/Choose.svg',
       title: 'Kies een set',
-      description: 'Kies jouw favorite LEGO®-set en selecteer de huurgeldode.'
+      description: 'Kies jouw favorite LEGO®-set.'
     },
     {
       number: 2,
-      icon: '📦',
-      title: 'Wij verzenden',
-      description: 'We verpakken jouw set veilig en verzenden deze znel naar je toe.'
+      icon: 'assets/icons/Rent.svg',
+      title: 'Maak een afspraak',
+      description: 'We controleren en verpakken jouw set veilig, zodat alle stukjes aanwezig zijn.'
     },
     {
       number: 3,
-      icon: '🧱',
+      icon: 'assets/icons/Play.svg',
       title: 'Bouw & geniet',
-      description: 'Bouw, geniet en beloof umring bouwerij bij jou thuis.'
+      description: 'Bouw en geniet van uren bouwplezier bij jou thuis.'
     },
     {
       number: 4,
-      icon: '↩️',
+      icon: 'assets/icons/Return.svg',
       title: 'Retourneer gratis',
-      description: 'Gebruik het meegeleverde retourlabel en stuur de set terug.'
+      description: 'Maak een afspraak om de set weer in te leveren.'
     },
     {
       number: 5,
-      icon: '🎉',
+      icon: 'assets/icons/Repeat.svg',
       title: 'Kies je volgende avontuur',
       description: 'Klaar? Kies je volgende set en begin opnieuw!'
     }

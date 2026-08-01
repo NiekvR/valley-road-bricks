@@ -1,5 +1,4 @@
-@import 'src/styles/variables';
-
+@use 'src/styles/variables' as *;
 .filter-sidebar {
   background: $bg-white;
   border-radius: $radius-lg;

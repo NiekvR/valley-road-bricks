@@ -1,4 +1,4 @@
-@import 'src/styles/variables';
+@use 'src/styles/variables' as *;
 
 .newsletter-section {
   background: linear-gradient(135deg, rgba($primary-green, 0.1) 0%, rgba($secondary-dark, 0.05) 100%);

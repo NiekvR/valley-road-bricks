@@ -2,20 +2,9 @@
   <div class="footer-content">
     <div class="footer-about">
       <div class="logo">
-        <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
-          <path d="M10 30V15L20 8L30 15V30" stroke="#4a7c59" stroke-width="2" fill="none"/>
-          <rect x="14" y="18" width="5" height="8" fill="#4a7c59"/>
-          <rect x="21" y="18" width="5" height="8" fill="#4a7c59"/>
-        </svg>
-        <span>Valley Road Bricks</span>
+        <img ngSrc="assets/logo/Logo%20Valley%20Road%20Bricks%20Lean.svg" alt="Valley Road Bricks" height="75" width="100">
       </div>
-      <p>De mooiste LEGO®-sets huren is makkelijk, voordelig en voordelig en verantwoord en voordelig.</p>
-
-      <div class="payment-methods">
-        @for (method of paymentMethods; track method) {
-          <span title="{{ method.name }}">{{ method.icon }}</span>
-        }
-      </div>
+      <p>De mooiste LEGO®-sets huren zonder ze te kopen. Duurzaam voordelig en zorgeloos</p>
     </div>
 
     @for (section of sections; track section) {

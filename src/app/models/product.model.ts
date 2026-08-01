@@ -2,14 +2,16 @@ export interface Product {
   id: number;
   name: string;
   image: string;
+  images?: string[];
   price: number;
   originalPrice?: number;
   pieces: number;
-  buildTime: number;
+  minRentTime: number;
   category: string;
-  rating: number;
-  reviews: number;
+  rating?: number;
+  reviews?: number;
   inStock: boolean;
+  legoId: number;
 }
 
 export interface FilterOptions {

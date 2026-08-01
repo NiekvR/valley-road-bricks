@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {NgOptimizedImage} from "@angular/common";
 
 
 interface FooterLink {
@@ -13,7 +14,9 @@ interface FooterSection {
 
 @Component({
     selector: 'app-footer',
-    imports: [],
+    imports: [
+        NgOptimizedImage
+    ],
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss']
 })

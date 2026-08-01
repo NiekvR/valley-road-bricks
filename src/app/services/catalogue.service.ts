@@ -9,147 +9,102 @@ export class CatalogueService {
   private products: Product[] = [
     {
       id: 1,
-      name: 'LEGO® Icons Titanic',
+      name: 'LEGO® The Lord of the Rings: Minas Tirith™',
       image: '🚢',
-      price: 29.95,
-      pieces: 9090,
-      buildTime: 14,
+      price: 20.00,
+      pieces: 8278,
+      minRentTime: 3,
       category: 'Icons',
-      rating: 4.9,
-      reviews: 450,
-      inStock: true
+      inStock: true,
+        legoId: 11377
     },
     {
       id: 2,
-      name: 'LEGO® Icons Concorde',
+      name: 'LEGO® Creator Camp Nou',
       image: '✈️',
-      price: 24.95,
-      pieces: 2083,
-      buildTime: 14,
-      category: 'Icons',
-      rating: 4.8,
-      reviews: 320,
-      inStock: true
+      price: 20.00,
+      pieces: 5509,
+      minRentTime: 2,
+      category: 'Creator',
+      inStock: true,
+        legoId: 10284
     },
     {
       id: 3,
-      name: 'LEGO® Technic Land Rover Defender 90',
+      name: 'Dinosaurusfossielen: Tyrannosaurus rex',
       image: '🚙',
-      price: 22.95,
-      pieces: 2573,
-      buildTime: 14,
-      category: 'Technic',
-      rating: 4.7,
-      reviews: 280,
-      inStock: true
+      price: 15.00,
+      pieces: 2651,
+      minRentTime: 2,
+      category: 'Jurassic World™',
+      inStock: true,
+        legoId: 76968
     },
     {
       id: 4,
-      name: 'LEGO® Star Wars™ R2-D2',
+      name: 'De aarde en de maan in beweging',
       image: '🤖',
-      price: 19.95,
-      pieces: 2314,
-      buildTime: 14,
-      category: 'Star Wars',
-      rating: 4.9,
-      reviews: 520,
-      inStock: true
+      price: 10,
+      pieces: 526,
+      minRentTime: 1,
+      category: 'Technic',
+      inStock: true,
+        legoId: 42179
     },
     {
       id: 5,
-      name: 'LEGO® Technic Ferrari SF90 Stradale',
+      name: 'PAC-MAN arcade',
       image: '🏎️',
-      price: 34.95,
-      pieces: 3778,
-      buildTime: 16,
+      price: 15.00,
+      pieces: 2651,
+      minRentTime: 2,
       category: 'Technic',
-      rating: 4.8,
-      reviews: 410,
-      inStock: true
+      inStock: true,
+        legoId: 10323
     },
     {
       id: 6,
-      name: 'LEGO® Icons Colosseum',
+      name: 'LEGO® Harry Potter Kasteel Zweinstein™',
       image: '🏛️',
-      price: 39.95,
-      pieces: 9036,
-      buildTime: 18,
-      category: 'Icons',
-      rating: 4.9,
-      reviews: 380,
-      inStock: true
+      price: 20.00,
+      pieces: 6020,
+      minRentTime: 3,
+      category: 'Harry Potter™',
+      inStock: true,
+        legoId: 71043
     },
     {
       id: 7,
-      name: 'LEGO® Star Wars™ Millennium Falcon',
+      name: 'LEGO® Natuurhistorisch museum',
       image: '🚀',
-      price: 44.95,
-      pieces: 7541,
-      buildTime: 20,
-      category: 'Star Wars',
-      rating: 4.9,
-      reviews: 650,
-      inStock: true
+      price: 15.00,
+      pieces: 4014,
+      minRentTime: 2,
+      category: 'Icons',
+      inStock: true,
+        legoId: 10326
     },
     {
       id: 8,
-      name: 'LEGO® Technic Excavator',
+      name: 'LEGO® De Lantaarnstad',
       image: '🏗️',
-      price: 15.95,
-      pieces: 1109,
-      buildTime: 10,
-      category: 'Technic',
-      rating: 4.6,
-      reviews: 190,
-      inStock: true
+      price: 10,
+      pieces: 2187,
+      minRentTime: 2,
+      category: 'Monkie Kid™',
+      inStock: true,
+        legoId: 80036
     },
     {
       id: 9,
-      name: 'LEGO® Icons Big Ben',
+      name: 'Robuuste sleepwagen',
       image: '🕐',
-      price: 29.95,
-      pieces: 4163,
-      buildTime: 15,
-      category: 'Icons',
-      rating: 4.8,
-      reviews: 340,
-      inStock: true
-    },
-    {
-      id: 10,
-      name: 'LEGO® Star Wars™ Death Star',
-      image: '⭐',
-      price: 49.95,
-      pieces: 4016,
-      buildTime: 18,
-      category: 'Star Wars',
-      rating: 4.9,
-      reviews: 580,
-      inStock: false
-    },
-    {
-      id: 11,
-      name: 'LEGO® Technic Bugatti Bolide',
-      image: '🏎️',
-      price: 42.95,
-      pieces: 3599,
-      buildTime: 17,
+      price: 10,
+      pieces: 2017,
+      minRentTime: 2,
       category: 'Technic',
-      rating: 4.9,
-      reviews: 470,
-      inStock: true
-    },
-    {
-      id: 12,
-      name: 'LEGO® Icons Eiffel Tower',
-      image: '🗼',
-      price: 32.95,
-      pieces: 3428,
-      buildTime: 16,
-      category: 'Icons',
-      rating: 4.8,
-      reviews: 390,
-      inStock: true
+      inStock: true,
+        legoId: 42128
     }
   ];
 
@@ -224,7 +179,7 @@ export class CatalogueService {
 
     // Filter by build time range
     filtered = filtered.filter(
-      p => p.buildTime >= filters.buildTimeRange[0] && p.buildTime <= filters.buildTimeRange[1]
+      p => p.minRentTime >= filters.buildTimeRange[0] && p.minRentTime <= filters.buildTimeRange[1]
     );
 
     // Sort
@@ -240,7 +195,7 @@ export class CatalogueService {
         break;
       case 'popularity':
       default:
-        filtered.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews);
+        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0) || (b.reviews || 0) - (a.reviews || 0));
     }
 
     this.filteredProductsSubject.next(filtered);

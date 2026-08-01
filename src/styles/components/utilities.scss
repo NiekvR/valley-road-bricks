@@ -1,4 +1,6 @@
 /* Utility Classes */
+@use 'src/styles/variables' as *;
+@use "src/styles/mixins" as *;
 
 .grid {
   display: grid;

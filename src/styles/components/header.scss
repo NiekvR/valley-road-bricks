@@ -1,6 +1,8 @@
 /* Header & Navigation Styles */
+@use 'src/styles/variables' as *;
+@use "src/styles/mixins" as *;
+
 header {
-  padding: $spacing-lg $spacing-xl;
   box-shadow: $shadow-md;
   position: sticky;
   top: 0;
@@ -9,6 +11,13 @@ header {
   .top-header {
     background-color: $secondary-dark;
     color: $bg-white;
+    @include flex-center;
+    line-height: 2;
+
+    span {
+      margin-left: $spacing-md;
+      margin-right: $spacing-md;
+    }
   }
 
   .header-container {
@@ -20,7 +29,7 @@ header {
 
   .logo {
     img {
-      height: 50px;
+      height: 75px;
       width: auto;
     }
   }
@@ -41,7 +50,7 @@ header {
         position: relative;
 
         a {
-          color: $bg-white;
+          color: $secondary-dark;
           font-weight: $font-weight-medium;
           padding: $spacing-sm $spacing-md;
           border-radius: $radius-md;
@@ -55,79 +64,36 @@ header {
         }
       }
     }
+
   }
 
-  .header-actions {
-    display: flex;
-    gap: $spacing-lg;
-    align-items: center;
+  //@media (max-width: $breakpoint-lg) {
+  //  padding: $spacing-md $spacing-lg;
+  //
+  //  nav {
+  //    gap: $spacing-lg;
+  //
+  //    ul {
+  //      gap: $spacing-lg;
+  //    }
+  //  }
+  //}
 
-    .search-icon,
-    .account-icon {
-      @include button-reset;
-      color: $bg-white;
-      font-size: $font-size-lg;
-      transition: all $transition-base;
-
-      &:hover {
-        color: $primary-green-light;
-      }
-    }
-
-    .cart-icon {
-      position: relative;
-      @include button-reset;
-      color: $bg-white;
-      font-size: $font-size-lg;
-      transition: all $transition-base;
-
-      &:hover {
-        color: $primary-green-light;
-      }
-
-      .cart-badge {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        background-color: $primary-green;
-        color: $bg-white;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        @include flex-center;
-        font-size: $font-size-sm;
-        font-weight: $font-weight-bold;
-      }
-    }
-  }
-
-  @media (max-width: $breakpoint-lg) {
-    padding: $spacing-md $spacing-lg;
-
-    nav {
-      gap: $spacing-lg;
-
-      ul {
-        gap: $spacing-lg;
-      }
-    }
-  }
-
-  @media (max-width: $breakpoint-md) {
-    .header-container {
-      flex-wrap: wrap;
-      gap: $spacing-md;
-    }
-
-    nav {
-      order: 3;
-      flex-basis: 100%;
-      justify-content: flex-start;
-
-      ul {
-        flex-wrap: wrap;
-        gap: $spacing-md;
-      }
-    }
-  }
+  //@media (max-width: $breakpoint-md) {
+  //  .header-container {
+  //    flex-wrap: wrap;
+  //    gap: $spacing-md;
+  //  }
+  //
+  //  nav {
+  //    order: 3;
+  //    flex-basis: 100%;
+  //    justify-content: flex-start;
+  //
+  //    ul {
+  //      flex-wrap: wrap;
+  //      gap: $spacing-md;
+  //    }
+  //  }
+  //}
 }

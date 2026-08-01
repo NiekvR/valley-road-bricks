@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 
 import { Product } from '../../models/product.model';
 import { CatalogueService } from '../../services/catalogue.service';
+import {ProductComponent} from "../product/product.component";
 
 @Component({
     selector: 'app-product-list',
-    imports: [],
+    imports: [
+        ProductComponent
+    ],
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.scss']
 })

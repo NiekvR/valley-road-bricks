@@ -1,5 +1,9 @@
 /* Product Card Styles */
+@use 'src/styles/variables' as *;
+@use "src/styles/mixins" as *;
+
 .products-section {
+  margin: $spacing-xl;
   margin-bottom: $spacing-3xl;
 
   .section-header {

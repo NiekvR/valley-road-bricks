@@ -1,34 +1,18 @@
 import { Component, Input } from '@angular/core';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {faCircleCheck} from "@fortawesome/free-regular-svg-icons";
+import {faLeaf, faHouseChimneyCrack} from "@fortawesome/free-solid-svg-icons";
+import {NavbarComponent} from "../../shared/navbar/navbar.component";
 
 
 @Component({
     selector: 'app-header',
-    imports: [],
+    imports: [FontAwesomeModule, NavbarComponent],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  @Input() cartCount: number = 0;
-
-  menuItems = [
-    { label: 'Home', link: '/' },
-    { label: 'Catalogue', link: '/products' },
-    { label: 'Nieuwe sets', link: '/new' },
-    { label: 'Hoe werkt huren?', link: '/how-it-works' },
-    { label: 'Over ons', link: '/about' },
-    { label: 'FAQ', link: '/faq' },
-    { label: 'Contact', link: '/contact' }
-  ];
-
-  onSearch(): void {
-    console.log('Search clicked');
-  }
-
-  onAccount(): void {
-    console.log('Account clicked');
-  }
-
-  onCart(): void {
-    console.log('Cart clicked');
-  }
+    faCircleCheck = faCircleCheck;
+    faLeaf = faLeaf;
+    faHouseChimneyCrack = faHouseChimneyCrack;
 }

@@ -1,3 +1,229 @@
-@import 'src/styles/variables';
-@import 'src/styles/mixins';
-@import 'src/styles/components/hero';
+@use 'src/styles/variables' as *;
+@use "src/styles/mixins" as *;
+@use 'src/styles/components/hero';
+
+:host {
+  .hero-content-mobile {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: none;
+    height: 40dvh;
+
+    .divider {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      display: flex;
+    }
+  }
+  .hero {
+    background: linear-gradient(135deg, rgba($bg-white, 1.0) 0%, rgba($bg-white, 1.0) 40%, rgba($bg-white, 0.0) 60%),
+    url('src/assets/img/VRB - Hogwarts castle.png') center/cover;
+    background-attachment: fixed;
+    color: $bg-white;
+    padding: $spacing-3xl $spacing-xl;
+    display: flex;
+    align-items: center;
+    gap: $spacing-3xl;
+    min-height: 500px;
+    margin-bottom: $spacing-3xl;
+
+    @media (max-width: $breakpoint-md) {
+      background: $bg-white;
+      padding: 0;
+
+      .hero-content {
+        padding-top: $spacing-xl;
+      }
+    }
+
+    .hero-content {
+      flex: 1;
+      z-index: 1;
+      padding: $spacing-xl;
+
+      h1 {
+        font-size: $font-size-3xl;
+        color: $secondary-dark;
+        margin-bottom: $spacing-lg;
+        line-height: 1.2;
+      }
+
+      .hero-subtitle {
+        font-size: $font-size-xl;
+        color: $primary-green-light;
+        margin-bottom: $spacing-lg;
+        font-weight: $font-weight-semibold;
+      }
+
+      p {
+        color: rgba($secondary-dark, 0.9);
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-2xl;
+        line-height: 1.8;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: $spacing-lg;
+        flex-wrap: wrap;
+
+        .btn-primary {
+          @include button-primary;
+          font-size: $font-size-base;
+          padding: $spacing-sm $spacing-xl;
+        }
+
+        .btn-secondary {
+          @include button-reset;
+          border: 2px solid $primary-green;
+          color: $primary-green;
+          padding: $spacing-sm $spacing-xl;
+          border-radius: $radius-md;
+          font-weight: $font-weight-semibold;
+          transition: all $transition-base;
+
+          &:hover {
+            background-color: rgba($primary-green, 0.1);
+          }
+        }
+      }
+
+      .hero-reviews {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        margin-top: $spacing-2xl;
+
+        .review-avatars {
+          display: flex;
+          margin-right: $spacing-md;
+
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: -12px;
+            border: 3px solid $bg-white;
+
+            &:first-child {
+              margin-left: 0;
+            }
+          }
+        }
+
+        .review-info {
+          .stars {
+            color: $warning-orange;
+            font-size: $font-size-base;
+            margin-bottom: 2px;
+          }
+
+          .review-count {
+            font-size: $font-size-sm;
+            color: rgba($bg-white, 0.8);
+          }
+        }
+      }
+    }
+
+    .hero-image {
+      flex: 1;
+      @include flex-center;
+      z-index: 1;
+
+      img {
+        max-width: 100%;
+        height: auto;
+        filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+      }
+    }
+
+    @media (max-width: $breakpoint-lg) {
+      flex-direction: column;
+      min-height: auto;
+
+      .hero-content {
+        h1 {
+          font-size: $font-size-2xl;
+        }
+
+        p {
+          font-size: $font-size-base;
+        }
+      }
+    }
+  }
+
+  /* Info Bars */
+  .info-bars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $spacing-xl;
+    margin-bottom: $spacing-3xl;
+    margin-top: -$spacing-2xl;
+    margin-left: $spacing-xl;
+    margin-right: $spacing-xl;
+    position: relative;
+    z-index: 10;
+
+    .info-bar {
+      background: $bg-white;
+      padding: $spacing-xl $spacing-lg;
+      border-radius: $radius-lg;
+      box-shadow: $shadow-md;
+      display: flex;
+      align-items: center;
+      gap: $spacing-lg;
+      text-align: center;
+      transition: all $transition-base;
+
+      &:hover {
+        box-shadow: $shadow-lg;
+      }
+
+      .info-icon {
+        font-size: $font-size-2xl;
+        color: $primary-green;
+        flex-shrink: 0;
+        width: 60px;
+        height: 60px;
+        @include flex-center;
+        background-color: rgba($primary-green, 0.1);
+        border-radius: $radius-lg;
+      }
+
+      .info-content {
+        flex: 1;
+        text-align: left;
+
+        .info-title {
+          font-weight: $font-weight-semibold;
+          color: $text-dark;
+          margin-bottom: 4px;
+        }
+
+        .info-text {
+          font-size: $font-size-sm;
+          color: $text-gray;
+        }
+      }
+    }
+
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-lg;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+      gap: $spacing-md;
+    }
+  }
+
+}
