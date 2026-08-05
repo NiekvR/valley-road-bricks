@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, map, Observable} from 'rxjs';
 import { Product, FilterOptions } from '../models/product.model';
 
 @Injectable({
@@ -29,17 +29,23 @@ export class CatalogueService {
       inStock: true,
         legoId: 10284
     },
-    {
-      id: 3,
-      name: 'Dinosaurusfossielen: Tyrannosaurus rex',
-      image: '🚙',
-      price: 15.00,
-      pieces: 2651,
-      minRentTime: 2,
-      category: 'Jurassic World™',
-      inStock: true,
-        legoId: 76968
-    },
+      {
+          id: 3,
+          name: 'Dinosaurusfossielen: Tyrannosaurus rex',
+          image: '🚙',
+          images: [
+              'assets/img/products/T-Rex/T-Rex-1.webp',
+              'assets/img/products/T-Rex/T-Rex-2.webp',
+              'assets/img/products/T-Rex/T-Rex-3.webp'
+          ],
+          price: 15.00,
+          pieces: 2651,
+          minRentTime: 2,
+          category: 'Jurassic World™',
+          inStock: true,
+          legoId: 76968,
+          starred: true,
+      },
     {
       id: 4,
       name: 'De aarde en de maan in beweging',
@@ -73,6 +79,26 @@ export class CatalogueService {
       inStock: true,
         legoId: 71043
     },
+      {
+          id: 6,
+          name: 'LEGO® Harry Potter Kasteel Zweinstein™',
+          image: '🏛️',
+          images: [
+              'assets/img/products/Zweinstein/Zweinsteinkasteel-1.jpg',
+              'assets/img/products/Zweinstein/Zweinsteinkasteel-2.jpg',
+              'assets/img/products/Zweinstein/Zweinsteinkasteel-3.jpg',
+              'assets/img/products/Zweinstein/Zweinsteinkasteel-4.jpg',
+              'assets/img/products/Zweinstein/Zweinsteinkasteel-5.jpg',
+              'assets/img/products/Zweinstein/Zweinsteinkasteel-6.jpg'
+          ],
+          price: 20.00,
+          pieces: 6020,
+          minRentTime: 3,
+          category: 'Harry Potter™',
+          inStock: true,
+          legoId: 71043,
+          starred: true,
+      },
     {
       id: 7,
       name: 'LEGO® Natuurhistorisch museum',
@@ -84,28 +110,41 @@ export class CatalogueService {
       inStock: true,
         legoId: 10326
     },
-    {
-      id: 8,
-      name: 'LEGO® De Lantaarnstad',
-      image: '🏗️',
-      price: 10,
-      pieces: 2187,
-      minRentTime: 2,
-      category: 'Monkie Kid™',
-      inStock: true,
-        legoId: 80036
-    },
-    {
-      id: 9,
-      name: 'Robuuste sleepwagen',
-      image: '🕐',
-      price: 10,
-      pieces: 2017,
-      minRentTime: 2,
-      category: 'Technic',
-      inStock: true,
-        legoId: 42128
-    }
+      {
+          id: 8,
+          name: 'LEGO® De Lantaarnstad',
+          image: 'assets/img/products/Lantaarnstad/Lantaarnstad-1.webp',
+          images: [
+              'assets/img/products/Lantaarnstad/Lantaarnstad-1.webp',
+              'assets/img/products/Lantaarnstad/Lantaarnstad-2.webp',
+              'assets/img/products/Lantaarnstad/Lantaarnstad-3.webp'
+          ],
+          price: 10,
+          pieces: 2187,
+          minRentTime: 2,
+          category: 'Monkie Kid™',
+          inStock: true,
+          legoId: 80036,
+          starred: true,
+      },
+      {
+          id: 9,
+          name: 'Robuuste sleepwagen',
+          image: '🕐',
+          images: [
+              'assets/img/products/Sleepwagen/Robuuste-sleepwagen-1.jpg',
+              'assets/img/products/Sleepwagen/Robuuste-sleepwagen-2.jpg',
+              'assets/img/products/Sleepwagen/Robuuste-sleepwagen-3.jpg',
+              'assets/img/products/Sleepwagen/Robuuste-sleepwagen-4.webp'
+          ],
+          price: 10,
+          pieces: 2017,
+          minRentTime: 2,
+          category: 'Technic',
+          inStock: true,
+          legoId: 42128,
+          starred: true,
+      }
   ];
 
   private filteredProductsSubject = new BehaviorSubject<Product[]>(this.products);
@@ -132,6 +171,10 @@ export class CatalogueService {
   getProducts(): Observable<Product[]> {
     return this.filteredProducts$;
   }
+
+    getStarredProducts(): Observable<Product[]> {
+        return this.filteredProducts$.pipe(map(products => products.filter(product => product.starred)));
+    }
 
   getFilterOptions(): Observable<FilterOptions> {
     return this.filterOptions$;

@@ -12,6 +12,7 @@ export interface Product {
   reviews?: number;
   inStock: boolean;
   legoId: number;
+  starred?: boolean;
 }
 
 export interface FilterOptions {
