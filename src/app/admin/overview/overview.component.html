@@ -1,0 +1,623 @@
+<div class="page">
+
+  <!-- Header -->
+
+  <header class="page-header">
+
+    <div>
+
+      <div class="breadcrumb">
+        Beheer <span>/</span> Verhuur
+      </div>
+
+      <h1>LEGO sets</h1>
+
+      <p>
+        Bekijk je collectie en beheer welke sets verhuurd zijn.
+      </p>
+
+    </div>
+
+    <button
+        type="button"
+        class="btn btn-primary"
+        [routerLink]="['../','new-form']"
+    >
+      Nieuwe set aanmaken
+    </button>
+
+  </header>
+
+
+  <main class="content">
+
+    <!-- Statistics -->
+
+    <section class="statistics">
+
+      <div class="stat-card">
+
+        <span class="stat-label">
+          Totaal aantal sets
+        </span>
+
+        <strong>
+          {{ products.length }}
+        </strong>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <span class="stat-label">
+          Beschikbaar
+        </span>
+
+        <strong class="green">
+          {{
+            products.length -
+            rentals.filter(rental => rental.status === 'active').length
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <span class="stat-label">
+          Verhuurd
+        </span>
+
+        <strong class="orange">
+          {{
+            rentals.filter(
+              r => r.status === 'active'
+              ).length
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <span class="stat-label">
+          Uitgelicht
+        </span>
+
+        <strong>
+          {{
+            products.filter(
+              set => set.starred
+              ).length
+          }}
+        </strong>
+
+      </div>
+
+    </section>
+
+
+    <!-- Table card -->
+
+    <section class="card">
+
+      <!-- Toolbar -->
+
+      <div class="toolbar">
+
+        <div class="search">
+
+          <span class="search-icon">
+            🔍
+          </span>
+
+          <input
+              type="text"
+              [(ngModel)]="search"
+              (ngModelChange)="applyFilters()"
+              placeholder="Zoek op naam of setnummer..."
+          />
+
+        </div>
+
+
+        <select
+            [(ngModel)]="selectedCategory"
+            (ngModelChange)="applyFilters()"
+        >
+
+          <option value="">
+            Alle categorieën
+          </option>
+
+          @for (
+            category of categories;
+            track category
+              ) {
+
+            <option [value]="category">
+              {{ category }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <!-- Loading -->
+
+      @if (loading) {
+
+        <div class="loading">
+
+          <div class="spinner"></div>
+
+          <span>
+            Sets laden...
+          </span>
+
+        </div>
+
+      }
+
+
+      <!-- Empty -->
+
+      @else if (filteredProducts.length === 0) {
+
+        <div class="empty">
+
+          <div class="empty-icon">
+            🧱
+          </div>
+
+          <h3>
+            Geen sets gevonden
+          </h3>
+
+          <p>
+            Er zijn geen sets die voldoen aan je zoekopdracht.
+          </p>
+
+        </div>
+
+      }
+
+
+      <!-- Table -->
+
+      @else {
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+
+            <tr>
+              <th>
+                ID
+              </th>
+
+              <th>
+                Set
+              </th>
+
+              <th>
+                Categorie
+              </th>
+
+              <th>
+                Onderdelen
+              </th>
+
+              <th>
+                Prijs
+              </th>
+
+              <th>
+                Status
+              </th>
+
+              <th>
+                Verhuurd tot
+              </th>
+
+              <th>
+                Actie
+              </th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              @for (
+                set of filteredProducts;
+                track set.id
+                  ) {
+
+                <tr>
+
+                  <!-- Product -->
+                  <td>
+                    <div class="">
+                      {{ set.localId }}
+                    </div>
+                  </td>
+
+                  <td>
+
+                    <div class="product">
+                      <div class="product-image">
+
+                        @if (set.image) {
+
+                          <img
+                              [src]="set.image"
+                              [alt]="set.name"
+                          />
+
+                        } @else {
+
+                          <span>
+                            🧱
+                          </span>
+
+                        }
+
+                      </div>
+
+
+                      <div class="product-info">
+
+                        <strong>
+                          <a [routerLink]="['../../','product',set.link]">{{ set.name }}</a>
+                        </strong>
+
+                        <span>
+                          LEGO #{{ set.legoId }}
+                        </span>
+
+                      </div>
+
+                      @if (set.starred) {
+
+                        <span class="star">
+                          ★
+                        </span>
+
+                      }
+
+                    </div>
+
+                  </td>
+
+
+                  <!-- Category -->
+
+                  <td>
+
+                    <span class="category">
+                      {{ set.category }}
+                    </span>
+
+                  </td>
+
+
+                  <!-- Pieces -->
+
+                  <td>
+
+                    <span class="pieces">
+                      {{ set.pieces | number }}
+                    </span>
+
+                  </td>
+
+
+                  <!-- Price -->
+
+                  <td>
+
+                    <strong class="price">
+                      €{{ set.price | number:'1.2-2' }}
+                    </strong>
+
+                  </td>
+
+
+                  <!-- Status -->
+
+                  <td>
+
+                    @if (
+                      isRented(set.id)
+                        ) {
+
+                      <span class="status rented">
+                        <i></i>
+                        Verhuurd
+                      </span>
+
+                    } @else if (
+                      !set.inStock
+                        ) {
+
+                      <span class="status unavailable">
+                        <i></i>
+                        Niet beschikbaar
+                      </span>
+
+                    } @else {
+
+                      <span class="status available">
+                        <i></i>
+                        Beschikbaar
+                      </span>
+
+                    }
+
+                  </td>
+
+
+                  <!-- Rental date -->
+
+                  <td>
+
+                    @if (
+                      getRentalForSet(set.id);
+                      as rental
+                        ) {
+
+                      <div class="rental-date">
+
+                        <strong>
+                          {{
+                            formatDisplayDate(
+                              rental.endDate
+                            )
+                          }}
+                        </strong>
+
+                        <small>
+                          {{ rental.customerName }}
+                        </small>
+
+                      </div>
+
+                    } @else {
+
+                      <span class="no-rental">
+                        —
+                      </span>
+
+                    }
+
+                  </td>
+
+
+                  <!-- Action -->
+
+                  <td>
+                    <button
+                      type="button"
+                      class="rent-button"
+                      [routerLink]="['../','products', set.id]">
+                      Pas aan
+                    </button>
+<!--                    @if (-->
+<!--                      !isRented(set.id) &&-->
+<!--                      set.inStock-->
+<!--                        ) {-->
+
+<!--                      <button-->
+<!--                          type="button"-->
+<!--                          class="rent-button"-->
+<!--                          (click)="openRentalModal(set)"-->
+<!--                      >-->
+<!--                        Verhuur-->
+<!--                      </button>-->
+
+<!--                    } @else {-->
+
+<!--                      <button-->
+<!--                          type="button"-->
+<!--                          class="rent-button disabled"-->
+<!--                          disabled-->
+<!--                      >-->
+<!--                        Niet beschikbaar-->
+<!--                      </button>-->
+
+<!--                    }-->
+
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+    </section>
+
+  </main>
+
+
+  <!-- Rental Modal -->
+
+  @if (
+    showRentalModal &&
+    selectedProduct
+      ) {
+
+    <div
+        class="modal-backdrop"
+        (click)="closeRentalModal()"
+    >
+
+      <div
+          class="modal"
+          (click)="$event.stopPropagation()"
+      >
+
+        <button
+            type="button"
+            class="modal-close"
+            (click)="closeRentalModal()"
+        >
+          ×
+        </button>
+
+
+        <div class="modal-header">
+
+          <div class="modal-product-image">
+
+            @if (selectedProduct.image) {
+
+              <img
+                  [src]="selectedProduct.image"
+                  [alt]="selectedProduct.name"
+              />
+
+            } @else {
+
+              🧱
+
+            }
+
+          </div>
+
+
+          <div>
+
+            <span>
+              LEGO #{{ selectedProduct.legoId }}
+            </span>
+
+            <h2>
+              {{ selectedProduct.name }}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="modal-body">
+
+          <div class="form-group">
+
+            <label>
+              Naam huurder
+            </label>
+
+            <input
+                type="text"
+                [(ngModel)]="rental.customerName"
+                placeholder="Bijvoorbeeld: Jan Jansen"
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Verhuur tot
+            </label>
+
+            <input
+                type="date"
+                [(ngModel)]="rental.endDate"
+            />
+
+            <small>
+              Minimale huurperiode:
+              {{ selectedProduct.minRentTime }} dagen
+            </small>
+
+          </div>
+
+
+          <div class="rental-summary">
+
+            <div>
+
+              <span>
+                Huurprijs
+              </span>
+
+              <strong>
+                €{{ selectedProduct.price | number:'1.2-2' }}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Terugbrengen op
+              </span>
+
+              <strong>
+                {{
+                  formatDisplayDate(
+                    rental.endDate
+                  )
+                }}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button
+              type="button"
+              class="btn-secondary"
+              (click)="closeRentalModal()"
+          >
+            Annuleren
+          </button>
+
+          <button
+              type="button"
+              class="btn-primary"
+              [disabled]="
+              !rental.customerName ||
+              !rental.endDate
+            "
+              (click)="createRental()"
+          >
+            Verhuur bevestigen
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

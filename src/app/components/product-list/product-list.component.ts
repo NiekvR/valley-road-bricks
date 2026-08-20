@@ -22,6 +22,7 @@ export class ProductListComponent implements OnInit {
     this.catalogueService.getProducts().subscribe(products => {
       this.products = products;
       this.filteredCount = products.length;
+      console.log(this.products);
     });
   }
 

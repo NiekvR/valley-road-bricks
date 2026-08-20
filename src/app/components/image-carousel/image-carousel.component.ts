@@ -12,6 +12,7 @@ export class ImageCarouselComponent {
 
     @Input({ required: true })
     images: string[] = [];
+    @Input() dots = true;
 
     protected currentIndex = signal(0);
 

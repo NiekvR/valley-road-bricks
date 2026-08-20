@@ -80,17 +80,14 @@
         }
 
         .btn-secondary {
-          @include button-reset;
+          @include button-secondary;
           border: 2px solid $primary-green;
           color: $primary-green;
           padding: $spacing-sm $spacing-xl;
           border-radius: $radius-md;
           font-weight: $font-weight-semibold;
           transition: all $transition-base;
-
-          &:hover {
-            background-color: rgba($primary-green, 0.1);
-          }
+          background-color: rgba($bg-white, 0.6);
         }
       }
 
@@ -163,7 +160,7 @@
   /* Info Bars */
   .info-bars {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: $spacing-xl;
     margin-bottom: $spacing-3xl;
     margin-top: -$spacing-2xl;

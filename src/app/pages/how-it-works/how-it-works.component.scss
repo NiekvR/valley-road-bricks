@@ -16,7 +16,7 @@
 
 .page-header {
   text-align: center;
-  margin-bottom: $spacing-3xl;
+  margin-bottom: $spacing-xl;
 
   h1 {
     margin-bottom: $spacing-md;
@@ -24,15 +24,13 @@
 
   p {
     font-size: $font-size-lg;
-    color: $text-gray;
+    color: $primary-green;
   }
 }
 
 .content-section {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: $spacing-xl;
-  margin-bottom: $spacing-3xl;
+  display: flex;
+  flex-direction: column;
 
   @media (max-width: $breakpoint-lg) {
     grid-template-columns: repeat(2, 1fr);
@@ -45,11 +43,11 @@
 
 .step-card {
   background: $bg-white;
-  padding: $spacing-xl;
   border-radius: $radius-lg;
   box-shadow: $shadow-md;
   text-align: center;
   transition: all $transition-base;
+  margin-bottom: $spacing-md;
 
   &:hover {
     box-shadow: $shadow-lg;

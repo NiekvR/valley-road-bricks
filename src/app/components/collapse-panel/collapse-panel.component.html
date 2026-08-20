@@ -1,0 +1,25 @@
+<div class="collapse-panel" [class.open]="isOpen()">
+  <!-- Header -->
+  <button
+      type="button"
+      class="panel-header"
+      (click)="toggle()"
+      [attr.aria-expanded]="isOpen()"
+  >
+    <div class="header-left">
+      @if (icon) {
+        <span class="icon">{{ icon }}</span>
+      }
+      <span class="title">{{ title }}</span>
+    </div>
+
+    <span class="chevron">▼</span>
+  </button>
+
+  <!-- Content -->
+  <div class="panel-content">
+    <div class="content-inner">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

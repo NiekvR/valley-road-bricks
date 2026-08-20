@@ -13,12 +13,16 @@ export interface Product {
   inStock: boolean;
   legoId: number;
   starred?: boolean;
+  nearlyInStock?: boolean;
+  link?: string;
+  description?: string;
+  localId?: number;
 }
 
 export interface FilterOptions {
   categories: string[];
-  priceRange: [number, number];
+  prices: number[];
   piecesRange: [number, number];
   buildTimeRange: [number, number];
-  sortBy: 'price-asc' | 'price-desc' | 'popularity' | 'newest';
+  sortBy: 'a-z' | 'z-a' | 'price-asc' | 'price-desc' | 'newest';
 }

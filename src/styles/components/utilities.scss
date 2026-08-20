@@ -42,6 +42,10 @@
 .flex {
   display: flex;
 
+  &.flex-column {
+    flex-direction: column;
+  }
+
   &.flex-center {
     @include flex-center;
   }
@@ -180,4 +184,8 @@
   @media (max-width: $breakpoint-sm) {
     padding: $spacing-md;
   }
+}
+
+.uppercase {
+  text-transform: uppercase;
 }

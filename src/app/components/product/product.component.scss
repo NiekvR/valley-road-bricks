@@ -27,6 +27,17 @@
         transform: scale(1.05);
       }
 
+      .badge {
+        position: absolute;
+        top: 15px;
+        right: 0;
+        background-color: $secondary-dark;
+        z-index: 100;
+        color: $bg-white;
+        padding: $spacing-sm;
+        border-radius: $radius-md 0 0 $radius-md;
+      }
+
       .wishlist-btn {
         @include button-reset;
         position: absolute;
@@ -67,6 +78,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      cursor: pointer;
 
       .product-category {
         font-size: $font-size-sm;

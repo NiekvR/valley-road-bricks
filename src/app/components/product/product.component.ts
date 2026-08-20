@@ -2,12 +2,13 @@ import {Component, Input} from '@angular/core';
 import {Product} from "../../models/product.model";
 import {NgOptimizedImage} from "@angular/common";
 import {ImageCarouselComponent} from "../image-carousel/image-carousel.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-product',
     imports: [
-        NgOptimizedImage,
-        ImageCarouselComponent
+        ImageCarouselComponent,
+        RouterLink
     ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',

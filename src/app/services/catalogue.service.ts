@@ -1,161 +1,174 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {BehaviorSubject, map, Observable} from 'rxjs';
 import { Product, FilterOptions } from '../models/product.model';
+import {ProductService} from "./product.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CatalogueService {
-  private products: Product[] = [
-    {
-      id: 1,
-      name: 'LEGO® The Lord of the Rings: Minas Tirith™',
-      image: '🚢',
-      price: 20.00,
-      pieces: 8278,
-      minRentTime: 3,
-      category: 'Icons',
-      inStock: true,
-        legoId: 11377
-    },
-    {
-      id: 2,
-      name: 'LEGO® Creator Camp Nou',
-      image: '✈️',
-      price: 20.00,
-      pieces: 5509,
-      minRentTime: 2,
-      category: 'Creator',
-      inStock: true,
-        legoId: 10284
-    },
-      {
-          id: 3,
-          name: 'Dinosaurusfossielen: Tyrannosaurus rex',
-          image: '🚙',
-          images: [
-              'assets/img/products/T-Rex/T-Rex-1.webp',
-              'assets/img/products/T-Rex/T-Rex-2.webp',
-              'assets/img/products/T-Rex/T-Rex-3.webp'
-          ],
-          price: 15.00,
-          pieces: 2651,
-          minRentTime: 2,
-          category: 'Jurassic World™',
-          inStock: true,
-          legoId: 76968,
-          starred: true,
-      },
-    {
-      id: 4,
-      name: 'De aarde en de maan in beweging',
-      image: '🤖',
-      price: 10,
-      pieces: 526,
-      minRentTime: 1,
-      category: 'Technic',
-      inStock: true,
-        legoId: 42179
-    },
-    {
-      id: 5,
-      name: 'PAC-MAN arcade',
-      image: '🏎️',
-      price: 15.00,
-      pieces: 2651,
-      minRentTime: 2,
-      category: 'Technic',
-      inStock: true,
-        legoId: 10323
-    },
-    {
-      id: 6,
-      name: 'LEGO® Harry Potter Kasteel Zweinstein™',
-      image: '🏛️',
-      price: 20.00,
-      pieces: 6020,
-      minRentTime: 3,
-      category: 'Harry Potter™',
-      inStock: true,
-        legoId: 71043
-    },
-      {
-          id: 6,
-          name: 'LEGO® Harry Potter Kasteel Zweinstein™',
-          image: '🏛️',
-          images: [
-              'assets/img/products/Zweinstein/Zweinsteinkasteel-1.jpg',
-              'assets/img/products/Zweinstein/Zweinsteinkasteel-2.jpg',
-              'assets/img/products/Zweinstein/Zweinsteinkasteel-3.jpg',
-              'assets/img/products/Zweinstein/Zweinsteinkasteel-4.jpg',
-              'assets/img/products/Zweinstein/Zweinsteinkasteel-5.jpg',
-              'assets/img/products/Zweinstein/Zweinsteinkasteel-6.jpg'
-          ],
-          price: 20.00,
-          pieces: 6020,
-          minRentTime: 3,
-          category: 'Harry Potter™',
-          inStock: true,
-          legoId: 71043,
-          starred: true,
-      },
-    {
-      id: 7,
-      name: 'LEGO® Natuurhistorisch museum',
-      image: '🚀',
-      price: 15.00,
-      pieces: 4014,
-      minRentTime: 2,
-      category: 'Icons',
-      inStock: true,
-        legoId: 10326
-    },
-      {
-          id: 8,
-          name: 'LEGO® De Lantaarnstad',
-          image: 'assets/img/products/Lantaarnstad/Lantaarnstad-1.webp',
-          images: [
-              'assets/img/products/Lantaarnstad/Lantaarnstad-1.webp',
-              'assets/img/products/Lantaarnstad/Lantaarnstad-2.webp',
-              'assets/img/products/Lantaarnstad/Lantaarnstad-3.webp'
-          ],
-          price: 10,
-          pieces: 2187,
-          minRentTime: 2,
-          category: 'Monkie Kid™',
-          inStock: true,
-          legoId: 80036,
-          starred: true,
-      },
-      {
-          id: 9,
-          name: 'Robuuste sleepwagen',
-          image: '🕐',
-          images: [
-              'assets/img/products/Sleepwagen/Robuuste-sleepwagen-1.jpg',
-              'assets/img/products/Sleepwagen/Robuuste-sleepwagen-2.jpg',
-              'assets/img/products/Sleepwagen/Robuuste-sleepwagen-3.jpg',
-              'assets/img/products/Sleepwagen/Robuuste-sleepwagen-4.webp'
-          ],
-          price: 10,
-          pieces: 2017,
-          minRentTime: 2,
-          category: 'Technic',
-          inStock: true,
-          legoId: 42128,
-          starred: true,
-      }
-  ];
+    private productService = inject(ProductService);
+
+    private products: Product[] = [];
+  // private products: Product[] = [
+  //   {
+  //     id: 1,
+  //     name: 'The Lord of the Rings: Minas Tirith™',
+  //     image: '🚢',
+  //     price: 20.00,
+  //     pieces: 8278,
+  //     minRentTime: 3,
+  //     category: 'LEGO® Icons',
+  //     inStock: true,
+  //       legoId: 11377,
+  //       link: 'lego-the-lord-of-the-rings-minas-tirith-11377'
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Camp Nou',
+  //     image: '✈️',
+  //     price: 20.00,
+  //     pieces: 5509,
+  //     minRentTime: 2,
+  //     category: 'LEGO® Creator',
+  //     inStock: true,
+  //       legoId: 10284,
+  //       link: 'lego-creator-camp-nou-10284',
+  //   },
+  //     {
+  //         id: 3,
+  //         name: 'Dinosaurusfossielen: Tyrannosaurus rex',
+  //         image: '🚙',
+  //         images: [
+  //             'assets/img/products/T-Rex/T-Rex-1.webp',
+  //             'assets/img/products/T-Rex/T-Rex-2.webp',
+  //             'assets/img/products/T-Rex/T-Rex-3.webp'
+  //         ],
+  //         price: 15.00,
+  //         pieces: 2651,
+  //         minRentTime: 2,
+  //         category: 'LEGO® Jurassic World™',
+  //         inStock: true,
+  //         legoId: 76968,
+  //         starred: true,
+  //         link: 'lego-jurassic-world-dinosaurusfossielen-tyrannosaurus-rex-76968',
+  //         description: 'Ga terug naar de wereld van Jurassic Park met de indrukwekkende LEGO® Jurassic World Dinosaurusfossielen: Tyrannosaurus rex (76968). Deze bijzondere displayset voor volwassenen laat je een imposant T. rex-fossielskelet op schaal 1:12 steen voor steen opbouwen.\n' +
+  //             '\n' +
+  //             'Met 3.145 onderdelen is dit een uitdagend bouwproject vol prachtige details. Het skelet is voorzien van beweegbare gewrichten, waaronder de schedel, kaak, voorpoten en staart, zodat je de T. rex in verschillende houdingen kunt presenteren. Het model is ruim 33 cm hoog en vormt daardoor een echte blikvanger in iedere LEGO- of dinosauruscollectie.\n' +
+  //             '\n' +
+  //             'De set bevat daarnaast de minifiguren van Dr. Ellie Sattler en Dr. Alan Grant uit de originele Jurassic Park-film uit 1993, samen met een informatieplaatje. Op de displaystandaard zijn bovendien verschillende verborgen verwijzingen naar de films verwerkt, waaronder een opvallend ‘barnsteen’-element.\n' +
+  //             '\n' +
+  //             'Liever bouwen zonder de set te kopen? Huur hem! 🦖\n' +
+  //             '\n' +
+  //             'Voor een fractie van de aankoopprijs haal je deze indrukwekkende T. rex tijdelijk in huis. Bouw hem steen voor steen, ontdek alle details en geniet van een uniek LEGO-avontuur. Ben je klaar met bouwen? Dan stuur je de set eenvoudig terug en kan iemand anders ermee aan de slag.\n' +
+  //             '\n' +
+  //             'Zo beleef je steeds nieuwe LEGO-avonturen zonder dat je kast vol hoeft te staan met grote sets. Huur de LEGO Jurassic World T. rex en ontdek hoe leuk bouwen kan zijn!'
+  //     },
+  //   {
+  //     id: 4,
+  //     name: 'De aarde en de maan in beweging',
+  //     image: '🤖',
+  //     price: 10,
+  //     pieces: 526,
+  //     minRentTime: 1,
+  //     category: 'LEGO® Technic',
+  //     inStock: true,
+  //       legoId: 42179,
+  //       link: 'lego-technic-de-aarde-en-de-maan-in-beweging-42179',
+  //   },
+  //   {
+  //     id: 5,
+  //     name: 'PAC-MAN arcade',
+  //     image: '🏎️',
+  //     price: 15.00,
+  //     pieces: 2651,
+  //     minRentTime: 2,
+  //     category: 'LEGO® Technic',
+  //     inStock: true,
+  //       legoId: 10323,
+  //       link: 'lego-technic-pac-man-arcade-10323'
+  //   },
+  //     {
+  //         id: 6,
+  //         name: 'Harry Potter Kasteel Zweinstein™',
+  //         image: '🏛️',
+  //         images: [
+  //             'assets/img/products/Zweinstein/Zweinsteinkasteel-1.jpg',
+  //             'assets/img/products/Zweinstein/Zweinsteinkasteel-2.jpg',
+  //             'assets/img/products/Zweinstein/Zweinsteinkasteel-3.jpg',
+  //             'assets/img/products/Zweinstein/Zweinsteinkasteel-4.jpg',
+  //             'assets/img/products/Zweinstein/Zweinsteinkasteel-5.jpg',
+  //             'assets/img/products/Zweinstein/Zweinsteinkasteel-6.jpg'
+  //         ],
+  //         price: 20.00,
+  //         pieces: 6020,
+  //         minRentTime: 3,
+  //         category: 'LEGO®  Harry Potter™',
+  //         inStock: true,
+  //         legoId: 71043,
+  //         starred: true,
+  //         link: 'lego-harry-potter-kasteel-zweinstein-71043'
+  //     },
+  //   {
+  //     id: 7,
+  //     name: 'Natuurhistorisch museum',
+  //     image: '🚀',
+  //     price: 15.00,
+  //     pieces: 4014,
+  //     minRentTime: 2,
+  //     category: 'LEGO® Icons',
+  //     inStock: true,
+  //       legoId: 10326,
+  //       link: 'lego-icons-natuurhistorisch-museum-10326',
+  //   },
+  //     {
+  //         id: 8,
+  //         name: 'De Lantaarnstad',
+  //         image: 'assets/img/products/Lantaarnstad/Lantaarnstad-1.webp',
+  //         images: [
+  //             'assets/img/products/Lantaarnstad/Lantaarnstad-1.webp',
+  //             'assets/img/products/Lantaarnstad/Lantaarnstad-2.webp',
+  //             'assets/img/products/Lantaarnstad/Lantaarnstad-3.webp'
+  //         ],
+  //         price: 10,
+  //         pieces: 2187,
+  //         minRentTime: 2,
+  //         category: 'LEGO® Monkie Kid™',
+  //         inStock: true,
+  //         legoId: 80036,
+  //         starred: true,
+  //         link: 'lego-monkie-kid-de-lantaarnstad-80036'
+  //     },
+  //     {
+  //         id: 9,
+  //         name: 'Robuuste sleepwagen',
+  //         image: '🕐',
+  //         images: [
+  //             'assets/img/products/Sleepwagen/Robuuste-sleepwagen-1.jpg',
+  //             'assets/img/products/Sleepwagen/Robuuste-sleepwagen-2.jpg',
+  //             'assets/img/products/Sleepwagen/Robuuste-sleepwagen-3.jpg',
+  //             'assets/img/products/Sleepwagen/Robuuste-sleepwagen-4.webp'
+  //         ],
+  //         price: 10,
+  //         pieces: 2017,
+  //         minRentTime: 2,
+  //         category: 'LEGO® Technic',
+  //         inStock: true,
+  //         legoId: 42128,
+  //         starred: true,
+  //         link: 'lego-technic-robuuste-sleepwagen-42128'
+  //     }
+  // ];
 
   private filteredProductsSubject = new BehaviorSubject<Product[]>(this.products);
   filteredProducts$ = this.filteredProductsSubject.asObservable();
 
   private filterOptionsSubject = new BehaviorSubject<FilterOptions>({
     categories: [],
-    priceRange: [0, 100],
+    prices: [],
     piecesRange: [0, 10000],
     buildTimeRange: [0, 25],
-    sortBy: 'popularity'
+    sortBy: 'a-z'
   });
   filterOptions$ = this.filterOptionsSubject.asObservable();
 
@@ -165,7 +178,10 @@ export class CatalogueService {
   categories$ = this.categoriesSubject.asObservable();
 
   constructor() {
-    this.applyFilters();
+      this.productService.getProducts().subscribe(products => {
+          this.products = products;
+          this.applyFilters();
+      });
   }
 
   getProducts(): Observable<Product[]> {
@@ -175,10 +191,6 @@ export class CatalogueService {
     getStarredProducts(): Observable<Product[]> {
         return this.filteredProducts$.pipe(map(products => products.filter(product => product.starred)));
     }
-
-  getFilterOptions(): Observable<FilterOptions> {
-    return this.filterOptions$;
-  }
 
   getCategories(): Observable<string[]> {
     return this.categoriesSubject.asObservable();
@@ -193,10 +205,10 @@ export class CatalogueService {
   resetFilters(): void {
     this.filterOptionsSubject.next({
       categories: [],
-      priceRange: [0, 100],
+      prices: [0, 100],
       piecesRange: [0, 10000],
       buildTimeRange: [0, 25],
-      sortBy: 'popularity'
+      sortBy: 'a-z'
     });
     this.applyFilters();
   }
@@ -211,9 +223,9 @@ export class CatalogueService {
     }
 
     // Filter by price range
-    filtered = filtered.filter(
-      p => p.price >= filters.priceRange[0] && p.price <= filters.priceRange[1]
-    );
+      if (filters.prices.length > 0) {
+          filtered = filtered.filter(p => filters.prices.includes(p.price));
+      }
 
     // Filter by pieces range
     filtered = filtered.filter(
@@ -234,9 +246,12 @@ export class CatalogueService {
         filtered.sort((a, b) => b.price - a.price);
         break;
       case 'newest':
-        filtered.reverse();
+        filtered.sort((a, b) => (b.localId || 1000) - (a.localId || 1000));
         break;
-      case 'popularity':
+    case 'z-a':
+        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0) || (b.reviews || 0) - (a.reviews || 0)).reverse();
+        break;
+      case 'a-z':
       default:
         filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0) || (b.reviews || 0) - (a.reviews || 0));
     }

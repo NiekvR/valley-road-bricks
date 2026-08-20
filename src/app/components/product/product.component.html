@@ -1,5 +1,10 @@
 <div class="product-card">
   <div class="product-image">
+    @if (product.nearlyInStock) {
+      <div class="badge">
+        Binnenkort te huur
+      </div>
+    }
     @if (!product.images) {
       <div style="font-size: 4rem; width: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f5f5f5, #e8e8e8); height: 250px;">
         {{ product.image }}
@@ -7,14 +12,15 @@
     }
     @if (!!product.images) {
       <app-image-carousel
-          [images]="product.images!">
+          [images]="[product.image].concat(product.images!)"
+          [dots]="false">
       </app-image-carousel>
     }
     @if (!product.inStock) {
-      <div class="out-of-stock">Uitverkocht</div>
+      <div class="out-of-stock">Verhuurd</div>
     }
   </div>
-  <div class="product-info">
+  <div class="product-info" [routerLink]="['/product',product.link]">
     <div class="product-category">{{ product.category }}</div>
     <h3 class="product-name">{{ product.name }}</h3>
     <!--            <div class="product-rating">-->
@@ -36,7 +42,7 @@
       </div>
     </div>
     <div class="product-price">
-      <span class="price">€{{ product.price }}</span>
+      <span class="price">€{{ product.price }}</span> per week
       @if (product.originalPrice) {
         <span class="original-price">€{{ product.originalPrice }}</span>
       }
@@ -44,7 +50,7 @@
     <button
         class="btn-add-to-cart"
         (click)="onAddToCart(product)"
-        [disabled]="!product.inStock"
+        [disabled]="!product.inStock || product.nearlyInStock"
     >
       {{ product.inStock ? 'Huur nu →' : 'Uitverkocht' }}
     </button>

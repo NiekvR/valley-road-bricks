@@ -1,0 +1,16 @@
+<section
+    class="image-text"
+    [class.image-left]="imageSide === 'left'"
+    [class.image-right]="imageSide === 'right'"
+>
+  <div class="image-text__image">
+    <img
+        [src]="image"
+        alt=""
+    />
+  </div>
+
+  <div class="image-text__content">
+    <ng-content></ng-content>
+  </div>
+</section>

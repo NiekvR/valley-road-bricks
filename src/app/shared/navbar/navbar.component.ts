@@ -21,10 +21,10 @@ export class NavbarComponent {
 
     readonly links = [
         { label: 'Home', link: '/' },
-        { label: 'Catalogue', link: '/products' },
-        { label: 'Nieuwe sets', link: '/new' },
-        { label: 'Hoe werkt huren?', link: '/how-it-works' },
-        { label: 'Over ons', link: '/about' },
+        { label: 'Sets', link: '/onze-sets' },
+        // { label: 'Nieuwe sets', link: '/new' },
+        { label: 'Hoe werkt huren?', link: '/hoe-het-werkt' },
+        { label: 'Over ons', link: '/over-ons' },
         { label: 'FAQ', link: '/faq' },
         { label: 'Contact', link: '/contact' }
     ];

@@ -1,14 +1,19 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height:  100%;
 }
 
 .carousel {
+  display: flex;
+  flex: 1 1 auto;
   position: relative;
   overflow: hidden;
   border-radius: 16px;
 }
 
 .viewport {
+  display: flex;
 
   img {
     width: 100%;

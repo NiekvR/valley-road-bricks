@@ -9,10 +9,10 @@
     <p>Bouw iconische sets van LEGO® Technic, Icons, Star Wars™ en meer. Professioneel gecontroleerd, altijd compleet en gemakkelijk te retourneren.</p>
 
     <div class="hero-actions">
-      <button class="btn-primary" (click)="onBrowseCollection()">
+      <button class="btn-primary" [routerLink]="['onze-sets']">
         Bekijk de collectie →
       </button>
-      <button class="btn-secondary" (click)="onHowItWorks()">
+      <button class="btn-secondary" [routerLink]="['hoe-het-werkt']">
         Hoe werkt het?
       </button>
     </div>
@@ -27,7 +27,7 @@
     <div class="info-icon"><fa-icon [icon]="faCircleCheck"></fa-icon></div>
     <div class="info-content">
       <div class="info-title">100% compleet</div>
-      <div class="info-text">& gecontroleerd</div>
+      <div class="info-text">en gecontroleerd</div>
     </div>
   </div>
 
@@ -43,7 +43,7 @@
     <div class="info-icon"><fa-icon [icon]="faHouseChimneyCrack"></fa-icon></div>
     <div class="info-content">
       <div class="info-title">Afbreekservice</div>
-      <div class="info-text"></div>
+      <div class="info-text">Kies voor gemak</div>
     </div>
   </div>
 </div>

@@ -1,0 +1,26 @@
+<div class="upload-container">
+  <label class="upload-label">
+    <input
+        type="file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+        [disabled]="isUploading"
+        hidden
+    />
+    <span class="btn">{{ isUploading ? 'Bezig met uploaden...' : change ? 'Verander afbeelding' : 'Kies afbeelding' }}</span>
+  </label>
+
+  <!-- Voortgang -->
+  <div *ngIf="isUploading" class="progress-bar">
+    <div class="progress" [style.width.%]="progress"></div>
+    <span>{{ progress }}%</span>
+  </div>
+
+  <!-- Preview -->
+  <div *ngIf="previewUrl" class="preview">
+    <img [src]="previewUrl" alt="Preview" />
+  </div>
+
+  <!-- Foutmelding -->
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+</div>

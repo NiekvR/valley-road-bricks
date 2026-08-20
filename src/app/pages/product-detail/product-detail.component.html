@@ -1,0 +1,64 @@
+<div class="container">
+  <app-header></app-header>
+  <span class="m-2"><fa-icon [icon]="faChevronLeft"></fa-icon> Terug</span>
+  <main>
+    @if (!!product) {
+      @if (!!product.images) {
+        <app-image-carousel [images]="[product.image].concat(product.images)"></app-image-carousel>
+      }
+      <div class="product-overview flex flex-column">
+        <div class="flex flex-column">
+          <span class="uppercase">{{product.category}}</span>
+          <span>{{product.legoId}}</span>
+          <p class="text-bold">{{product.name}}</p>
+          <span class="text-primary text-bold">€{{product.price}},-</span>
+          <span><fa-icon [icon]="faClock"></fa-icon> {{product.minRentTime}} weken verhuur periode</span>
+          <span><fa-icon [icon]="faHashtag"></fa-icon> {{product.pieces}} stenen</span>
+        </div>
+
+        <button class="btn mt-5">Huur nu</button>
+      </div>
+    }
+    <div class="info-bars">
+      <div class="info-bar">
+        <div class="info-icon"><fa-icon [icon]="faCircleCheck"></fa-icon></div>
+        <div class="info-content">
+          <div class="info-title">100% compleet</div>
+          <div class="info-text">en gecontroleerd</div>
+        </div>
+      </div>
+
+      <div class="info-bar">
+        <div class="info-icon"><fa-icon [icon]="faLeaf"></fa-icon></div>
+        <div class="info-content">
+          <div class="info-title">Duurzaam</div>
+          <div class="info-text">en voordelig</div>
+        </div>
+      </div>
+
+      <div class="info-bar">
+        <div class="info-icon"><fa-icon [icon]="faHouseChimneyCrack"></fa-icon></div>
+        <div class="info-content">
+          <div class="info-title">Afbreekservice</div>
+          <div class="info-text">Kies voor gemak</div>
+        </div>
+      </div>
+    </div>
+    <div class="product-details mb-6">
+      <p class="text-secondary">Omschrijving</p>
+      <span class="text-pre-line">{{product.description}}</span>
+    </div>
+    <div class="in-product">
+      <div>
+        <p class="text-secondary">Wat zit er in de doos?</p>
+        <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Complete LEGO®-sets</p>
+        <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Mini-figs</p>
+        <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Bouwinstructies</p>
+        <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Gesorteerde onderdelen</p>
+        <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Opbergzakjes</p>
+      </div>
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>

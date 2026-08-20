@@ -58,9 +58,15 @@ small {
 }
 
 .text-bold {
+  color: $primary-green;
   font-weight: $font-weight-bold;
 }
 
 .text-semibold {
+  color: $secondary-dark;
   font-weight: $font-weight-semibold;
+}
+
+.text-pre-line {
+  white-space: pre-line;
 }

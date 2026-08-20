@@ -9,9 +9,7 @@
   <div class="viewport">
 
     <img
-        [ngSrc]="currentImage()"
-        width="1200"
-        height="700"
+        [src]="currentImage()"
         alt="Carousel image"
         priority>
 
@@ -24,17 +22,18 @@
   </button>
 
 </div>
+@if (dots) {
+  <div class="dots">
 
-<div class="dots">
+    @for(image of images; track image; let i = $index) {
 
-  @for(image of images; track image; let i = $index) {
+      <button
+          class="dot"
+          [class.active]="i === currentIndex()"
+          (click)="goTo(i)">
+      </button>
 
-    <button
-        class="dot"
-        [class.active]="i === currentIndex()"
-        (click)="goTo(i)">
-    </button>
+    }
 
-  }
-
-</div>
+  </div>
+}

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { CatalogueService } from '../../services/catalogue.service';
 import { FilterOptions } from '../../models/product.model';
+import {ProductService} from "../../services/product.service";
+import {take} from "rxjs";
 
 @Component({
     selector: 'app-filter-sidebar',
@@ -11,18 +13,19 @@ import { FilterOptions } from '../../models/product.model';
     styleUrls: ['./filter-sidebar.component.scss']
 })
 export class FilterSidebarComponent implements OnInit {
+    private catalogueService = inject(CatalogueService);
+    private productService = inject(ProductService);
   categories: string[] = [];
   selectedCategories: string[] = [];
-  priceRange: [number, number] = [0, 100];
+  prices: number[] = [10,15,20];
+  selectedPrices: number[] = [];
   piecesRange: [number, number] = [0, 10000];
-  buildTimeRange: [number, number] = [0, 25];
-  sortBy: 'price-asc' | 'price-desc' | 'popularity' | 'newest' = 'popularity';
-
-  constructor(private catalogueService: CatalogueService) {}
+  buildTimeRange: [number, number] = [0, 4];
+  sortBy: 'a-z' | 'z-a' | 'price-asc' | 'price-desc' | 'newest' = 'a-z';
 
   ngOnInit(): void {
-    this.catalogueService.getCategories().subscribe(categories => {
-      this.categories = categories;
+    this.productService.getProducts().pipe(take(1)).subscribe(products => {
+      this.categories = [... new Set(products.map(product => product.category).filter(category => !!category))];
     });
   }
 
@@ -35,7 +38,12 @@ export class FilterSidebarComponent implements OnInit {
     this.applyFilters();
   }
 
-  onPriceRangeChange(): void {
+  onPriceRangeChange(price: number, event: any): void {
+      if (event.target.checked) {
+          this.selectedPrices.push(price);
+      } else {
+          this.selectedPrices = this.selectedPrices.filter(c => c !== price);
+      }
     this.applyFilters();
   }
 
@@ -53,17 +61,17 @@ export class FilterSidebarComponent implements OnInit {
 
   onResetFilters(): void {
     this.selectedCategories = [];
-    this.priceRange = [0, 100];
+    this.selectedPrices = [];
     this.piecesRange = [0, 10000];
     this.buildTimeRange = [0, 25];
-    this.sortBy = 'popularity';
+    this.sortBy = 'a-z';
     this.catalogueService.resetFilters();
   }
 
   private applyFilters(): void {
     this.catalogueService.updateFilters({
       categories: this.selectedCategories,
-      priceRange: this.priceRange,
+      prices: this.selectedPrices,
       piecesRange: this.piecesRange,
       buildTimeRange: this.buildTimeRange,
       sortBy: this.sortBy

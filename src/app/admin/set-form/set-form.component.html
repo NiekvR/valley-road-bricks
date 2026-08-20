@@ -1,0 +1,440 @@
+<div class="page">
+
+  <!-- Header -->
+  <header class="page-header">
+
+    <div>
+      <div class="breadcrumb">
+        Sets <span>/</span> Nieuwe set
+      </div>
+
+      <h1>Nieuwe LEGO set</h1>
+
+      <p>
+        Voeg een nieuwe set toe aan de verhuurcollectie.
+      </p>
+    </div>
+  </header>
+
+
+  <main class="content">
+
+    <!-- Basic information -->
+    <section class="card">
+
+      <div class="card-header">
+        <div>
+          <h2>Algemene informatie</h2>
+          <p>De basisgegevens van de LEGO set.</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+
+        <div class="form-group full">
+          <label for="name">
+            Naam
+            <span>*</span>
+          </label>
+
+          <input
+              id="name"
+              type="text"
+              [(ngModel)]="product.name"
+              placeholder="Bijvoorbeeld: Dinosaurusfossielen: Tyrannosaurus rex"
+          />
+        </div>
+
+
+        <div class="form-group">
+          <label for="legoId">
+            LEGO setnummer
+            <span>*</span>
+          </label>
+
+          <input
+              id="legoId"
+              type="number"
+              [(ngModel)]="product.legoId"
+              placeholder="76968"
+          />
+        </div>
+
+
+        <div class="form-group">
+          <label for="category">
+            Categorie
+          </label>
+
+          <select
+              id="category"
+              [(ngModel)]="product.category"
+          >
+            <option value="">
+              Selecteer een categorie
+            </option>
+
+            @for (category of categories; track category) {
+              <option [value]="category">
+                {{ category }}
+              </option>
+            }
+          </select>
+        </div>
+
+
+        <div class="form-group">
+          <label for="pieces">
+            Aantal onderdelen
+          </label>
+
+          <input
+              id="pieces"
+              type="number"
+              [(ngModel)]="product.pieces"
+              placeholder="3145"
+          />
+        </div>
+
+
+        <div class="form-group">
+          <label for="price">
+            Huurprijs
+          </label>
+
+          <div class="input-with-prefix">
+            <span>€</span>
+
+            <input
+                id="price"
+                type="number"
+                step="0.01"
+                [(ngModel)]="product.price"
+                placeholder="15.00"
+            />
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="rentTime">
+            Minimale huurperiode
+          </label>
+
+          <div class="input-with-suffix">
+            <input
+                id="rentTime"
+                type="number"
+                min="1"
+                [(ngModel)]="product.minRentTime"
+            />
+
+            <span>dagen</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="localId">
+            VBR ID
+            <span>*</span>
+          </label>
+
+          <input
+              id="localId"
+              type="number"
+              [(ngModel)]="product.localId"
+              placeholder="1"
+          />
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Status -->
+    <section class="card">
+
+      <div class="card-header">
+        <div>
+          <h2>Status</h2>
+          <p>Beheer de beschikbaarheid van deze set.</p>
+        </div>
+      </div>
+
+      <div class="status-grid">
+
+        <label class="toggle-card">
+
+          <div class="toggle-content">
+
+            <strong>Op voorraad</strong>
+
+            <span>
+              Deze set kan momenteel verhuurd worden.
+            </span>
+
+          </div>
+
+          <input
+              type="checkbox"
+              [(ngModel)]="product.inStock"
+          />
+
+          <span class="toggle"></span>
+
+        </label>
+
+
+        <label class="toggle-card">
+
+          <div class="toggle-content">
+
+            <strong>Uitgelichte set</strong>
+
+            <span>
+              Toon deze set als aanbevolen of populaire set.
+            </span>
+
+          </div>
+
+          <input
+              type="checkbox"
+              [(ngModel)]="product.starred"
+          />
+
+          <span class="toggle"></span>
+
+        </label>
+
+        <label class="toggle-card">
+
+          <div class="toggle-content">
+
+            <strong>Bijna te huur</strong>
+
+            <span>
+              Geeft aan dat deze set bijna in de collectie beschikbaar komt
+            </span>
+
+          </div>
+
+          <input
+              type="checkbox"
+              [(ngModel)]="product.nearlyInStock"
+          />
+
+          <span class="toggle"></span>
+
+        </label>
+
+      </div>
+
+    </section>
+
+
+    <!-- Images -->
+    <section class="card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>Afbeeldingen</h2>
+
+          <p>
+            Voeg de afbeeldingen van de productdetailpagina toe.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="image-form">
+
+        <!-- Main image -->
+        <div class="form-group">
+
+          <label for="mainImage">
+            Hoofdafbeelding
+          </label>
+
+          <app-image-upload
+              (imageUrlReady)="onMainImageUploaded($event)"
+              (uploadProgress)="onProgress($event)">
+          </app-image-upload>
+
+          @if (product.image) {
+            <div class="image-preview">
+              <img [src]="product.image" alt="Hoofdafbeelding">
+            </div>
+          }
+
+        </div>
+
+
+        <!-- Gallery -->
+        <div class="gallery">
+
+          <label>
+            Productafbeeldingen
+          </label>
+
+          @for (image of product.images; track $index) {
+            <div class="gallery-row">
+              <div class="image-number">{{ $index + 1 }}</div>
+
+              <input
+                  type="text"
+                  [(ngModel)]="product.images![$index]"
+                  placeholder="URL of upload een nieuwe afbeelding"
+              />
+
+              @if (image) {
+                <img class="thumbnail" [src]="image" alt="Product afbeelding" />
+              }
+              <app-image-upload
+                  (imageUrlReady)="replaceImage($index, $event)"
+                  [change]="true"
+                  class="replace-upload"
+              ></app-image-upload>
+
+              <button
+                  type="button"
+                  class="remove-btn"
+                  (click)="removeImage($index)"
+                  title="Verwijderen"
+              >
+                ×
+              </button>
+            </div>
+          }
+
+          <!-- Nieuwe afbeelding uploaden -->
+          <div class="add-image-row">
+            <app-image-upload
+                (imageUrlReady)="onNewImageUploaded($event)"
+            ></app-image-upload>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SEO / URL -->
+    <section class="card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>URL</h2>
+
+          <p>
+            De URL waarop de productdetailpagina beschikbaar is.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="link">
+          URL slug
+        </label>
+
+        <div class="slug-input">
+
+          <span>/sets/</span>
+
+          <input
+              id="link"
+              type="text"
+              [(ngModel)]="product.link"
+              placeholder="lego-jurassic-world-t-rex-76968"
+          />
+
+        </div>
+
+        <button
+            type="button"
+            class="generate-link"
+            (click)="generateLink()"
+        >
+          Genereer automatisch vanuit naam
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- Description -->
+    <section class="card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>Omschrijving</h2>
+
+          <p>
+            Beschrijf de LEGO set en vertel waarom klanten hem
+            zouden moeten huren.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="description">
+          Productomschrijving
+        </label>
+
+        <textarea
+            id="description"
+            rows="16"
+            [(ngModel)]="product.description"
+            placeholder="Schrijf hier de productomschrijving..."
+        ></textarea>
+
+        <div class="textarea-help">
+          Gebruik een lege regel om een nieuwe alinea te maken.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Preview -->
+<!--    <section class="card preview-card">-->
+<!--      <app-product-detail></app-product-detail>-->
+<!--    </section>-->
+
+  </main>
+
+
+  <!-- Bottom actions -->
+  <footer class="bottom-actions">
+
+    <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="cancel()"
+    >
+      Annuleren
+    </button>
+
+    <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="saving"
+        (click)="save()"
+    >
+      {{ saving ? 'Opslaan...' : 'Set opslaan' }}
+    </button>
+
+  </footer>
+
+</div>

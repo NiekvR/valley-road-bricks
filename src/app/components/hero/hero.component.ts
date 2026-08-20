@@ -3,6 +3,7 @@ import {faCircleCheck} from "@fortawesome/free-regular-svg-icons";
 import {faLeaf, faHouseChimneyCrack} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {NgOptimizedImage} from "@angular/common";
+import {RouterLink} from "@angular/router";
 
 
 interface Review {
@@ -15,7 +16,8 @@ interface Review {
     selector: 'app-hero',
     imports: [
         FaIconComponent,
-        NgOptimizedImage
+        NgOptimizedImage,
+        RouterLink
     ],
     templateUrl: './hero.component.html',
     styleUrls: ['./hero.component.scss']

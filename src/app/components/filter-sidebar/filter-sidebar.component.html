@@ -9,7 +9,8 @@
   <div class="filter-section">
     <h4 class="filter-title">Sorteren</h4>
     <select [(ngModel)]="sortBy" (change)="onSortChange()" class="sort-select">
-      <option value="popularity">Populairste</option>
+      <option value="a-z">A-Z</option>
+      <option value="z-a">Z-A</option>
       <option value="newest">Nieuwste</option>
       <option value="price-asc">Prijs: laag naar hoog</option>
       <option value="price-desc">Prijs: hoog naar laag</option>
@@ -35,43 +36,17 @@
 
   <div class="filter-section">
     <h4 class="filter-title">Prijs</h4>
-    <div class="range-inputs">
-      <input
-        type="number"
-        [(ngModel)]="priceRange[0]"
-        (change)="onPriceRangeChange()"
-        min="0"
-        [max]="priceRange[1]"
-        class="range-input"
-        placeholder="Min"
+    @for (price of prices; track price) {
+      <label class="checkbox-label">
+        <input
+            type="checkbox"
+            [checked]="selectedPrices.includes(price)"
+            (change)="onPriceRangeChange(price, $event)"
+            class="checkbox-input"
         />
-      <span class="range-separator">-</span>
-      <input
-        type="number"
-        [(ngModel)]="priceRange[1]"
-        (change)="onPriceRangeChange()"
-        [min]="priceRange[0]"
-        max="100"
-        class="range-input"
-        placeholder="Max"
-        />
-    </div>
-    <input
-      type="range"
-      [(ngModel)]="priceRange[0]"
-      (change)="onPriceRangeChange()"
-      min="0"
-      [max]="priceRange[1]"
-      class="slider"
-      />
-    <input
-      type="range"
-      [(ngModel)]="priceRange[1]"
-      (change)="onPriceRangeChange()"
-      [min]="priceRange[0]"
-      max="100"
-      class="slider"
-      />
+        <span>€{{ price }} per week</span>
+      </label>
+    }
   </div>
 
   <div class="filter-section">
@@ -93,31 +68,6 @@
         (change)="onPiecesRangeChange()"
         [min]="piecesRange[0]"
         max="10000"
-        class="range-input"
-        placeholder="Max"
-        />
-    </div>
-  </div>
-
-  <div class="filter-section">
-    <h4 class="filter-title">Bouwduur (dagen)</h4>
-    <div class="range-inputs">
-      <input
-        type="number"
-        [(ngModel)]="buildTimeRange[0]"
-        (change)="onBuildTimeRangeChange()"
-        min="0"
-        [max]="buildTimeRange[1]"
-        class="range-input"
-        placeholder="Min"
-        />
-      <span class="range-separator">-</span>
-      <input
-        type="number"
-        [(ngModel)]="buildTimeRange[1]"
-        (change)="onBuildTimeRangeChange()"
-        [min]="buildTimeRange[0]"
-        max="25"
         class="range-input"
         placeholder="Max"
         />
