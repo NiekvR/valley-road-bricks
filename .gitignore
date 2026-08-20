@@ -20,6 +20,7 @@ dist/
 .env
 .env.local
 .env.*.local
+src/environment.ts
 
 # Testing
 cover/
