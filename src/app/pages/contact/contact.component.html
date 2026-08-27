@@ -1,0 +1,314 @@
+<div class="container">
+  <app-header></app-header>
+
+  <main class="contact-page">
+
+    <!-- Hero -->
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <span class="eyebrow">
+          VALLEY ROAD BRICKS
+        </span>
+
+        <h1>
+          We helpen je graag<br>
+          <span>met je LEGO-avontuur.</span>
+        </h1>
+
+        <p>
+          Heb je een vraag over een set, je bestelling,
+          huren of retourneren? Neem gerust contact met
+          ons op. We helpen je graag verder!
+        </p>
+
+      </div>
+
+      <div class="hero-decoration">
+
+        <div class="brick brick-one"></div>
+        <div class="brick brick-two"></div>
+        <div class="brick brick-three"></div>
+
+        <span class="emoji">🧱</span>
+
+      </div>
+
+    </section>
+
+
+    <!-- Contact options -->
+    <section class="contact-options">
+
+      <div class="contact-card whatsapp-card">
+
+        <div class="card-icon">
+          💬
+        </div>
+
+        <div class="card-content">
+
+          <h2>
+            WhatsApp
+          </h2>
+
+          <p>
+            Snel een vraag? Stuur ons een berichtje via WhatsApp.
+            Vaak is dit de snelste manier om antwoord te krijgen.
+          </p>
+
+          <button
+              type="button"
+              class="button button-green"
+              (click)="sendWhatsApp()"
+          >
+            Start een WhatsApp gesprek
+            <span>→</span>
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="contact-card email-card">
+
+        <div class="card-icon">
+          ✉️
+        </div>
+
+        <div class="card-content">
+
+          <h2>
+            E-mail
+          </h2>
+
+          <p>
+            Liever een e-mail sturen? Dat kan natuurlijk ook.
+            We beantwoorden je bericht zo snel mogelijk.
+          </p>
+
+          <a
+              class="button button-outline"
+              [href]="'mailto:' + emailAddress"
+          >
+            {{ emailAddress }}
+            <span>→</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+    <!-- FAQ CTA -->
+    <section class="faq-cta">
+
+      <div class="faq-icon">
+        ?
+      </div>
+
+      <div>
+        <h2>
+          Misschien staat je vraag al bij de FAQ?
+        </h2>
+
+        <p>
+          Bekijk de meestgestelde vragen over huren,
+          verzending, retourneren en onze sets.
+        </p>
+      </div>
+
+      <a
+          class="button button-white"
+          routerLink="/faq"
+      >
+        Bekijk de FAQ
+        <span>→</span>
+      </a>
+    </section>
+
+    <!-- Contact form -->
+    <section class="contact-section">
+
+      <div class="form-intro">
+
+        <span class="eyebrow">
+          STUUR ONS EEN BERICHT
+        </span>
+
+        <h2>
+          Waar kunnen we je mee helpen?
+        </h2>
+
+        <p>
+          Vul het formulier in en kies daarna of je je bericht
+          via WhatsApp of e-mail wilt versturen.
+        </p>
+
+        <div class="help-list">
+
+          <div>
+            <span>✓</span>
+            Vragen over een LEGO-set
+          </div>
+
+          <div>
+            <span>✓</span>
+            Een huurperiode aanvragen
+          </div>
+
+          <div>
+            <span>✓</span>
+            Vragen over terugbrengen
+          </div>
+
+          <div>
+            <span>✓</span>
+            Iets anders? Vraag het gerust!
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-card">
+
+        <form>
+
+          <div class="form-row">
+
+            <div class="form-field">
+
+              <label for="name">
+                Naam
+              </label>
+
+              <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  [(ngModel)]="name"
+                  placeholder="Je naam"
+              >
+
+            </div>
+
+
+            <div class="form-field">
+
+              <label for="email">
+                E-mailadres
+              </label>
+
+              <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  [(ngModel)]="email"
+                  placeholder="jij@voorbeeld.nl"
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="form-field">
+
+            <label for="subject">
+              Onderwerp
+            </label>
+
+            <select
+                id="subject"
+                name="subject"
+                [(ngModel)]="subject"
+            >
+
+              <option value="">
+                Kies een onderwerp
+              </option>
+
+              <option value="Vraag over een LEGO-set">
+                Vraag over een LEGO-set
+              </option>
+
+              <option value="Een set huren">
+                Een set huren
+              </option>
+
+              <option value="Mijn bestelling">
+                Mijn bestelling
+              </option>
+
+              <option value="Terugbrengen">
+                Terugbrengen
+              </option>
+
+              <option value="Overig">
+                Overig
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-field">
+
+            <label for="message">
+              Je bericht
+            </label>
+
+            <textarea
+                id="message"
+                name="message"
+                [(ngModel)]="message"
+                rows="6"
+                placeholder="Waar kunnen we je mee helpen?"
+            ></textarea>
+
+          </div>
+
+
+          <div class="form-actions">
+
+            <button
+                type="button"
+                class="button button-green"
+                [disabled]="!message"
+                (click)="sendWhatsApp()"
+            >
+              💬 Via WhatsApp
+              <span>→</span>
+            </button>
+
+            <button
+                type="button"
+                class="button button-outline"
+                [disabled]="!message || !email"
+                (click)="sendEmail()"
+            >
+              ✉️ Via e-mail
+              <span>→</span>
+            </button>
+
+          </div>
+
+          <p class="form-note">
+            Je bericht wordt niet automatisch opgeslagen.
+            Je kiest zelf of je het via WhatsApp of e-mail verstuurt.
+          </p>
+
+        </form>
+
+      </div>
+
+    </section>
+
+  </main>
+  <app-footer></app-footer>
+</div>

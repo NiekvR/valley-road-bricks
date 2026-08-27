@@ -1,0 +1,513 @@
+@use 'src/styles/variables' as *;
+:host {
+  --border: #dfe6df;
+  --text: #172b3d;
+  --muted: #697581;
+  --white: #ffffff;
+
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+/* =========================
+   Backdrop
+   ========================= */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(10, 28, 47, 0.58);
+
+  backdrop-filter: blur(4px);
+
+  animation: fade-in 180ms ease-out;
+}
+
+
+/* =========================
+   Modal
+   ========================= */
+
+.modal {
+  position: relative;
+
+  width: min(100%, 560px);
+  max-height: calc(100vh - 48px);
+
+  overflow-y: auto;
+
+  background: var(--white);
+  border-radius: 20px;
+
+  padding: 32px;
+
+  box-shadow:
+          0 24px 70px rgba(10, 28, 47, 0.25);
+
+  animation: slide-up 220ms ease-out;
+}
+
+
+/* =========================
+   Close
+   ========================= */
+
+.close-button {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--border);
+  border-radius: 50%;
+
+  background: white;
+
+  color: $secondary-dark;
+
+  font-size: 25px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+          background 150ms ease,
+          transform 150ms ease;
+}
+
+.close-button:hover {
+  background: #f5f8f4;
+  transform: rotate(5deg);
+}
+
+
+/* =========================
+   Header
+   ========================= */
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding-right: 40px;
+}
+
+.lego-icon {
+  width: 52px;
+  height: 52px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: $primary-green-light;
+
+  font-size: 25px;
+}
+
+.eyebrow {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: $primary-green;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+h2 {
+  margin: 0;
+
+  color: $secondary-dark;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 27px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+
+/* =========================
+   Product
+   ========================= */
+
+.product {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  margin-top: 26px;
+  padding: 14px;
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+
+  background: #fafcf9;
+}
+
+.product-image {
+  width: 90px;
+  height: 90px;
+
+  flex-shrink: 0;
+
+  object-fit: contain;
+
+  border-radius: 10px;
+
+  background: white;
+}
+
+.product-info {
+  min-width: 0;
+}
+
+.category {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+.product-info h3 {
+  margin: 0 0 5px;
+
+  color: $secondary-dark;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 17px;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.lego-number {
+  color: $primary-green;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================
+   Form
+   ========================= */
+
+.form {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+
+  gap: 16px;
+
+  margin-top: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.field label {
+  color: $secondary-dark;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  box-sizing: border-box;
+
+  min-height: 48px;
+
+  padding: 0 14px;
+
+  border: 1px solid #ccd7ce;
+  border-radius: 9px;
+
+  background: white;
+
+  color: var(--text);
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+          border-color 150ms ease,
+          box-shadow 150ms ease;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: $primary-green;
+
+  box-shadow:
+          0 0 0 3px rgba(63, 135, 63, 0.12);
+}
+
+
+/* =========================
+   Notice
+   ========================= */
+
+.notice {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-top: 20px;
+  padding: 14px 16px;
+
+  border: 1px solid #d4e4cd;
+  border-radius: 12px;
+
+}
+
+.notice-icon {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.notice p {
+  margin: 0;
+
+  color: #415149;
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.notice strong {
+  color: $secondary-dark;
+
+  font-weight: 700;
+}
+
+
+/* =========================
+   Actions
+   ========================= */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  margin-top: 24px;
+}
+
+.button {
+  min-height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 0 18px;
+
+  border-radius: 8px;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+          background 150ms ease,
+          border-color 150ms ease,
+          transform 150ms ease;
+}
+
+.button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+
+/* WhatsApp */
+
+.button-whatsapp {
+  border: 1px solid $primary-green;
+  background: $primary-green;
+
+  color: white;
+}
+
+.button-whatsapp:not(:disabled):hover {
+  background: $primary-green-dark;
+}
+
+.button-whatsapp:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.arrow {
+  margin-left: auto;
+
+  font-size: 18px;
+}
+
+
+/* Email */
+
+.button-email {
+  border: 1px solid #b8c8ba;
+
+  background: white;
+
+  color: $primary-green;
+}
+
+.button-email:not(:disabled):hover {
+  background: $primary-green-light;
+}
+
+.button-email:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+
+/* =========================
+   Footer
+   ========================= */
+
+.footer-text {
+  margin: 18px 0 0;
+
+  color: var(--muted);
+
+  text-align: center;
+
+  font-size: 12px;
+}
+
+.footer-text button {
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: $primary-green;
+
+  font: inherit;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+
+/* =========================
+   Animations
+   ========================= */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* =========================
+   Mobile
+   ========================= */
+
+@media (max-width: 600px) {
+
+  .modal-backdrop {
+    align-items: flex-end;
+
+    padding: 0;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: 90vh;
+
+    border-radius: 20px 20px 0 0;
+
+    padding: 26px 20px 22px;
+  }
+
+  .modal-header {
+    gap: 12px;
+  }
+
+  h2 {
+    font-size: 23px;
+  }
+
+  .product {
+    margin-top: 20px;
+  }
+
+  .product-image {
+    width: 70px;
+    height: 70px;
+  }
+
+  .product-info h3 {
+    font-size: 15px;
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    margin-top: 20px;
+  }
+}

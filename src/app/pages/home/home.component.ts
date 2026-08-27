@@ -14,7 +14,6 @@ import { FooterComponent } from '../../components/footer/footer.component';
     HeroComponent,
     ProductsComponent,
     ProcessComponent,
-    NewsletterComponent,
     FooterComponent
 ],
     templateUrl: './home.component.html',

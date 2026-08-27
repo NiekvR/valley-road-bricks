@@ -21,13 +21,18 @@ export class FilterSidebarComponent implements OnInit {
   selectedPrices: number[] = [];
   piecesRange: [number, number] = [0, 10000];
   buildTimeRange: [number, number] = [0, 4];
-  sortBy: 'a-z' | 'z-a' | 'price-asc' | 'price-desc' | 'newest' = 'a-z';
+  sortBy: 'a-z' | 'z-a' | 'price-asc' | 'price-desc' | 'size-asc' | 'size-desc' | 'newest' = 'a-z';
+  mobileFiltersOpen = false;
 
   ngOnInit(): void {
     this.productService.getProducts().pipe(take(1)).subscribe(products => {
       this.categories = [... new Set(products.map(product => product.category).filter(category => !!category))];
     });
   }
+
+    toggleMobileFilters(): void {
+        this.mobileFiltersOpen = !this.mobileFiltersOpen;
+    }
 
   onCategoryChange(category: string, event: any): void {
     if (event.target.checked) {
@@ -48,10 +53,6 @@ export class FilterSidebarComponent implements OnInit {
   }
 
   onPiecesRangeChange(): void {
-    this.applyFilters();
-  }
-
-  onBuildTimeRangeChange(): void {
     this.applyFilters();
   }
 

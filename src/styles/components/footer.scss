@@ -16,7 +16,6 @@ footer {
     margin: 0 auto;
     margin-bottom: $spacing-2xl;
     padding-bottom: $spacing-2xl;
-    border-bottom: 1px solid rgba($bg-white, 0.1);
 
     @media (max-width: $breakpoint-lg) {
       grid-template-columns: repeat(2, 1fr);
@@ -95,8 +94,6 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: $spacing-xl;
-    border-top: 1px solid rgba($bg-white, 0.1);
     font-size: $font-size-sm;
     color: rgba($bg-white, 0.6);
 

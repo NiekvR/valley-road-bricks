@@ -27,37 +27,27 @@ export class FooterComponent {
     {
       title: 'Klantenservice',
       links: [
-        { label: 'FAQ', link: '#' },
-        { label: 'Verzending & retour', link: '#' },
-        { label: 'Huurextra garantie', link: '#' },
-        { label: 'Contact', link: '#' }
+        { label: 'FAQ', link: 'faq' },
+        { label: 'Contact', link: 'contact' }
       ]
     },
     {
       title: 'Informatie',
       links: [
-        { label: 'Hoe werkt huren?', link: '#' },
-        { label: 'Over ons', link: '#' },
-        { label: 'Blog', link: '#' },
-        { label: 'Duurzaamheid', link: '#' }
+        { label: 'Hoe werkt huren?', link: 'hoe-het-werkt' },
+        { label: 'Over ons', link: 'over-ons' },
+        // { label: 'Blog', link: '#' },
+        // { label: 'Duurzaamheid', link: '#' }
       ]
     },
-    {
-      title: 'Mijn account',
-      links: [
-        { label: 'Inloggen', link: '#' },
-        { label: 'Mijn verhuur', link: '#' },
-        { label: 'Favorieten', link: '#' },
-        { label: 'Retourannulering', link: '#' }
-      ]
-    }
-  ];
-
-  paymentMethods = [
-    { name: 'iDEAL', icon: '🏦' },
-    { name: 'Visa', icon: '💳' },
-    { name: 'Mastercard', icon: '💳' },
-    { name: 'PayPal', icon: '🅿️' },
-    { name: 'Klarna', icon: '📱' }
+    // {
+    //   title: 'Mijn account',
+    //   links: [
+    //     { label: 'Inloggen', link: '#' },
+    //     { label: 'Mijn verhuur', link: '#' },
+    //     { label: 'Favorieten', link: '#' },
+    //     { label: 'Retourannulering', link: '#' }
+    //   ]
+    // }
   ];
 }

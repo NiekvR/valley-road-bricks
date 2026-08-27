@@ -1,0 +1,67 @@
+<!-- custom-datepicker.component.html -->
+<div class="datepicker" [class.disabled]="disabled">
+  <!-- Input -->
+  <div class="datepicker-input" (click)="toggle()">
+    <input
+        type="text"
+        [value]="displayValue"
+        [placeholder]="placeholder"
+        readonly
+        [disabled]="disabled"
+    />
+    <button type="button" class="toggle-btn" [disabled]="disabled" aria-label="Open calendar">
+      📅
+    </button>
+
+    @if (value && !disabled) {
+      <button
+          type="button"
+          class="clear-btn"
+          (click)="clear(); $event.stopPropagation()"
+          aria-label="Clear date"
+      >
+        ✕
+      </button>
+    }
+  </div>
+
+  <!-- Dropdown calendar -->
+  @if (isOpen) {
+    <div class="calendar" (click)="$event.stopPropagation()">
+      <div class="calendar-header">
+        <button type="button" (click)="prevMonth()" aria-label="Previous month">‹</button>
+        <span class="month-label">{{ monthLabel }}</span>
+        <button type="button" (click)="nextMonth()" aria-label="Next month">›</button>
+      </div>
+
+      <div class="weekdays">
+        @for (day of weekDays; track day) {
+          <span>{{ day }}</span>
+        }
+      </div>
+
+      <div class="days">
+        @for (day of calendarDays; track $index) {
+          <button
+              type="button"
+              class="day"
+              [class.other-month]="!day.isCurrentMonth"
+              [class.today]="day.isToday"
+              [class.selected]="day.isSelected"
+              [class.blocked]="day.isBlocked"
+              [class.disabled]="day.isDisabled || day.isBlocked"
+              [disabled]="day.isBlocked || day.isDisabled || !day.isCurrentMonth"
+              (click)="selectDay(day)"
+          >
+            {{ day.day }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<!-- Backdrop to close on outside click -->
+@if (isOpen) {
+  <div class="backdrop" (click)="close()"></div>
+}

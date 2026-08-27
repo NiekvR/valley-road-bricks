@@ -10,7 +10,6 @@ import {CollapsePanelComponent} from "../../components/collapse-panel/collapse-p
         FooterComponent,
         HeaderComponent,
         ImageTextComponent,
-        CollapsePanelComponent
     ],
   templateUrl: './about-us.component.html',
   styleUrl: './about-us.component.scss',

@@ -1,18 +1,37 @@
 @use 'src/styles/variables' as *;
+
+
+.mobile-filter-toggle {
+  display: none;
+}
+
+
 .filter-sidebar {
+
   background: $bg-white;
   border-radius: $radius-lg;
   padding: $spacing-lg;
+
   box-shadow: $shadow-md;
+
   position: sticky;
   top: 100px;
+
   height: fit-content;
   max-height: calc(100vh - 120px);
+
   overflow-y: auto;
 
+
+  // --------------------------------------------------------
+  // Sections
+  // --------------------------------------------------------
+
   .filter-section {
+
     margin-bottom: $spacing-xl;
     padding-bottom: $spacing-lg;
+
     border-bottom: 1px solid $border-gray;
 
     &:last-child {
@@ -20,25 +39,41 @@
     }
   }
 
+
+  // --------------------------------------------------------
+  // Header
+  // --------------------------------------------------------
+
   .filter-header {
+
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     margin-bottom: $spacing-lg;
+
 
     h3 {
       margin: 0;
+
       font-size: $font-size-lg;
     }
 
+
     .reset-btn {
+
       background: none;
       border: none;
+
       color: $primary-green;
+
       font-weight: $font-weight-semibold;
-      cursor: pointer;
       font-size: $font-size-sm;
+
+      cursor: pointer;
+
       transition: color $transition-base;
+
 
       &:hover {
         color: $primary-green-dark;
@@ -46,115 +81,308 @@
     }
   }
 
+
+  // --------------------------------------------------------
+  // Titles
+  // --------------------------------------------------------
+
   .filter-title {
+
+    margin-bottom: $spacing-md;
+
+    color: $text-dark;
+
     font-size: $font-size-base;
     font-weight: $font-weight-semibold;
-    margin-bottom: $spacing-md;
-    color: $text-dark;
   }
 
+
+  // --------------------------------------------------------
+  // Sort
+  // --------------------------------------------------------
+
   .sort-select {
+
     width: 100%;
+
     padding: $spacing-sm $spacing-md;
+
     border: 1px solid $border-gray;
     border-radius: $radius-md;
+
+    background-color: $bg-white;
+
     font-family: $font-family-primary;
     font-size: $font-size-sm;
-    background-color: $bg-white;
+
     cursor: pointer;
+
     transition: border-color $transition-base;
 
+
     &:focus {
+
       outline: none;
+
       border-color: $primary-green;
     }
   }
 
+
+  // --------------------------------------------------------
+  // Checkboxes
+  // --------------------------------------------------------
+
   .filter-options {
+
     display: flex;
     flex-direction: column;
+
     gap: $spacing-sm;
   }
 
+
   .checkbox-label {
+
     display: flex;
     align-items: center;
+
     gap: $spacing-sm;
+
     cursor: pointer;
+
     font-size: $font-size-sm;
+
     user-select: none;
 
+
     .checkbox-input {
+
       width: 18px;
       height: 18px;
+
       cursor: pointer;
+
       accent-color: $primary-green;
     }
+
 
     &:hover {
       color: $primary-green;
     }
   }
 
+
+  // --------------------------------------------------------
+  // Pieces range
+  // --------------------------------------------------------
+
   .range-inputs {
+
     display: flex;
-    gap: $spacing-sm;
-    margin-bottom: $spacing-md;
     align-items: center;
 
+    gap: $spacing-sm;
+
+    margin-bottom: $spacing-md;
+
+
     .range-input {
+
       flex: 1;
+
+      min-width: 0;
+
       padding: $spacing-xs $spacing-sm;
+
       border: 1px solid $border-gray;
       border-radius: $radius-sm;
-      font-size: $font-size-sm;
+
       font-family: $font-family-primary;
+      font-size: $font-size-sm;
+
 
       &:focus {
+
         outline: none;
+
         border-color: $primary-green;
       }
     }
+
 
     .range-separator {
       color: $text-light;
     }
   }
 
+
+  // --------------------------------------------------------
+  // Slider
+  // --------------------------------------------------------
+
   .slider {
+
     width: 100%;
     height: 4px;
-    border-radius: 2px;
-    background: $border-gray;
-    outline: none;
-    -webkit-appearance: none;
-    appearance: none;
+
     margin-bottom: $spacing-sm;
 
+    border-radius: 2px;
+
+    background: $border-gray;
+
+    outline: none;
+
+    -webkit-appearance: none;
+    appearance: none;
+
+
     &::-webkit-slider-thumb {
+
       -webkit-appearance: none;
       appearance: none;
+
       width: 16px;
       height: 16px;
+
       border-radius: 50%;
+
       background: $primary-green;
+
       cursor: pointer;
+
       box-shadow: $shadow-sm;
     }
 
+
     &::-moz-range-thumb {
+
       width: 16px;
       height: 16px;
+
       border-radius: 50%;
+
       background: $primary-green;
+
       cursor: pointer;
+
       border: none;
+
       box-shadow: $shadow-sm;
     }
   }
+}
 
-  @media (max-width: $breakpoint-lg) {
+
+// ============================================================
+// Mobile
+// ============================================================
+
+@media (max-width: $breakpoint-lg) {
+
+
+  // ----------------------------------------------------------
+  // Filter toggle
+  // ----------------------------------------------------------
+
+  .mobile-filter-toggle {
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: $spacing-sm;
+
+    padding: $spacing-md;
+
+    margin-bottom: $spacing-md;
+
+    background: $bg-white;
+
+    border: 1px solid $border-gray;
+    border-radius: $radius-md;
+
+    color: $text-dark;
+
+    font-family: $font-family-primary;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+
+    cursor: pointer;
+
+    box-shadow: $shadow-sm;
+
+
+    .filter-icon {
+
+      color: $primary-green;
+
+      font-size: 18px;
+    }
+
+
+    .filter-toggle-icon {
+
+      margin-left: auto;
+
+      color: $primary-green;
+
+      font-size: 12px;
+    }
+
+
+    &:active {
+      background: $bg-light;
+    }
+  }
+
+
+  // ----------------------------------------------------------
+  // Sidebar
+  // ----------------------------------------------------------
+
+  .filter-sidebar {
+
     position: static;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
     margin-bottom: $spacing-xl;
+
+    max-height: none;
+
+    overflow: hidden;
+
+    display: none;
+
+
+    &.mobile-open {
+
+      display: block;
+
+      animation: filterSlideDown .2s ease-out;
+    }
+  }
+}
+
+
+// ============================================================
+// Animation
+// ============================================================
+
+@keyframes filterSlideDown {
+
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

@@ -1,0 +1,325 @@
+@use 'src/styles/variables' as *;
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+
+.login-page {
+
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: $spacing-xl;
+
+  box-sizing: border-box;
+
+  background:
+          linear-gradient(
+                          135deg,
+                          $bg-light 0%,
+                          #eef3ed 100%
+          );
+}
+
+
+.login-card {
+
+  width: 100%;
+  max-width: 420px;
+
+  padding: 40px;
+
+  box-sizing: border-box;
+
+  background: $bg-white;
+
+  border-radius: $radius-lg;
+
+  box-shadow: $shadow-lg;
+}
+
+
+.login-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.login-header {
+
+  text-align: center;
+
+  margin-bottom: $spacing-xl;
+
+
+  .eyebrow {
+
+    display: block;
+
+    margin-bottom: $spacing-xs;
+
+    color: $primary-green;
+
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+
+    text-transform: uppercase;
+
+    letter-spacing: .08em;
+  }
+
+
+  h1 {
+
+    margin: 0 0 $spacing-sm;
+
+    color: $secondary-dark;
+
+    font-size: 32px;
+    font-weight: $font-weight-bold;
+  }
+
+
+  p {
+
+    margin: 0;
+
+    color: $text-gray;
+
+    font-size: $font-size-sm;
+
+    line-height: 1.6;
+  }
+}
+
+
+// ---------------------------------------------------------
+// Error
+// ---------------------------------------------------------
+
+.error-message {
+
+  margin-bottom: $spacing-lg;
+
+  padding: $spacing-md;
+
+  background: rgba(
+                  $error-red,
+                  .08
+  );
+
+  border: 1px solid rgba(
+                  $error-red,
+                  .2
+  );
+
+  border-radius: $radius-md;
+
+  color: $error-red;
+
+  font-size: $font-size-sm;
+
+  line-height: 1.5;
+}
+
+
+// ---------------------------------------------------------
+// Form
+// ---------------------------------------------------------
+
+form {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: $spacing-lg;
+}
+
+
+.form-group {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: $spacing-sm;
+
+
+  label {
+
+    color: $text-dark;
+
+    font-size: $font-size-sm;
+
+    font-weight: $font-weight-semibold;
+  }
+
+
+  input {
+
+    width: 100%;
+
+    height: 46px;
+
+    padding: 0 $spacing-md;
+
+    box-sizing: border-box;
+
+    border: 1px solid $border-gray;
+
+    border-radius: $radius-md;
+
+    background: $bg-white;
+
+    color: $text-dark;
+
+    font-family: $font-family-primary;
+
+    font-size: $font-size-sm;
+
+    transition:
+            border-color $transition-base,
+            box-shadow $transition-base;
+
+
+    &::placeholder {
+      color: $text-light;
+    }
+
+
+    &:focus {
+
+      outline: none;
+
+      border-color: $primary-green;
+
+      box-shadow:
+              0 0 0 3px
+              rgba(
+                              $primary-green,
+                              .12
+              );
+    }
+
+
+    &:disabled {
+
+      background: $bg-light;
+
+      cursor: not-allowed;
+    }
+  }
+}
+
+
+// ---------------------------------------------------------
+// Button
+// ---------------------------------------------------------
+
+.login-button {
+
+  width: 100%;
+
+  height: 48px;
+
+  margin-top: $spacing-sm;
+
+  border: none;
+
+  border-radius: $radius-md;
+
+  background: $primary-green;
+
+  color: $bg-white;
+
+  font-family: $font-family-primary;
+
+  font-size: $font-size-base;
+
+  font-weight: $font-weight-semibold;
+
+  cursor: pointer;
+
+  transition:
+          background $transition-base,
+          transform $transition-base,
+          box-shadow $transition-base;
+
+
+  &:hover:not(:disabled) {
+
+    background: $primary-green-dark;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+            $shadow-md;
+  }
+
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+
+  &:disabled {
+
+    opacity: .6;
+
+    cursor: not-allowed;
+  }
+}
+
+
+// ---------------------------------------------------------
+// Footer
+// ---------------------------------------------------------
+
+.login-footer {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: $spacing-xl;
+
+  color: $text-light;
+
+  font-size: 11px;
+}
+
+
+// ---------------------------------------------------------
+// Mobile
+// ---------------------------------------------------------
+
+@media (max-width: $breakpoint-md) {
+
+  .login-page {
+
+    padding: $spacing-md;
+
+    align-items: flex-start;
+
+    padding-top: 10vh;
+  }
+
+
+  .login-card {
+
+    padding: $spacing-xl;
+
+    border-radius: $radius-md;
+  }
+}

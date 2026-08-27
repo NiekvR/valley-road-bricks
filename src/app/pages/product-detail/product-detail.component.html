@@ -1,6 +1,6 @@
 <div class="container">
   <app-header></app-header>
-  <span class="m-2"><fa-icon [icon]="faChevronLeft"></fa-icon> Terug</span>
+  <span class="m-2 cursor-pointer" (click)="back()"><fa-icon [icon]="faChevronLeft"></fa-icon> Terug</span>
   <main>
     @if (!!product) {
       @if (!!product.images) {
@@ -12,18 +12,84 @@
           <span>{{product.legoId}}</span>
           <p class="text-bold">{{product.name}}</p>
           <span class="text-primary text-bold">€{{product.price}},-</span>
-          <span><fa-icon [icon]="faClock"></fa-icon> {{product.minRentTime}} weken verhuur periode</span>
           <span><fa-icon [icon]="faHashtag"></fa-icon> {{product.pieces}} stenen</span>
         </div>
 
-        <button class="btn mt-5">Huur nu</button>
+        <button class="btn mt-5"
+                (click)="showRentalModal = true"
+                [disabled]="!product.inStock || product.nearlyInStock">
+          Huur deze set
+          <span>→</span>
+        </button>
+        @if (product.hasNoMiniFigs) {
+          <span class="text-warning">* deze set wordt geleverd zonder mini-figuren</span>
+        }
+        @if (!!rentals && rentals.length > 0) {
+
+          <div class="rental-period-list">
+              <div class="rental-period">
+
+                <div class="rental-period-icon">
+                  📅
+                </div>
+
+                <div class="rental-period-content">
+
+            <span class="rental-period-label">
+              Verhuurd
+            </span>
+                @for (rental of rentals; track $index) {
+                  <div class="rental-period-dates">
+
+                    <strong>
+                      {{ formatDisplayDate(rental.startDate) }}
+                    </strong>
+
+                    <span class="date-arrow">
+                      →
+                    </span>
+
+                    <strong>
+                      {{ formatDisplayDate(rental.endDate) }}
+                    </strong>
+
+                  </div>
+
+                }
+                </div>
+
+              </div>
+
+          </div>
+
+        } @else {
+
+          <div class="no-rentals">
+
+      <span class="no-rentals-icon">
+        ✓
+      </span>
+
+            <div>
+              <strong>
+                Nog geen verhuurde periodes
+              </strong>
+
+              <span>
+          Deze set is momenteel beschikbaar.
+        </span>
+            </div>
+
+          </div>
+
+        }
       </div>
     }
     <div class="info-bars">
       <div class="info-bar">
         <div class="info-icon"><fa-icon [icon]="faCircleCheck"></fa-icon></div>
         <div class="info-content">
-          <div class="info-title">100% compleet</div>
+          <div class="info-title">Compleet</div>
           <div class="info-text">en gecontroleerd</div>
         </div>
       </div>
@@ -51,10 +117,19 @@
     <div class="in-product">
       <div>
         <p class="text-secondary">Wat zit er in de doos?</p>
-        <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Complete LEGO®-sets</p>
-        <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Mini-figs</p>
+        <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Complete LEGO®-set</p>
+        <p>
+          @if (product.hasNoMiniFigs) {
+            <fa-icon [icon]="faX" class="text-warning"></fa-icon>
+          } @else {
+            <fa-icon [icon]="faCheck" class="text-primary"></fa-icon>
+          }
+
+          Mini-figuren
+        </p>
         <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Bouwinstructies</p>
         <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Gesorteerde onderdelen</p>
+        <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Opruiminstructie</p>
         <p><fa-icon [icon]="faCheck" class="text-primary"></fa-icon>Opbergzakjes</p>
       </div>
     </div>
@@ -62,3 +137,9 @@
 
   <app-footer></app-footer>
 </div>
+
+<app-rental-request-modal
+    [visible]="showRentalModal"
+    [set]="product"
+    (closed)="showRentalModal = false"
+></app-rental-request-modal>

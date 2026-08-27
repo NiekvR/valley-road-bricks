@@ -1,0 +1,728 @@
+@use 'src/styles/variables' as *;
+:host {
+  --navy: $secondary-dark;
+  --navy-dark: #0a2038;
+
+  --green: $primary-green;
+  --green-dark: $primary-green-dark;
+  --green-light: $primary-green-light;
+
+  --text: #172b3d;
+  --muted: #697581;
+
+  --border: #e0e6e1;
+
+  display: block;
+
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text);
+}
+
+
+/* =====================================================
+   Page
+   ===================================================== */
+
+.contact-page {
+  background: #fff;
+
+  overflow: hidden;
+}
+
+
+/* =====================================================
+   Hero
+   ===================================================== */
+
+.hero {
+  position: relative;
+
+  min-height: 390px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 70px max(5vw, 40px);
+
+  box-sizing: border-box;
+
+  background:
+          linear-gradient(
+                          110deg,
+                          #ffffff 0%,
+                          #ffffff 58%,
+                          #f4f8f2 100%
+          );
+
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 680px;
+}
+
+.eyebrow {
+  display: inline-block;
+
+  margin-bottom: 12px;
+
+  color: $primary-green;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: .08em;
+}
+
+.hero h1 {
+  margin: 0;
+
+  color: $secondary-dark;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.08;
+
+  font-weight: 800;
+}
+
+.hero h1 span {
+  color: $primary-green;
+}
+
+.hero p {
+  max-width: 600px;
+
+  margin: 22px 0 0;
+
+  color: var(--muted);
+
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+
+/* Decorative bricks */
+
+.hero-decoration {
+  position: absolute;
+
+  right: 6%;
+  top: 50%;
+
+  width: 360px;
+  height: 260px;
+
+  transform: translateY(-50%);
+
+  opacity: .8;
+}
+
+.brick {
+  position: absolute;
+
+  border-radius: 14px;
+
+  background: $primary-green;
+
+  box-shadow:
+          0 15px 35px rgba(20, 70, 30, .15);
+}
+
+.brick::before,
+.brick::after {
+  content: '';
+
+  position: absolute;
+
+  width: 26px;
+  height: 10px;
+
+  border-radius: 10px;
+
+  background: rgba(255,255,255,.35);
+}
+
+.brick::before {
+  left: 25px;
+  top: 12px;
+}
+
+.brick::after {
+  left: 75px;
+  top: 12px;
+}
+
+.brick-one {
+  width: 240px;
+  height: 70px;
+
+  right: 30px;
+  bottom: 35px;
+
+  transform: rotate(-7deg);
+}
+
+.brick-two {
+  width: 190px;
+  height: 65px;
+
+  right: 100px;
+  top: 45px;
+
+  transform: rotate(8deg);
+
+  background: #68a85f;
+}
+
+.brick-three {
+  width: 130px;
+  height: 60px;
+
+  right: 10px;
+  top: 10px;
+
+  transform: rotate(-4deg);
+}
+
+.emoji {
+  position: absolute;
+
+  right: 115px;
+  top: 95px;
+
+  font-size: 85px;
+
+  transform: rotate(-8deg);
+}
+
+
+/* =====================================================
+   Contact options
+   ===================================================== */
+
+.contact-options {
+  max-width: 1180px;
+
+  margin: -35px auto 0;
+
+  padding: 0 24px;
+
+  position: relative;
+  z-index: 5;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 22px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 20px;
+
+  padding: 28px;
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  background: white;
+
+  box-shadow:
+          0 8px 30px rgba(15, 40, 65, .08);
+}
+
+.card-icon {
+  width: 55px;
+  height: 55px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: $primary-green-light;
+
+  font-size: 27px;
+}
+
+.card-content h2 {
+  margin: 0 0 7px;
+
+  color: $secondary-dark;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.card-content p {
+  margin: 0 0 18px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* =====================================================
+   Buttons
+   ===================================================== */
+
+.button {
+  min-height: 46px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 0 18px;
+
+  border-radius: 7px;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+          transform .15s ease,
+          background .15s ease,
+          border-color .15s ease;
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.button-green {
+  border: 1px solid $primary-green;
+
+  background: $primary-green;
+
+  color: white;
+}
+
+.button-green:hover:not(:disabled) {
+  background: $primary-green-dark;
+}
+
+.button-outline {
+  border: 1px solid #b9cbb9;
+
+  background: white;
+
+  color: $primary-green;
+}
+
+.button-outline:hover:not(:disabled) {
+  background: $primary-green-light;
+
+  border-color: $primary-green;
+}
+
+.button:disabled {
+  opacity: .45;
+
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   Contact section
+   ===================================================== */
+
+.contact-section {
+  max-width: 1180px;
+
+  margin: 90px auto;
+
+  padding: 0 24px;
+
+  display: grid;
+  grid-template-columns: .85fr 1.15fr;
+
+  gap: 70px;
+
+  align-items: start;
+}
+
+.form-intro {
+  padding-top: 15px;
+}
+
+.form-intro h2 {
+  margin: 0;
+
+  color: $secondary-dark;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 32px;
+  line-height: 1.2;
+
+  font-weight: 800;
+}
+
+.form-intro > p {
+  margin: 18px 0 30px;
+
+  color: var(--muted);
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+.help-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.help-list div {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  color: var(--text);
+
+  font-size: 13px;
+}
+
+.help-list span {
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: $primary-green-light;
+
+  color: $bg-light;
+
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   Form card
+   ===================================================== */
+
+.form-card {
+  padding: 32px;
+
+  border: 1px solid var(--border);
+  border-radius: 18px;
+
+  background: white;
+
+  box-shadow:
+          0 10px 35px rgba(15, 40, 65, .07);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 18px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  margin-bottom: 19px;
+}
+
+.form-field label {
+  color: $secondary-dark;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  box-sizing: border-box;
+
+  width: 100%;
+
+  border: 1px solid #d0d9d1;
+  border-radius: 8px;
+
+  background: white;
+
+  color: var(--text);
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px;
+
+  outline: none;
+
+  transition:
+          border-color .15s ease,
+          box-shadow .15s ease;
+}
+
+.form-field input,
+.form-field select {
+  height: 46px;
+
+  padding: 0 13px;
+}
+
+.form-field textarea {
+  padding: 13px;
+
+  resize: vertical;
+
+  min-height: 130px;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: $primary-green;
+
+  box-shadow:
+          0 0 0 3px rgba(64, 136, 63, .1);
+}
+
+.form-actions {
+  display: flex;
+
+  gap: 10px;
+
+  margin-top: 3px;
+}
+
+.form-actions .button {
+  flex: 1;
+}
+
+.form-note {
+  margin: 15px 0 0;
+
+  color: #8a949b;
+
+  text-align: center;
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   FAQ CTA
+   ===================================================== */
+
+.faq-cta {
+  max-width: 1130px;
+
+  margin: $spacing-md;
+
+  padding: 30px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+
+  border-radius: 16px;
+
+  background: $secondary-dark;
+}
+
+.faq-icon {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: $primary-green;
+
+  color: white;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.faq-cta > div:nth-child(2) {
+  flex: 1;
+}
+
+.faq-cta h2 {
+  margin: 0 0 4px;
+
+  color: white;
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.faq-cta p {
+  margin: 0;
+
+  color: rgba(255,255,255,.7);
+
+  font-size: 12px;
+}
+
+.button-white {
+  flex-shrink: 0;
+
+  background: white;
+
+  color: $secondary-dark;
+
+  border: 1px solid white;
+}
+
+.button-white:hover {
+  background: $primary-green-light;
+}
+
+
+/* =====================================================
+   Responsive
+   ===================================================== */
+
+@media (max-width: 900px) {
+
+  .hero {
+    min-height: 330px;
+  }
+
+  .hero-decoration {
+    right: -100px;
+
+    opacity: .35;
+  }
+
+  .contact-section {
+    grid-template-columns: 1fr;
+
+    gap: 35px;
+
+    margin-top: 65px;
+  }
+}
+
+
+@media (max-width: 700px) {
+
+  .hero {
+    padding: 55px 24px;
+
+    min-height: 350px;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .hero-decoration {
+    display: none;
+  }
+
+  .contact-options {
+    grid-template-columns: 1fr;
+
+    margin-top: -25px;
+  }
+
+  .contact-section {
+    padding: 0 18px;
+  }
+
+  .form-card {
+    padding: 22px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .faq-cta {
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+  }
+
+  .faq-cta .button {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .contact-card {
+    padding: 22px 18px;
+  }
+
+  .card-icon {
+    width: 45px;
+    height: 45px;
+
+    font-size: 22px;
+  }
+
+  .card-content h2 {
+    font-size: 18px;
+  }
+
+  .faq-cta {
+    padding: 22px;
+  }
+}

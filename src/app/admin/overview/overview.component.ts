@@ -1,29 +1,13 @@
-import {Component, OnInit, inject, EnvironmentInjector} from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-import {
-    Firestore,
-    collection,
-    collectionData,
-    addDoc,
-} from '@angular/fire/firestore';
-
 import {Product} from "../../models/product.model";
 import {ProductService} from "../../services/product.service";
 import {RouterLink} from "@angular/router";
 import {map} from "rxjs";
-
-export interface Rental {
-    id?: number;
-    setId: number;
-    setName: string;
-    customerName: string;
-    startDate: string;
-    endDate: string;
-    status: 'active' | 'returned' | 'cancelled';
-    createdAt: Date;
-}
+import {CustomDatepickerComponent } from "../../shared/custom-datepicker/custom-datepicker.component";
+import {Rental} from "../../models/rental.modal";
+import {RentalsService} from "../../services/rentals.service";
 
 @Component({
     selector: 'app-overview',
@@ -31,16 +15,16 @@ export interface Rental {
     imports: [
         CommonModule,
         FormsModule,
-        RouterLink
+        RouterLink,
+        CustomDatepickerComponent
     ],
     templateUrl: './overview.component.html',
     styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
 
-    private firestore = inject(Firestore);
-    private injector = inject(EnvironmentInjector);
     private productService = inject(ProductService);
+    private rentalsService = inject(RentalsService);
 
     products: Product[] = [];
     rentals: Rental[] = [];
@@ -58,14 +42,66 @@ export class OverviewComponent implements OnInit {
 
     rental = {
         customerName: '',
-        endDate: ''
+        startDate: '',
+        endDate: '',
+        weeks: 0,
+        disassemblyService: false,
+        sortingPlates: false
     };
+
+    readonly sortingPlatesPrice = 5;
+
+    rentalWeekOptions: number[] = Array.from(
+        { length: 10 + 1 },
+        (_, index) => index
+    );
 
     categories: string[] = [];
 
     ngOnInit(): void {
         this.loadProducts();
-        // this.loadRentals();
+        this.loadRentals();
+    }
+
+    get baseRentalPrice(): number {
+
+        if (!this.selectedProduct) {
+            return 0;
+        }
+
+        return (
+            this.selectedProduct.price *
+            this.rental.weeks
+        );
+    }
+
+    get disassemblyPrice(): number {
+
+        if (
+            !this.selectedProduct ||
+            !this.rental.disassemblyService
+        ) {
+            return 0;
+        }
+
+        // Afbreekservice = één extra week huur
+        return this.selectedProduct.price;
+    }
+
+    get sortingPlatesPriceTotal(): number {
+
+        return this.rental.sortingPlates
+            ? this.sortingPlatesPrice
+            : 0;
+    }
+
+    get rentalPrice(): number {
+
+        return (
+            this.baseRentalPrice +
+            this.disassemblyPrice +
+            this.sortingPlatesPriceTotal
+        );
     }
 
     loadProducts(): void {
@@ -106,35 +142,25 @@ export class OverviewComponent implements OnInit {
     }
 
 
-    // loadRentals(): void {
-    //
-    //     const rentalsRef = collection(
-    //         this.firestore,
-    //         'rentals'
-    //     );
-    //
-    //     collectionData(
-    //         rentalsRef,
-    //         {
-    //             idField: 'id'
-    //         }
-    //     ).subscribe({
-    //         next: data => {
-    //
-    //             this.rentals = data as Rental[];
-    //
-    //         },
-    //
-    //         error: error => {
-    //
-    //             console.error(
-    //                 'Error loading rentals:',
-    //                 error
-    //             );
-    //
-    //         }
-    //     });
-    // }
+    loadRentals(): void {
+
+        this.rentalsService.getActiveRentals().subscribe({
+            next: data => {
+
+                this.rentals = data as Rental[];
+
+            },
+
+            error: error => {
+
+                console.error(
+                    'Error loading rentals:',
+                    error
+                );
+
+            }
+        });
+    }
 
     applyFilters(): void {
 
@@ -166,8 +192,14 @@ export class OverviewComponent implements OnInit {
 
         this.rental = {
             customerName: '',
-            endDate: this.getDefaultEndDate(set)
+            startDate: this.formatDate(new Date()),
+            endDate: '',
+            weeks: 0,
+            disassemblyService: false,
+            sortingPlates: false
         };
+
+        this.initializeRental()
 
         this.showRentalModal = true;
     }
@@ -179,12 +211,67 @@ export class OverviewComponent implements OnInit {
 
     }
 
+    initializeRental(): void {
+
+        if (!this.selectedProduct) {
+            return;
+        }
+
+        this.rental.weeks = this.selectedProduct.minRentTime;
+
+        this.rental.disassemblyService = false;
+        this.rental.sortingPlates = false;
+
+        this.updateRentalDates();
+    }
+
+    updateRentalDates(date?: string | null): void {
+        console.log(this.rental.startDate, date);
+        if (!this.rental.startDate || !this.rental.weeks) {
+            this.rental.endDate = '';
+            return;
+        }
+
+        const start = !!date ? date : this.rental.startDate as Date | string;
+        const startDate = start instanceof Date ?
+            new Date(start.getFullYear(), start.getMonth(), start.getDate()) :
+            new Date(`${this.rental.startDate}T00:00:00`);
+
+        const endDate = new Date(startDate);
+
+        endDate.setDate(
+            endDate.getDate() +
+            (this.rental.weeks * 7)
+        );
+
+        console.log(endDate)
+
+        this.rental.endDate =
+            this.formatDateForInput(endDate);
+    }
+
+    private formatDateForInput(date: Date): string {
+
+        const year = date.getFullYear();
+
+        const month = String(
+            date.getMonth() + 1
+        ).padStart(2, '0');
+
+        const day = String(
+            date.getDate()
+        ).padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
+    }
+
     async createRental(): Promise<void> {
 
         if (
             !this.selectedProduct ||
             !this.rental.customerName ||
-            !this.rental.endDate
+            !this.rental.startDate ||
+            !this.rental.weeks
         ) {
             return;
         }
@@ -203,25 +290,18 @@ export class OverviewComponent implements OnInit {
             return;
         }
 
-        const rentalsRef = collection(
-            this.firestore,
-            'rentals'
-        );
-
         const rental: Rental = {
 
-            setId: this.selectedProduct.id,
+            setId: this.selectedProduct.id!,
 
             setName: this.selectedProduct.name,
 
             customerName:
             this.rental.customerName,
 
-            startDate:
-                this.formatDate(today),
+            startDate: this.rental.startDate,
 
-            endDate:
-            this.rental.endDate,
+            endDate: this.rental.endDate,
 
             status: 'active',
 
@@ -230,10 +310,7 @@ export class OverviewComponent implements OnInit {
 
         try {
 
-            await addDoc(
-                rentalsRef,
-                rental
-            );
+            await this.rentalsService.addRental(rental);
 
             this.closeRentalModal();
 
@@ -251,10 +328,7 @@ export class OverviewComponent implements OnInit {
         }
     }
 
-    getRentalForSet(
-        setId: number
-    ): Rental | undefined {
-
+    getRentalForSet(setId: string): Rental | undefined {
         const today = this.formatDate(
             new Date()
         );
@@ -266,7 +340,41 @@ export class OverviewComponent implements OnInit {
         );
     }
 
-    isRented(setId: number): boolean {
+    getRentalsForSet(
+        setId: string
+    ): Rental[] | undefined {
+
+        const today = this.formatDate(
+            new Date()
+        );
+
+        return this.rentals.filter(rental =>
+            rental.setId === setId &&
+            rental.status === 'active' &&
+            rental.endDate >= today
+        );
+    }
+
+    getRentedDates(setId: string): { start: Date | string, end: Date | string } [] {
+        return (this.getRentalsForSet(setId) || []).map(rental => {
+            return { start: this.subtractSevenDays(rental.startDate), end: rental.endDate };
+        })
+    }
+
+    subtractSevenDays(input: Date | string): Date {
+        const date = typeof input === 'string' ? new Date(input) : new Date(input);
+
+        // Create a new date to avoid mutating the original
+        const result = new Date(date);
+        result.setDate(result.getDate() - 7);
+
+        // Normalize to midnight (optional but recommended)
+        result.setHours(0, 0, 0, 0);
+
+        return result;
+    }
+
+    isRented(setId: string): boolean {
 
         return !!this.getRentalForSet(
             setId
@@ -276,7 +384,7 @@ export class OverviewComponent implements OnInit {
     getStatus(set: Product): string {
 
         const rental =
-            this.getRentalForSet(set.id);
+            this.getRentalForSet(set.id!);
 
         if (rental) {
             return 'Verhuurd';
@@ -297,7 +405,7 @@ export class OverviewComponent implements OnInit {
 
         date.setDate(
             date.getDate() +
-            (set.minRentTime || 1)
+            ((set.minRentTime || 1) * 7)
         );
 
         return this.formatDate(date);
@@ -308,6 +416,11 @@ export class OverviewComponent implements OnInit {
         return date
             .toISOString()
             .split('T')[0];
+    }
+
+    formatDatestringToDate(date: string): Date {
+
+        return new Date(date)
     }
 
     formatDisplayDate(

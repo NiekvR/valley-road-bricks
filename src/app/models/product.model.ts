@@ -1,5 +1,5 @@
 export interface Product {
-  id: number;
+  id?: string;
   name: string;
   image: string;
   images?: string[];
@@ -14,6 +14,7 @@ export interface Product {
   legoId: number;
   starred?: boolean;
   nearlyInStock?: boolean;
+  hasNoMiniFigs?: boolean;
   link?: string;
   description?: string;
   localId?: number;
@@ -24,5 +25,5 @@ export interface FilterOptions {
   prices: number[];
   piecesRange: [number, number];
   buildTimeRange: [number, number];
-  sortBy: 'a-z' | 'z-a' | 'price-asc' | 'price-desc' | 'newest';
+  sortBy: 'a-z' | 'z-a' | 'price-asc' | 'price-desc' | 'size-asc' | 'size-desc' | 'newest';
 }

@@ -59,7 +59,6 @@ export class SetFormComponent {
                     this.product = product;
                 } else {
                     this.product = {
-                        id: 0,
                         name: '',
                         image: '',
                         images: [

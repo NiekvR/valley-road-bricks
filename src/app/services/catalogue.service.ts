@@ -205,7 +205,7 @@ export class CatalogueService {
   resetFilters(): void {
     this.filterOptionsSubject.next({
       categories: [],
-      prices: [0, 100],
+      prices: [],
       piecesRange: [0, 10000],
       buildTimeRange: [0, 25],
       sortBy: 'a-z'
@@ -245,10 +245,16 @@ export class CatalogueService {
       case 'price-desc':
         filtered.sort((a, b) => b.price - a.price);
         break;
+      case 'size-asc':
+        filtered.sort((a, b) => a.pieces - b.pieces);
+        break;
+      case 'size-desc':
+        filtered.sort((a, b) => b.pieces - a.pieces);
+        break;
       case 'newest':
         filtered.sort((a, b) => (b.localId || 1000) - (a.localId || 1000));
         break;
-    case 'z-a':
+      case 'z-a':
         filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0) || (b.reviews || 0) - (a.reviews || 0)).reverse();
         break;
       case 'a-z':

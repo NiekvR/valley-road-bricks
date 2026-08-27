@@ -7,6 +7,10 @@ import {SetFormComponent} from "./admin/set-form/set-form.component";
 import {OverviewComponent} from "./admin/overview/overview.component";
 import {AboutUsComponent} from "./pages/about-us/about-us.component";
 import {FaqComponent} from "./pages/faq/faq.component";
+import {ContactComponent} from "./pages/contact/contact.component";
+import {adminGuard} from "./services/admin.guard";
+import {AdminLoginComponent} from "./admin/admin-login/admin-login.component";
+import {NewsEditorComponent} from "./admin/news-editor/news-editor.component";
 
 export const routes: Routes = [
     {
@@ -47,7 +51,16 @@ export const routes: Routes = [
         component: FaqComponent
     },
     {
+        path: 'contact',
+        component: ContactComponent
+    },
+    {
+        path: 'admin/login',
+        component: AdminLoginComponent
+    },
+    {
         path: 'admin',
+        canActivate: [adminGuard],
         children: [
             {
                 path: 'overview',
@@ -60,8 +73,15 @@ export const routes: Routes = [
             {
                 path: 'products/:id',
                 component: SetFormComponent,
-                pathMatch: 'full'
-            }
+            },
+            {
+                path: 'news',
+                component: NewsEditorComponent,
+            },
+            // {
+            //     path: 'news/:id',
+            //     component: NewsEditorComponent,
+            // }
         ]
     },
 ];

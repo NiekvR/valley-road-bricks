@@ -148,3 +148,327 @@
     }
   }
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.rental-periods {
+
+  margin-top: $spacing-xl;
+
+  padding: $spacing-lg;
+
+  background: $bg-white;
+
+  border: 1px solid $border-gray;
+
+  border-radius: $radius-lg;
+}
+
+
+// ---------------------------------------------------------
+// Header
+// ---------------------------------------------------------
+
+.rental-periods-header {
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: $spacing-md;
+
+  margin-bottom: $spacing-lg;
+
+
+  h3 {
+
+    margin: 0;
+
+    color: $secondary-dark;
+
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+
+.rental-count {
+
+  padding: 4px 10px;
+
+  border-radius: 20px;
+
+  background: rgba(
+                  $primary-green,
+                  .1
+  );
+
+  color: $primary-green-dark;
+
+  font-weight: $font-weight-semibold;
+}
+
+
+// ---------------------------------------------------------
+// Period list
+// ---------------------------------------------------------
+
+.rental-period-list {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: $spacing-sm;
+}
+
+
+.rental-period {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: $spacing-md;
+
+  padding: $spacing-md;
+
+  background: $bg-light;
+
+  border: 1px solid transparent;
+
+  border-radius: $radius-md;
+
+  transition:
+          border-color $transition-base,
+          background-color $transition-base;
+
+
+  &:hover {
+
+    background: $bg-white;
+
+    border-color: $border-gray;
+  }
+}
+
+
+// ---------------------------------------------------------
+// Icon
+// ---------------------------------------------------------
+
+.rental-period-icon {
+
+  width: 40px;
+  height: 40px;
+
+  flex: 0 0 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(
+                  $primary-green,
+                  .1
+  );
+
+  border-radius: $radius-sm;
+
+  font-size: 18px;
+}
+
+
+// ---------------------------------------------------------
+// Content
+// ---------------------------------------------------------
+
+.rental-period-content {
+
+  flex: 1;
+
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.rental-period-label {
+
+  color: $text-light;
+
+}
+
+
+.rental-period-dates {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: $spacing-sm;
+
+  color: $text-dark;
+
+  font-size: $font-size-sm;
+
+
+  strong {
+    font-weight: $font-weight-semibold;
+  }
+}
+
+
+.date-arrow {
+
+  color: $primary-green;
+
+  font-size: $font-size-sm;
+}
+
+
+// ---------------------------------------------------------
+// Weeks
+// ---------------------------------------------------------
+
+.rental-period-weeks {
+
+  flex: 0 0 auto;
+
+  padding: 5px 9px;
+
+  background: $bg-white;
+
+  border-radius: $radius-sm;
+
+  color: $text-gray;
+
+  font-weight: $font-weight-semibold;
+}
+
+
+// ---------------------------------------------------------
+// No rentals
+// ---------------------------------------------------------
+
+.no-rentals {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: $spacing-md;
+
+  padding: $spacing-md;
+
+  background: rgba(
+                  $success-green,
+                  .07
+  );
+
+  border: 1px solid rgba(
+                  $success-green,
+                  .2
+  );
+
+  border-radius: $radius-md;
+
+
+  .no-rentals-icon {
+
+    width: 36px;
+    height: 36px;
+
+    flex: 0 0 36px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: $success-green;
+
+    color: $bg-white;
+
+    font-weight: $font-weight-bold;
+  }
+
+
+  div {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+  }
+
+
+  strong {
+
+    color: $primary-green-dark;
+
+    font-size: $font-size-sm;
+  }
+
+
+  span:not(.no-rentals-icon) {
+
+    color: $text-gray;
+
+  }
+}
+
+
+// ---------------------------------------------------------
+// Mobile
+// ---------------------------------------------------------
+
+@media (max-width: $breakpoint-md) {
+
+  .rental-periods {
+
+    padding: $spacing-md;
+  }
+
+
+  .rental-period {
+
+    gap: $spacing-sm;
+
+    padding: $spacing-sm;
+  }
+
+
+  .rental-period-icon {
+
+    width: 34px;
+    height: 34px;
+
+    flex-basis: 34px;
+
+    font-size: 15px;
+  }
+
+
+  .rental-period-dates {
+
+    gap: 5px;
+
+  }
+
+
+  .rental-period-weeks {
+
+    display: none;
+  }
+}

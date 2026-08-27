@@ -1,0 +1,652 @@
+<div class="editor">
+
+  <!-- TOPBAR -->
+
+  <header class="editor-header">
+
+    <div>
+      <span class="eyebrow">Nieuws</span>
+
+      <h1>
+        Nieuw artikel
+      </h1>
+    </div>
+
+    <div class="editor-actions">
+
+      <button
+          type="button"
+          class="btn-secondary">
+        Voorbeeld
+      </button>
+
+      <button
+          type="button"
+          class="btn-primary"
+          [disabled]="saving"
+          (click)="saveArticle()">
+
+        {{ saving ? 'Opslaan...' : 'Opslaan' }}
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <div class="editor-layout">
+
+
+    <!-- LEFT : CANVAS -->
+
+    <main class="canvas">
+
+
+      <!-- ARTICLE SETTINGS -->
+
+      <section class="article-settings">
+
+        <input
+            type="text"
+            [(ngModel)]="article.title"
+            (blur)="generateSlug()"
+            placeholder="Titel van je artikel..."
+            class="article-title-input"
+        />
+
+        <input
+            type="text"
+            [(ngModel)]="article.excerpt"
+            placeholder="Korte omschrijving..."
+            class="excerpt-input"
+        />
+
+        <input
+            type="text"
+            [(ngModel)]="article.heroImage"
+            placeholder="URL van hero afbeelding..."
+        />
+
+      </section>
+
+
+      <!-- BLOCKS -->
+
+      <div
+          class="blocks"
+          cdkDropList
+          cdkDropListOrientation="vertical"
+          (cdkDropListDropped)="drop($event)"
+      >
+
+        @for (block of blocks; track block.id) {
+
+          <div
+              class="block"
+              cdkDrag
+              [class.selected]="selectedBlock?.id === block.id"
+              (click)="selectBlock(block)"
+          >
+
+            <div class="block-toolbar">
+
+              <span class="drag-handle" cdkDragHandle>
+                ⠿
+              </span>
+
+              <span class="block-type">
+                {{ block.type }}
+              </span>
+
+              <div class="block-actions">
+
+                <button
+                    (click)="moveUp(block); $event.stopPropagation()">
+                  ↑
+                </button>
+
+                <button
+                    (click)="moveDown(block); $event.stopPropagation()">
+                  ↓
+                </button>
+
+                <button
+                    (click)="duplicateBlock(block); $event.stopPropagation()">
+                  ⧉
+                </button>
+
+                <button
+                    (click)="removeBlock(block); $event.stopPropagation()">
+                  ×
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- BLOCK PREVIEW -->
+
+            <div class="block-content">
+
+
+              @switch (block.type) {
+
+
+                @case ('heading') {
+
+                  <h2>
+                    {{ block.data.text }}
+                  </h2>
+
+                }
+
+
+                @case ('text') {
+
+                  <div
+                      class="article-text"
+                      [innerHTML]="block.data.html">
+                  </div>
+
+                }
+
+
+                @case ('image') {
+
+                  @if (block.data.url) {
+
+                    <img
+                        [src]="block.data.url"
+                        [alt]="block.data.alt"
+                    />
+
+                  } @else {
+
+                    <div class="image-placeholder">
+                      🖼️
+                      <span>
+                        Afbeelding toevoegen
+                      </span>
+                    </div>
+
+                  }
+
+                }
+
+
+                @case ('tip') {
+
+                  <div class="tip-block">
+
+                    <div class="tip-icon">
+                      💡
+                    </div>
+
+                    <div>
+
+                      <strong>
+                        {{ block.data.title }}
+                      </strong>
+
+                      <p>
+                        {{ block.data.text }}
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                }
+
+
+                @case ('quote') {
+
+                  <blockquote>
+
+                    "{{ block.data.text }}"
+
+                    @if (block.data.author) {
+                      <cite>
+                        — {{ block.data.author }}
+                      </cite>
+                    }
+
+                  </blockquote>
+
+                }
+
+
+                @case ('set') {
+
+                  <div class="set-block">
+
+                    @if (block.data.image) {
+
+                      <img
+                          [src]="block.data.image"
+                          alt=""
+                      />
+
+                    }
+
+                    <div>
+
+                      <span>
+                        LEGO® set
+                      </span>
+
+                      <h3>
+                        {{ block.data.title || 'LEGO set' }}
+                      </h3>
+
+                      <p>
+                        {{ block.data.description }}
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                }
+
+
+                @case ('columns') {
+
+                  <div class="columns-block">
+
+                    <div [innerHTML]="block.data.left"></div>
+
+                    <div [innerHTML]="block.data.right"></div>
+
+                  </div>
+
+                }
+
+
+                @case ('button') {
+
+                  <div class="button-block">
+
+                    <a [href]="block.data.url">
+                      {{ block.data.text }}
+                    </a>
+
+                  </div>
+
+                }
+
+
+                @case ('divider') {
+
+                  <hr>
+
+                }
+
+              }
+
+            </div>
+
+          </div>
+
+        }
+
+
+        <!-- EMPTY STATE -->
+
+        @if (blocks.length === 0) {
+
+          <div class="empty-editor">
+
+            <div class="empty-icon">
+              ✨
+            </div>
+
+            <h2>
+              Begin je artikel
+            </h2>
+
+            <p>
+              Voeg hieronder je eerste contentblok toe.
+            </p>
+
+            <button
+                class="btn-primary"
+                (click)="addBlock('text')">
+
+              + Tekst toevoegen
+
+            </button>
+
+          </div>
+
+        }
+
+      </div>
+
+
+      <!-- ADD BLOCK -->
+
+      <div class="add-block">
+
+        <span>
+          + Voeg content toe
+        </span>
+
+        <div class="block-buttons">
+
+          <button (click)="addBlock('heading')">
+            T
+            <span>Titel</span>
+          </button>
+
+          <button (click)="addBlock('text')">
+            ¶
+            <span>Tekst</span>
+          </button>
+
+          <button (click)="addBlock('image')">
+            🖼
+            <span>Afbeelding</span>
+          </button>
+
+          <button (click)="addBlock('tip')">
+            💡
+            <span>Tip</span>
+          </button>
+
+          <button (click)="addBlock('quote')">
+            “
+            <span>Quote</span>
+          </button>
+
+          <button (click)="addBlock('set')">
+            🧱
+            <span>LEGO set</span>
+          </button>
+
+          <button (click)="addBlock('columns')">
+            ▥
+            <span>2 kolommen</span>
+          </button>
+
+          <button (click)="addBlock('button')">
+            ↗
+            <span>Knop</span>
+          </button>
+
+          <button (click)="addBlock('divider')">
+            ―
+            <span>Scheiding</span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </main>
+
+
+    <!-- RIGHT : PROPERTIES -->
+
+    <aside class="properties">
+
+      @if (selectedBlock) {
+
+        <div class="properties-header">
+
+          <span>
+            Contentblok
+          </span>
+
+          <h2>
+            {{ selectedBlock.type }}
+          </h2>
+
+        </div>
+
+
+        @switch (selectedBlock.type) {
+
+
+          @case ('heading') {
+
+            <label>
+              Titel
+
+              <input
+                  [(ngModel)]="selectedBlock.data.text"
+              />
+
+            </label>
+
+            <label>
+              Niveau
+
+              <select
+                  [(ngModel)]="selectedBlock.data.level">
+
+                <option [value]="2">H2</option>
+                <option [value]="3">H3</option>
+                <option [value]="4">H4</option>
+
+              </select>
+
+            </label>
+
+          }
+
+
+          @case ('text') {
+
+            <label>
+              Tekst
+
+              <textarea
+                  rows="12"
+                  [(ngModel)]="selectedBlock.data.html">
+              </textarea>
+
+            </label>
+
+            <small>
+              HTML is momenteel toegestaan.
+            </small>
+
+          }
+
+
+          @case ('image') {
+
+            <label>
+              Afbeelding URL
+
+              <input
+                  [(ngModel)]="selectedBlock.data.url"
+              />
+
+            </label>
+
+            <label>
+              Alt tekst
+
+              <input
+                  [(ngModel)]="selectedBlock.data.alt"
+              />
+
+            </label>
+
+            <label>
+              Onderschrift
+
+              <input
+                  [(ngModel)]="selectedBlock.data.caption"
+              />
+
+            </label>
+
+          }
+
+
+          @case ('tip') {
+
+            <label>
+              Titel
+
+              <input
+                  [(ngModel)]="selectedBlock.data.title"
+              />
+
+            </label>
+
+            <label>
+              Tekst
+
+              <textarea
+                  rows="6"
+                  [(ngModel)]="selectedBlock.data.text">
+              </textarea>
+
+            </label>
+
+          }
+
+
+          @case ('quote') {
+
+            <label>
+              Quote
+
+              <textarea
+                  rows="6"
+                  [(ngModel)]="selectedBlock.data.text">
+              </textarea>
+
+            </label>
+
+            <label>
+              Auteur
+
+              <input
+                  [(ngModel)]="selectedBlock.data.author"
+              />
+
+            </label>
+
+          }
+
+
+          @case ('button') {
+
+            <label>
+              Tekst
+
+              <input
+                  [(ngModel)]="selectedBlock.data.text"
+              />
+
+            </label>
+
+            <label>
+              Link
+
+              <input
+                  [(ngModel)]="selectedBlock.data.url"
+              />
+
+            </label>
+
+          }
+
+
+          @case ('set') {
+
+            <label>
+              Setnaam
+
+              <input
+                  [(ngModel)]="selectedBlock.data.title"
+              />
+
+            </label>
+
+            <label>
+              Afbeelding
+
+              <input
+                  [(ngModel)]="selectedBlock.data.image"
+              />
+
+            </label>
+
+            <label>
+              Beschrijving
+
+              <textarea
+                  [(ngModel)]="selectedBlock.data.description">
+              </textarea>
+
+            </label>
+
+            <label>
+              Link
+
+              <input
+                  [(ngModel)]="selectedBlock.data.url"
+              />
+
+            </label>
+
+          }
+
+
+          @case ('columns') {
+
+            <label>
+              Linkerkolom
+
+              <textarea
+                  rows="8"
+                  [(ngModel)]="selectedBlock.data.left">
+              </textarea>
+
+            </label>
+
+            <label>
+              Rechterkolom
+
+              <textarea
+                  rows="8"
+                  [(ngModel)]="selectedBlock.data.right">
+              </textarea>
+
+            </label>
+
+          }
+
+        }
+
+      } @else {
+
+        <div class="no-selection">
+
+          <span>👆</span>
+
+          <h3>
+            Kies een blok
+          </h3>
+
+          <p>
+            Klik op een contentblok om de inhoud aan te passen.
+          </p>
+
+        </div>
+
+      }
+
+    </aside>
+
+  </div>
+
+</div>

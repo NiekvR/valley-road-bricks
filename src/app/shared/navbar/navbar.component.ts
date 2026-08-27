@@ -7,15 +7,12 @@ import {NgOptimizedImage} from "@angular/common";
 
 @Component({
     selector: 'app-navbar',
-    imports: [RouterLink, RouterLinkActive, FaIconComponent, NgOptimizedImage],
+    imports: [RouterLink, RouterLinkActive, NgOptimizedImage],
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
     menuOpen = signal(false);
-    faSearch = faSearch;
-    faUser = faUser;
-    faCartShopping = faCartShopping;
 
     @Input() cartCount: number = 1;
 

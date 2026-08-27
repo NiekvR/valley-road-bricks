@@ -63,8 +63,14 @@
         }
       }
 
-      &__image img {
-        min-height: 250px;
+      &__image {
+        &.display-none-mobile {
+          display: none;
+        }
+
+        img {
+          min-height: 250px;
+        }
       }
 
       &__content {

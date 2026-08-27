@@ -9,6 +9,7 @@
     left: 0;
     display: none;
     height: 40dvh;
+    overflow: hidden;
 
     .divider {
       position: absolute;
@@ -36,6 +37,7 @@
     @media (max-width: $breakpoint-md) {
       background: $bg-white;
       padding: 0;
+      gap: 0;
 
       .hero-content {
         padding-top: $spacing-xl;

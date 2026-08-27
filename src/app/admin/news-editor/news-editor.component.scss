@@ -1,0 +1,647 @@
+@use 'src/styles/variables' as *;
+
+.editor {
+  min-height: 100vh;
+  background: #f3f5f2;
+}
+
+
+/* ---------------------------------------------------------
+   HEADER
+--------------------------------------------------------- */
+
+.editor-header {
+  height: 72px;
+  padding: 0 $spacing-xl;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: $bg-white;
+  border-bottom: 1px solid $border-gray;
+
+  .eyebrow {
+    display: block;
+
+    color: $primary-green;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 2px 0 0;
+
+    color: $secondary-dark;
+    font-size: $font-size-xl;
+  }
+}
+
+.editor-actions {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+
+/* ---------------------------------------------------------
+   LAYOUT
+--------------------------------------------------------- */
+
+.editor-layout {
+  display: grid;
+  grid-template-columns: minmax(500px, 1fr) 320px;
+  gap: 0;
+
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+
+/* ---------------------------------------------------------
+   CANVAS
+--------------------------------------------------------- */
+
+.canvas {
+  padding: 40px;
+  max-width: 900px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.article-settings {
+  background: $bg-white;
+  padding: 30px;
+
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+
+  margin-bottom: $spacing-xl;
+
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: $spacing-sm $spacing-md;
+
+    border: 1px solid $border-gray;
+    border-radius: $radius-md;
+
+    font-family: $font-family-primary;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-green;
+    }
+  }
+
+  .article-title-input {
+    border: 0;
+    padding: 0;
+
+    font-size: 32px;
+    font-weight: $font-weight-bold;
+    color: $secondary-dark;
+
+    &:focus {
+      border: 0;
+    }
+  }
+}
+
+
+/* ---------------------------------------------------------
+   BLOCK
+--------------------------------------------------------- */
+
+.blocks {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.block {
+  position: relative;
+
+  background: $bg-white;
+
+  border: 2px solid transparent;
+  border-radius: $radius-lg;
+
+  transition:
+          border-color $transition-base,
+          box-shadow $transition-base;
+
+  &:hover {
+    border-color: $border-gray;
+
+    .block-toolbar {
+      opacity: 1;
+    }
+  }
+
+  &.selected {
+    border-color: $primary-green;
+
+    box-shadow:
+            0 0 0 3px rgba(74, 124, 89, .08);
+  }
+}
+
+.block-toolbar {
+  min-height: 38px;
+
+  padding: 0 $spacing-sm;
+
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  background: #f7f8f6;
+
+  border-bottom: 1px solid $border-gray;
+
+  opacity: 0;
+
+  transition: opacity $transition-base;
+
+  font-size: $font-size-sm;
+}
+
+.drag-handle {
+  cursor: grab;
+  font-size: 20px;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.block-type {
+  color: $text-gray;
+  text-transform: uppercase;
+  font-weight: $font-weight-semibold;
+}
+
+.block-actions {
+  margin-left: auto;
+
+  display: flex;
+  gap: 3px;
+
+  button {
+    width: 28px;
+    height: 28px;
+
+    border: 0;
+    border-radius: $radius-sm;
+
+    background: transparent;
+    color: $text-gray;
+
+    cursor: pointer;
+
+    &:hover {
+      background: $bg-white;
+      color: $primary-green;
+    }
+  }
+}
+
+.block-content {
+  padding: 28px;
+
+  h2 {
+    margin: 0;
+
+    color: $secondary-dark;
+  }
+
+  .article-text {
+    color: $text-dark;
+    line-height: 1.7;
+  }
+
+  img {
+    display: block;
+
+    max-width: 100%;
+
+    border-radius: $radius-md;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   IMAGE
+--------------------------------------------------------- */
+
+.image-placeholder {
+  min-height: 220px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: $spacing-sm;
+
+  background: #f5f6f4;
+
+  border: 2px dashed $border-gray;
+  border-radius: $radius-md;
+
+  color: $text-light;
+  font-size: 32px;
+
+  span {
+    font-size: $font-size-sm;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   TIP
+--------------------------------------------------------- */
+
+.tip-block {
+  display: flex;
+  gap: $spacing-md;
+
+  padding: 22px;
+
+  background: #f3f8f1;
+
+  border: 1px solid #d8e6d4;
+  border-radius: $radius-md;
+
+  .tip-icon {
+    font-size: 28px;
+  }
+
+  strong {
+    color: $primary-green-dark;
+  }
+
+  p {
+    margin: 5px 0 0;
+    color: $text-gray;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   QUOTE
+--------------------------------------------------------- */
+
+blockquote {
+  margin: 0;
+
+  padding: 25px 30px;
+
+  border-left: 4px solid $primary-green;
+
+  background: #f7f8f6;
+
+  color: $secondary-dark;
+
+  font-size: 20px;
+  font-style: italic;
+
+  cite {
+    display: block;
+
+    margin-top: 12px;
+
+    color: $text-gray;
+    font-size: $font-size-sm;
+    font-style: normal;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   SET BLOCK
+--------------------------------------------------------- */
+
+.set-block {
+  display: flex;
+  align-items: center;
+
+  gap: $spacing-lg;
+
+  padding: 20px;
+
+  border: 1px solid $border-gray;
+  border-radius: $radius-md;
+
+  img {
+    width: 140px;
+    height: 110px;
+
+    object-fit: cover;
+  }
+
+  span {
+    color: $primary-green;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+  }
+
+  h3 {
+    margin: 5px 0;
+    color: $secondary-dark;
+  }
+
+  p {
+    margin: 0;
+    color: $text-gray;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   COLUMNS
+--------------------------------------------------------- */
+
+.columns-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-xl;
+}
+
+
+/* ---------------------------------------------------------
+   BUTTON
+--------------------------------------------------------- */
+
+.button-block {
+  text-align: center;
+
+  a {
+    display: inline-block;
+
+    padding: 12px 24px;
+
+    border-radius: $radius-md;
+
+    background: $primary-green;
+    color: white;
+
+    text-decoration: none;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   ADD BLOCK
+--------------------------------------------------------- */
+
+.add-block {
+  margin-top: $spacing-xl;
+  padding: 20px;
+
+  background: $bg-white;
+
+  border: 2px dashed $border-gray;
+  border-radius: $radius-lg;
+
+  text-align: center;
+
+  > span {
+    display: block;
+
+    margin-bottom: $spacing-md;
+
+    color: $text-gray;
+    font-size: $font-size-sm;
+  }
+}
+
+.block-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: $spacing-sm;
+
+  button {
+    width: 82px;
+    min-height: 68px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    border: 1px solid $border-gray;
+    border-radius: $radius-md;
+
+    background: $bg-white;
+
+    color: $secondary-dark;
+
+    cursor: pointer;
+
+    transition: all $transition-base;
+
+    &:hover {
+      border-color: $primary-green;
+      color: $primary-green;
+
+      transform: translateY(-2px);
+    }
+
+    span {
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+
+/* ---------------------------------------------------------
+   PROPERTIES
+--------------------------------------------------------- */
+
+.properties {
+  position: sticky;
+  top: 0;
+
+  height: 100vh;
+
+  padding: 28px;
+
+  box-sizing: border-box;
+
+  background: $bg-white;
+
+  border-left: 1px solid $border-gray;
+
+  overflow-y: auto;
+}
+
+.properties-header {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+
+  border-bottom: 1px solid $border-gray;
+
+  span {
+    color: $primary-green;
+    font-size: $font-size-sm;
+    text-transform: uppercase;
+    font-weight: $font-weight-semibold;
+  }
+
+  h2 {
+    margin: 5px 0 0;
+
+    color: $secondary-dark;
+    font-size: $font-size-lg;
+  }
+}
+
+.properties label {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  margin-bottom: $spacing-lg;
+
+  color: $text-gray;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+.properties input,
+.properties textarea,
+.properties select {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 10px;
+
+  border: 1px solid $border-gray;
+  border-radius: $radius-md;
+
+  font: inherit;
+
+  resize: vertical;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-green;
+  }
+}
+
+.properties small {
+  color: $text-light;
+}
+
+.no-selection {
+  padding-top: 100px;
+
+  text-align: center;
+
+  color: $text-gray;
+
+  span {
+    font-size: 40px;
+  }
+
+  h3 {
+    color: $secondary-dark;
+  }
+
+  p {
+    font-size: $font-size-sm;
+    line-height: 1.6;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   BUTTONS
+--------------------------------------------------------- */
+
+.btn-primary,
+.btn-secondary {
+  height: 42px;
+
+  padding: 0 18px;
+
+  border-radius: $radius-md;
+
+  font: inherit;
+  font-weight: $font-weight-semibold;
+
+  cursor: pointer;
+}
+
+.btn-primary {
+  border: 0;
+
+  background: $primary-green;
+  color: white;
+
+  &:hover {
+    background: $primary-green-dark;
+  }
+
+  &:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-secondary {
+  border: 1px solid $border-gray;
+
+  background: white;
+  color: $secondary-dark;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+--------------------------------------------------------- */
+
+@media (max-width: $breakpoint-lg) {
+
+  .editor-layout {
+    display: block;
+  }
+
+  .canvas {
+    padding: 20px;
+    max-width: none;
+  }
+
+  .properties {
+    position: static;
+
+    width: 100%;
+    height: auto;
+
+    border-left: 0;
+    border-top: 1px solid $border-gray;
+  }
+
+  .editor-header {
+    padding: 0 20px;
+  }
+
+  .columns-block {
+    grid-template-columns: 1fr;
+  }
+
+}

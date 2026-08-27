@@ -1,76 +1,143 @@
-<aside class="filter-sidebar">
+<!-- Mobile filter button -->
+<button
+    type="button"
+    class="mobile-filter-toggle"
+    (click)="toggleMobileFilters()"
+    [attr.aria-expanded]="mobileFiltersOpen">
+
+  <span class="filter-icon">☰</span>
+
+  <span>Filters</span>
+
+  <span class="filter-toggle-icon">
+    {{ mobileFiltersOpen ? '▲' : '▼' }}
+  </span>
+
+</button>
+
+
+<aside
+    class="filter-sidebar"
+    [class.mobile-open]="mobileFiltersOpen">
+
   <div class="filter-section">
     <div class="filter-header">
       <h3>Filters</h3>
-      <button class="reset-btn" (click)="onResetFilters()">Reset</button>
+
+      <button
+          class="reset-btn"
+          (click)="onResetFilters()">
+        Reset
+      </button>
     </div>
   </div>
 
+
   <div class="filter-section">
     <h4 class="filter-title">Sorteren</h4>
-    <select [(ngModel)]="sortBy" (change)="onSortChange()" class="sort-select">
+
+    <select
+        [(ngModel)]="sortBy"
+        (change)="onSortChange()"
+        class="sort-select">
+
       <option value="a-z">A-Z</option>
       <option value="z-a">Z-A</option>
       <option value="newest">Nieuwste</option>
       <option value="price-asc">Prijs: laag naar hoog</option>
       <option value="price-desc">Prijs: hoog naar laag</option>
+      <option value="size-asc">
+        Aantal steentjes: laag naar hoog
+      </option>
+      <option value="size-desc">
+        Aantal steentjes: hoog naar laag
+      </option>
+
     </select>
   </div>
 
+
   <div class="filter-section">
     <h4 class="filter-title">Categorie</h4>
+
     <div class="filter-options">
+
       @for (category of categories; track category) {
+
         <label class="checkbox-label">
+
           <input
-            type="checkbox"
-            [checked]="selectedCategories.includes(category)"
-            (change)="onCategoryChange(category, $event)"
-            class="checkbox-input"
-            />
+              type="checkbox"
+              [checked]="selectedCategories.includes(category)"
+              (change)="onCategoryChange(category, $event)"
+              class="checkbox-input"
+          />
+
           <span>{{ category }}</span>
+
         </label>
+
       }
+
     </div>
   </div>
 
+
   <div class="filter-section">
     <h4 class="filter-title">Prijs</h4>
+
     @for (price of prices; track price) {
+
       <label class="checkbox-label">
+
         <input
             type="checkbox"
             [checked]="selectedPrices.includes(price)"
             (change)="onPriceRangeChange(price, $event)"
             class="checkbox-input"
         />
+
         <span>€{{ price }} per week</span>
+
       </label>
+
     }
+
   </div>
 
+
   <div class="filter-section">
-    <h4 class="filter-title">Aantal stukjes</h4>
+
+    <h4 class="filter-title">
+      Aantal steentjes
+    </h4>
+
     <div class="range-inputs">
+
       <input
-        type="number"
-        [(ngModel)]="piecesRange[0]"
-        (change)="onPiecesRangeChange()"
-        min="0"
-        [max]="piecesRange[1]"
-        class="range-input"
-        placeholder="Min"
-        />
+          type="number"
+          [(ngModel)]="piecesRange[0]"
+          (change)="onPiecesRangeChange()"
+          min="0"
+          [max]="piecesRange[1]"
+          class="range-input"
+          placeholder="Min"
+      />
+
       <span class="range-separator">-</span>
+
       <input
-        type="number"
-        [(ngModel)]="piecesRange[1]"
-        (change)="onPiecesRangeChange()"
-        [min]="piecesRange[0]"
-        max="10000"
-        class="range-input"
-        placeholder="Max"
-        />
+          type="number"
+          [(ngModel)]="piecesRange[1]"
+          (change)="onPiecesRangeChange()"
+          [min]="piecesRange[0]"
+          max="10000"
+          class="range-input"
+          placeholder="Max"
+      />
+
     </div>
+
   </div>
+
 </aside>

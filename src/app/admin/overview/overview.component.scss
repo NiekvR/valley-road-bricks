@@ -524,9 +524,13 @@ tbody tr {
 
 .modal {
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   width: 100%;
   max-width: 540px;
+  max-height: 100%;
+  overflow: hidden;
 
   background: white;
 
@@ -535,8 +539,6 @@ tbody tr {
   box-shadow:
           0 20px 60px
           rgba(16, 37, 63, 0.2);
-
-  overflow: hidden;
 }
 
 .modal-close {
@@ -597,7 +599,7 @@ tbody tr {
     width: 100%;
     height: 100%;
 
-    object-fit: contain;
+    object-fit: cover;
   }
 }
 
@@ -619,6 +621,7 @@ tbody tr {
 
 .modal-body {
   padding: 28px;
+  overflow: scroll;
 
   display: flex;
   flex-direction: column;
@@ -739,6 +742,257 @@ tbody tr {
       opacity: 0.5;
       cursor: not-allowed;
     }
+  }
+}
+
+.weeks-select {
+  width: 100%;
+
+  height: 44px;
+
+  padding: 0 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dce3dc;
+  border-radius: 9px;
+
+  background: white;
+
+  font: inherit;
+
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+
+    border-color: #5c8f43;
+
+    box-shadow:
+            0 0 0 3px
+            rgba(92, 143, 67, 0.1);
+  }
+}
+
+
+.rental-date-info {
+  padding: 14px 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #f6f8f5;
+
+  border-radius: 10px;
+
+  span {
+    color: #89949c;
+    font-size: 12px;
+  }
+
+  strong {
+    color: #30465a;
+    font-size: 14px;
+  }
+}
+
+
+// ---------------------------------------------------------
+// Extra options
+// ---------------------------------------------------------
+
+.options-section {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  h3 {
+    margin: 0 0 4px;
+
+    color: #30465a;
+
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+
+.option-card {
+
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 14px;
+
+  border: 1px solid #dce3dc;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition:
+          border-color .2s,
+          background .2s;
+
+
+  &:hover {
+    border-color: #a9bca4;
+  }
+
+
+  &.selected {
+    border-color: #5c8f43;
+
+    background: #f5f8f3;
+  }
+
+
+  input {
+    width: 20px;
+    height: 20px;
+
+    flex: 0 0 auto;
+
+    accent-color: #5c8f43;
+
+    cursor: pointer;
+  }
+}
+
+
+.option-content {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+
+.option-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 10px;
+
+  strong {
+    color: #30465a;
+
+    font-size: 13px;
+  }
+}
+
+
+.option-price {
+  color: #5c8f43;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+.option-content small {
+  color: #89949c;
+
+  font-size: 11px;
+
+  line-height: 1.45;
+}
+
+
+// ---------------------------------------------------------
+// Rental summary
+// ---------------------------------------------------------
+
+.rental-summary {
+
+  padding: 18px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  background: #f6f8f5;
+
+  border-radius: 10px;
+}
+
+
+.summary-row {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 16px;
+
+  span {
+    color: #30465a;
+    font-size: 13px;
+  }
+
+  strong {
+    color: #30465a;
+    font-size: 15px;
+  }
+}
+
+
+.summary-detail {
+
+  span {
+    color: #89949c;
+
+    font-size: 11px;
+  }
+}
+
+
+.summary-divider {
+
+  height: 1px;
+
+  margin: 6px 0;
+
+  background: #dce3dc;
+}
+
+
+.summary-total {
+
+  span {
+    font-weight: 600;
+  }
+
+  strong {
+    color: #5c8f43;
+
+    font-size: 20px;
+  }
+}
+
+
+.return-date {
+
+  margin-top: 4px;
+
+  color: #89949c;
+
+  font-size: 11px;
+
+  text-align: right;
+
+  strong {
+    color: #30465a;
   }
 }
 

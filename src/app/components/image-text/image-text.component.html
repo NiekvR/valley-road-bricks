@@ -3,7 +3,10 @@
     [class.image-left]="imageSide === 'left'"
     [class.image-right]="imageSide === 'right'"
 >
-  <div class="image-text__image">
+  <div
+      class="image-text__image"
+      [class.display-none-mobile]="!mobileImages"
+  >
     <img
         [src]="image"
         alt=""

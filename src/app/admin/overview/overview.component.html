@@ -21,6 +21,13 @@
     <button
         type="button"
         class="btn btn-primary"
+        [routerLink]="['../','news']"
+    >
+      Nieuwsartikel maken
+    </button>
+    <button
+        type="button"
+        class="btn btn-primary"
         [routerLink]="['../','new-form']"
     >
       Nieuwe set aanmaken
@@ -339,7 +346,7 @@
                   <td>
 
                     @if (
-                      isRented(set.id)
+                      isRented(set.id!)
                         ) {
 
                       <span class="status rented">
@@ -373,7 +380,7 @@
                   <td>
 
                     @if (
-                      getRentalForSet(set.id);
+                      getRentalForSet(set.id!);
                       as rental
                         ) {
 
@@ -413,30 +420,13 @@
                       [routerLink]="['../','products', set.id]">
                       Pas aan
                     </button>
-<!--                    @if (-->
-<!--                      !isRented(set.id) &&-->
-<!--                      set.inStock-->
-<!--                        ) {-->
-
-<!--                      <button-->
-<!--                          type="button"-->
-<!--                          class="rent-button"-->
-<!--                          (click)="openRentalModal(set)"-->
-<!--                      >-->
-<!--                        Verhuur-->
-<!--                      </button>-->
-
-<!--                    } @else {-->
-
-<!--                      <button-->
-<!--                          type="button"-->
-<!--                          class="rent-button disabled"-->
-<!--                          disabled-->
-<!--                      >-->
-<!--                        Niet beschikbaar-->
-<!--                      </button>-->
-
-<!--                    }-->
+                    <button
+                        type="button"
+                        class="rent-button"
+                        (click)="openRentalModal(set)"
+                    >
+                      Verhuur
+                    </button>
 
                   </td>
 
@@ -457,12 +447,7 @@
   </main>
 
 
-  <!-- Rental Modal -->
-
-  @if (
-    showRentalModal &&
-    selectedProduct
-      ) {
+  @if (showRentalModal && selectedProduct) {
 
     <div
         class="modal-backdrop"
@@ -482,6 +467,8 @@
           ×
         </button>
 
+
+        <!-- Header -->
 
         <div class="modal-header">
 
@@ -505,9 +492,9 @@
 
           <div>
 
-            <span>
-              LEGO #{{ selectedProduct.legoId }}
-            </span>
+          <span>
+            LEGO #{{ selectedProduct.legoId }}
+          </span>
 
             <h2>
               {{ selectedProduct.name }}
@@ -515,10 +502,32 @@
 
           </div>
 
+          <!-- Price summary -->
+
+          <div class="rental-summary">
+
+            <div class="summary-row summary-total">
+
+            <span>
+              Totaal
+            </span>
+
+              <strong>
+                €{{ rentalPrice | number:'1.2-2' }}
+              </strong>
+
+            </div>
+
+          </div>
+
         </div>
 
 
+        <!-- Body -->
+
         <div class="modal-body">
+
+          <!-- Naam -->
 
           <div class="form-group">
 
@@ -535,60 +544,167 @@
           </div>
 
 
+          <!-- Startdatum -->
+
           <div class="form-group">
 
             <label>
-              Verhuur tot
+              Startdatum
             </label>
 
-            <input
-                type="date"
-                [(ngModel)]="rental.endDate"
-            />
+            <app-custom-datepicker
+                [blockedRanges]="getRentedDates(selectedProduct.id!)"
+                placeholder="Pick an available date"
+                (valueChange)="updateRentalDates($event)"
+                [(value)]="rental.startDate"
+            ></app-custom-datepicker>
 
             <small>
-              Minimale huurperiode:
-              {{ selectedProduct.minRentTime }} dagen
+              Je kunt op iedere dag van de week starten.
             </small>
 
           </div>
 
 
-          <div class="rental-summary">
+          <!-- Aantal weken -->
 
-            <div>
+          <div class="form-group">
 
-              <span>
-                Huurprijs
-              </span>
+            <label>
+              Huurperiode
+            </label>
 
-              <strong>
-                €{{ selectedProduct.price | number:'1.2-2' }}
-              </strong>
+            <select
+                [(ngModel)]="rental.weeks"
+                (ngModelChange)="updateRentalDates()"
+                class="weeks-select"
+            >
 
-            </div>
+              @for (
+                week of rentalWeekOptions;
+                track week
+                  ) {
+
+                <option [ngValue]="week">
+
+                  {{ week }}
+                  {{ week === 1 ? 'week' : 'weken' }}
+
+                </option>
+
+              }
+
+            </select>
+
+            <small>
+              Minimale huurperiode:
+              {{ selectedProduct.minRentTime }} weken
+            </small>
+
+          </div>
 
 
-            <div>
+          <!-- Einddatum -->
 
-              <span>
-                Terugbrengen op
-              </span>
+          <div class="rental-date-info">
 
-              <strong>
-                {{
-                  formatDisplayDate(
-                    rental.endDate
-                  )
-                }}
-              </strong>
+          <span>
+            Terugbrengen op
+          </span>
 
-            </div>
+            <strong>
+              {{ formatDisplayDate(rental.endDate) }}
+            </strong>
+
+          </div>
+
+
+          <!-- Extra opties -->
+
+          <div class="options-section">
+
+            <h3>
+              Extra opties
+            </h3>
+
+
+            <!-- Afbreekservice -->
+
+            <label
+                class="option-card"
+                [class.selected]="rental.disassemblyService"
+            >
+
+              <div class="option-content">
+
+                <div class="option-title">
+                  <strong>
+                    Afbreekservice
+                  </strong>
+
+                  <span class="option-price">
+                  + €{{ selectedProduct.price | number:'1.2-2' }}
+                </span>
+                </div>
+
+                <small>
+                  Wij breken de set voor je af en sorteren hem
+                  opnieuw voor de volgende huurder.
+                </small>
+
+              </div>
+
+
+              <input
+                  type="checkbox"
+                  [(ngModel)]="rental.disassemblyService"
+              />
+
+            </label>
+
+
+            <!-- Sorteerplaten -->
+
+            <label
+                class="option-card"
+                [class.selected]="rental.sortingPlates"
+            >
+
+              <div class="option-content">
+
+                <div class="option-title">
+
+                  <strong>
+                    Sorteerplaten
+                  </strong>
+
+                  <span class="option-price">
+                  + €5,00
+                </span>
+
+                </div>
+
+                <small>
+                  Handige sorteerplaten om je LEGO-steentjes
+                  tijdens het bouwen overzichtelijk te houden.
+                </small>
+
+              </div>
+
+
+              <input
+                  type="checkbox"
+                  [(ngModel)]="rental.sortingPlates"
+              />
+
+            </label>
 
           </div>
 
         </div>
 
+
+        <!-- Footer -->
 
         <div class="modal-footer">
 
@@ -600,13 +716,17 @@
             Annuleren
           </button>
 
+
           <button
               type="button"
               class="btn-primary"
+
               [disabled]="
-              !rental.customerName ||
-              !rental.endDate
-            "
+            !rental.customerName ||
+            !rental.startDate ||
+            !rental.weeks
+          "
+
               (click)="createRental()"
           >
             Verhuur bevestigen

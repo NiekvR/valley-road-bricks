@@ -11,4 +11,5 @@ export class ImageTextComponent {
     @Input() image = '';
     @Input() text = '';
     @Input() imageSide: 'left' | 'right' = 'left';
+    @Input() mobileImages: boolean = false;
 }

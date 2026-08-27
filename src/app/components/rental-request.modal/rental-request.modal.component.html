@@ -1,0 +1,185 @@
+@if (visible) {
+
+  <div
+      class="modal-backdrop"
+      (click)="close()"
+  >
+
+    <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="rental-title"
+        (click)="$event.stopPropagation()"
+    >
+
+      <!-- Close -->
+      <button
+          class="close-button"
+          type="button"
+          aria-label="Sluiten"
+          (click)="close()"
+      >
+        ×
+      </button>
+
+
+      <!-- Header -->
+      <div class="modal-header">
+
+        <div class="lego-icon">
+          🧱
+        </div>
+
+        <div>
+          <span class="eyebrow">
+            Beschikbaarheid aanvragen
+          </span>
+
+          <h2 id="rental-title">
+            Deze set huren?
+          </h2>
+        </div>
+
+      </div>
+
+
+      <!-- Product -->
+      <div class="product">
+
+        @if (set?.images?.length) {
+          <img
+              class="product-image"
+              [src]="set.images[0]"
+              [alt]="set.name"
+          />
+        }
+
+        <div class="product-info">
+
+          <span class="category">
+            {{ set.category }}
+          </span>
+
+          <h3>
+            {{ set.name }}
+          </h3>
+
+          <span class="lego-number">
+            LEGO® {{ set.legoId }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- Form -->
+      <div class="form">
+
+        <div class="field">
+
+          <label for="startDate">
+            Wanneer wil je de set huren?
+          </label>
+
+          <input
+              id="startDate"
+              type="date"
+              [min]="minimumDate"
+              [(ngModel)]="startDate"
+          />
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="weeks">
+            Huurperiode
+          </label>
+
+          <select
+              id="weeks"
+              [(ngModel)]="weeks"
+          >
+            <option [ngValue]="2">
+              2 weken
+            </option>
+
+            <option [ngValue]="3">
+              3 weken
+            </option>
+
+            <option [ngValue]="4">
+              4 weken
+            </option>
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <!-- Information -->
+      <div class="notice">
+
+        <span class="notice-icon">
+          💚
+        </span>
+
+        <p>
+          <strong>Goed om te weten</strong>
+          <br />
+
+          Je aanvraag is nog geen definitieve reservering.
+          We controleren eerst de beschikbaarheid en nemen
+          daarna contact met je op.
+        </p>
+
+      </div>
+
+
+      <!-- Actions -->
+      <div class="actions">
+
+        <button
+            type="button"
+            class="button button-whatsapp"
+            [disabled]="!startDate"
+            (click)="requestViaWhatsApp()"
+        >
+          <span>💬</span>
+          Aanvragen via WhatsApp
+          <span class="arrow">→</span>
+        </button>
+
+
+        <button
+            type="button"
+            class="button button-email"
+            [disabled]="!startDate"
+            (click)="requestViaEmail()"
+        >
+          <span>✉️</span>
+          Aanvragen via e-mail
+        </button>
+
+      </div>
+
+
+      <p class="footer-text">
+        Nog vragen?
+        <button
+            type="button"
+            (click)="close()"
+        >
+          Neem gerust contact met ons op.
+        </button>
+      </p>
+
+    </div>
+
+  </div>
+
+}

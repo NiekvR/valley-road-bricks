@@ -12,6 +12,7 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import {environment} from "./environment";
 import {getStorage, provideStorage} from "@angular/fire/storage";
+import {getAuth, provideAuth} from "@angular/fire/auth";
 
 const scrollConfig: InMemoryScrollingOptions = {
     scrollPositionRestoration: 'top',
@@ -33,5 +34,8 @@ bootstrapApplication(AppComponent, {
           getFirestore()
       ),
       provideStorage(() => getStorage()),
+      provideAuth(() =>
+          getAuth()
+      )
   ]
 }).catch(err => console.error(err));

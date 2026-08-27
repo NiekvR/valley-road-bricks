@@ -36,6 +36,8 @@
 
     .nav-links {
       display: flex;
+      flex: 1 1 auto;
+      justify-content: center;
       gap: 2rem;
 
       list-style: none;
