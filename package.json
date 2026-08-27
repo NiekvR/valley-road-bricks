@@ -1,6 +1,6 @@
 {
   "name": "valley-road-bricks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Angular ecommerce website for Valley Road Bricks",
   "scripts": {
     "ng": "ng",

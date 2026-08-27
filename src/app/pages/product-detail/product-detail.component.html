@@ -15,12 +15,17 @@
           <span><fa-icon [icon]="faHashtag"></fa-icon> {{product.pieces}} stenen</span>
         </div>
 
-        <button class="btn mt-5"
-                (click)="showRentalModal = true"
-                [disabled]="!product.inStock || product.nearlyInStock">
-          Huur deze set
-          <span>→</span>
-        </button>
+        @if (!product.nearlyInStock) {
+          <button class="btn mt-5"
+                  (click)="showRentalModal = true"
+                  [disabled]="!product.inStock || product.nearlyInStock">
+            Huur deze set
+            <span>→</span>
+          </button>
+        } @else {
+          <span class="m-2 text-primary">Nog eventjes wachten. We zijn deze set op dit moment aan het klaarmaken voor verhuur.</span>
+        }
+
         @if (product.hasNoMiniFigs) {
           <span class="text-warning">* deze set wordt geleverd zonder mini-figuren</span>
         }
