@@ -226,7 +226,6 @@ export class OverviewComponent implements OnInit {
     }
 
     updateRentalDates(date?: string | null): void {
-        console.log(this.rental.startDate, date);
         if (!this.rental.startDate || !this.rental.weeks) {
             this.rental.endDate = '';
             return;
@@ -243,8 +242,6 @@ export class OverviewComponent implements OnInit {
             endDate.getDate() +
             (this.rental.weeks * 7)
         );
-
-        console.log(endDate)
 
         this.rental.endDate =
             this.formatDateForInput(endDate);

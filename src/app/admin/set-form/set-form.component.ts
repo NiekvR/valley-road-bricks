@@ -49,12 +49,10 @@ export class SetFormComponent {
         this.activatedRoute.params
             .pipe(
                 switchMap(params => {
-                    console.log(params);
                     return this.productService.getProduct(params['id'])
                 })
             )
             .subscribe((product) => {
-                console.log(product);
                 if (product) {
                     this.product = product;
                 } else {
@@ -95,7 +93,6 @@ export class SetFormComponent {
     }
 
     generateLink(): void {
-        console.log(this.product.category);
         if (!!this.product.category) {
             this.product.link = this.product.category
                 .toLowerCase()

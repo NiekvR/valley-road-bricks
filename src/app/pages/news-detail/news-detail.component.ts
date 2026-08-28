@@ -73,7 +73,6 @@ export class NewsDetailComponent {
                 filter(news => !!news),
             )
             .subscribe((article) => {
-                console.log(article);
                 if (!!article) {
                     this.article = article;
                 }

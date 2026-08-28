@@ -197,7 +197,6 @@ export class CustomDatepickerComponent implements ControlValueAccessor, OnChange
 
     private isDateBlocked(date: Date): boolean {
         const time = date.getTime();
-        console.log(this.blockedRanges);
         return this.blockedRanges.some((range) => {
             const start = this.normalize(range.start);
             const end = this.normalize(range.end);

@@ -43,7 +43,6 @@ export class RentalsService {
     }
 
     getActiveRentalsForSet(setId: string): Observable<Rental[]> {
-        console.log(setId)
         const rentalsRef = collection(
             this.firestore,
             'rentals'

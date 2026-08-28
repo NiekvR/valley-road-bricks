@@ -60,7 +60,6 @@ export class ProductDetailComponent {
                     switchMap(product => this.rentalsService.getActiveRentalsForSet(product!.id!)),
                 )
                 .subscribe((rentals) => {
-                    console.log(rentals);
                     if (rentals && rentals.length > 0) {
                         this.rentals = rentals;
                         this.cdr.detectChanges()

@@ -49,8 +49,6 @@ export class NewsComponent implements OnInit {
             .subscribe({
 
                 next: (articles) => {
-                    console.log(articles);
-
                     this.articles = articles;
 
                     this.loading = false;
