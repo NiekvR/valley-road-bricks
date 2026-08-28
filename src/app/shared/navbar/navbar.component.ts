@@ -7,7 +7,7 @@ import {NgOptimizedImage} from "@angular/common";
 
 @Component({
     selector: 'app-navbar',
-    imports: [RouterLink, RouterLinkActive, NgOptimizedImage],
+    imports: [RouterLink, RouterLinkActive],
     templateUrl: './navbar.component.html',
     styleUrl: './navbar.component.scss',
 })
@@ -22,6 +22,7 @@ export class NavbarComponent {
         // { label: 'Nieuwe sets', link: '/new' },
         { label: 'Hoe werkt huren?', link: '/hoe-het-werkt' },
         { label: 'Over ons', link: '/over-ons' },
+        { label: 'Nieuws', link: '/nieuws' },
         { label: 'FAQ', link: '/faq' },
         { label: 'Contact', link: '/contact' }
     ];

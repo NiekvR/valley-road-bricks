@@ -9,8 +9,7 @@ import {NgOptimizedImage} from "@angular/common";
     selector: 'app-admin-login',
     standalone: true,
     imports: [
-        FormsModule,
-        NgOptimizedImage
+        FormsModule
     ],
     templateUrl: './admin-login.component.html',
     styleUrl: './admin-login.component.scss'

@@ -1,26 +1,18 @@
 <section class="newsletter-section">
   <div class="max-width">
-    <div class="newsletter-content">
-      <h2>Blijf op de hoogte</h2>
-      <p>Ontvang je eerste updates over nieuwe sets, exclusieve aanbiedingen en LEGO®-nieuws.</p>
+    <div class="newsletter-content flex flex-center">
+      <div>
+        <h2>Blijf op de hoogte</h2>
+        <p>Ontvang je eerste updates over nieuwe sets, exclusieve aanbiedingen en LEGO®-nieuws.</p>
+      </div>
+      <button class="btn">
+        <a href="https://whatsapp.com/channel/0029VbDgl0r1noz7Z4Xvs50T"
+           target="_blank"
+           rel="noopener">
+          Volg ons op WhatsApp
+        </a>
+      </button>
 
-      <form class="newsletter-form" (ngSubmit)="onSubscribe()">
-        <input
-          type="email"
-          [(ngModel)]="email"
-          name="email"
-          placeholder="Jouw e-mailadres"
-          required
-          class="newsletter-input"
-          />
-        <button type="submit" class="btn-primary">Aanmelden</button>
-      </form>
-
-      @if (submitted) {
-        <div class="success-message">
-          ✓ Bedankt voor je aanmelding!
-        </div>
-      }
     </div>
   </div>
 </section>

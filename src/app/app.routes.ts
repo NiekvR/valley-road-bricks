@@ -11,6 +11,8 @@ import {ContactComponent} from "./pages/contact/contact.component";
 import {adminGuard} from "./services/admin.guard";
 import {AdminLoginComponent} from "./admin/admin-login/admin-login.component";
 import {NewsEditorComponent} from "./admin/news-editor/news-editor.component";
+import {NewsDetailComponent} from "./pages/news-detail/news-detail.component";
+import {NewsComponent} from "./pages/news/news.component";
 
 export const routes: Routes = [
     {
@@ -55,12 +57,20 @@ export const routes: Routes = [
         component: ContactComponent
     },
     {
+        path: 'nieuws',
+        component: NewsComponent
+    },
+    {
+        path: 'nieuws/:id',
+        component: NewsDetailComponent
+    },
+    {
         path: 'admin/login',
         component: AdminLoginComponent
     },
     {
         path: 'admin',
-        canActivate: [adminGuard],
+        // canActivate: [adminGuard],
         children: [
             {
                 path: 'overview',
@@ -75,13 +85,13 @@ export const routes: Routes = [
                 component: SetFormComponent,
             },
             {
-                path: 'news',
+                path: 'news/new',
                 component: NewsEditorComponent,
             },
-            // {
-            //     path: 'news/:id',
-            //     component: NewsEditorComponent,
-            // }
+            {
+                path: 'news/edit/:id',
+                component: NewsEditorComponent,
+            }
         ]
     },
 ];

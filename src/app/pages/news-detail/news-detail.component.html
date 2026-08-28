@@ -1,0 +1,364 @@
+<app-header></app-header>
+@if (!!article) {
+<article class="news-article">
+
+  <!-- Hero -->
+  <header class="article-hero">
+
+    <div class="hero-inner">
+
+      <div class="hero-image-wrapper">
+
+        @if (article.heroImage) {
+          <img
+              class="hero-image"
+              [src]="article.heroImage"
+              [alt]="article.title"
+          />
+        }
+
+        <div class="hero-decoration">
+          🧱
+        </div>
+
+      </div>
+
+
+      <div class="hero-content">
+
+      <span class="article-label">
+        {{correctLabel(this.article.type)}}
+      </span>
+
+        <h1>
+          {{ article.title }}
+        </h1>
+
+        @if (article.publishedAt) {
+          <time [attr.datetime]="article.publishedAt">
+            {{ formatPublishedDate(article.publishedAt) }}
+          </time>
+        }
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- Content -->
+  <div class="article-container">
+
+    <div class="article-content">
+
+      <!-- Intro -->
+      @if (article.excerpt) {
+        <p class="article-excerpt">
+          {{ article.excerpt }}
+        </p>
+      }
+
+
+      <!-- Main text -->
+      @if (article.text) {
+        <div class="article-text">
+          {{ article.text }}
+        </div>
+      }
+
+
+      <!-- Blocks -->
+      @if (article.blocks.length) {
+
+        <div class="article-blocks">
+
+          @for (block of article.blocks; track $index) {
+
+            @switch (block.type) {
+
+              <!-- TEXT -->
+              @case ('text') {
+
+                <section class="content-block text-block">
+
+                  @if (block.title) {
+                    <h2>
+                      {{ block.title }}
+                    </h2>
+                  }
+
+                  @if (block.text) {
+                    <div class="block-text">
+                      {{ block.text }}
+                    </div>
+                  }
+
+                </section>
+
+              }
+
+
+              <!-- IMAGE -->
+              @case ('image') {
+
+                <figure class="content-block image-block">
+
+                  @if (block.image) {
+
+                    <img
+                        [src]="block.image"
+                        [alt]="block.imageAlt || block.title || article.title"
+                    />
+
+                  }
+
+                  @if (block.caption) {
+                    <figcaption>
+                      {{ block.caption }}
+                    </figcaption>
+                  }
+
+                </figure>
+
+              }
+
+
+              <!-- QUOTE -->
+              @case ('quote') {
+
+                <blockquote class="content-block quote-block">
+
+                  <div class="quote-icon">
+                    “
+                  </div>
+
+                  <p>
+                    {{ block.text }}
+                  </p>
+
+                  @if (block.title) {
+                    <cite>
+                      {{ block.title }}
+                    </cite>
+                  }
+
+                </blockquote>
+
+              }
+
+
+              <!-- TIP -->
+              @case ('tip') {
+
+                <aside class="content-block tip-block">
+
+                  <div class="tip-icon">
+                    💡
+                  </div>
+
+                  <div class="tip-content">
+
+                    @if (block.title) {
+                      <h3>
+                        {{ block.title }}
+                      </h3>
+                    } @else {
+                      <h3>
+                        Tip van Valley Road Bricks
+                      </h3>
+                    }
+
+                    @if (block.text) {
+                      <p>
+                        {{ block.text }}
+                      </p>
+                    }
+
+                  </div>
+
+                </aside>
+
+              }
+
+              @case ('set') {
+
+                <section class="article-set">
+
+                  <div class="article-set-image">
+
+                    <img
+                        [src]="block.setImage"
+                        [alt]="block.setName || 'LEGO-set'"
+                    />
+
+                  </div>
+
+
+                  <div class="article-set-content">
+
+      <span class="set-label">
+        LEGO® SET
+      </span>
+
+                    <h2>
+                      {{ block.setName }}
+                    </h2>
+
+
+                    <div class="set-meta">
+
+                      @if (block.legoId) {
+                        <span>
+            LEGO #{{ block.legoId }}
+          </span>
+                      }
+
+                      @if (block.pieces) {
+                        <span>
+            🧱 {{ block.pieces | number }} steentjes
+          </span>
+                      }
+
+                    </div>
+
+
+                    <p>
+                      Zin om deze set zelf te bouwen?
+                      Bekijk de set en ontdek alle informatie,
+                      foto's en huurmogelijkheden.
+                    </p>
+
+
+                    @if (block.setLink) {
+
+                      <a
+                          class="set-button"
+                          [routerLink]="block.setLink"
+                      >
+                        Bekijk de set
+                        <span>→</span>
+                      </a>
+
+                    }
+
+                  </div>
+
+                </section>
+
+              }
+
+              @case ('video') {
+
+                <section class="article-video">
+
+                  @if (block.videoTitle) {
+
+                    <h2>
+                      {{ block.videoTitle }}
+                    </h2>
+
+                  }
+
+
+                  @if (block.videoDescription) {
+
+                    <p class="video-description">
+                      {{ block.videoDescription }}
+                    </p>
+
+                  }
+
+
+                  @if (getYoutubeEmbedUrl(block.videoUrl); as embedUrl) {
+
+                    <div class="video-wrapper">
+
+                      <iframe
+                          [src]="embedUrl | safeUrl"
+                          title="{{ block.videoTitle || 'YouTube video' }}"
+                          loading="lazy"
+                          allowfullscreen>
+                      </iframe>
+
+                    </div>
+
+                  }
+
+                </section>
+
+              }
+
+            }
+
+          }
+
+        </div>
+
+      }
+
+
+      <!-- Our advice -->
+      @if (article.ourAdvice) {
+
+        <aside class="our-advice">
+
+          <div class="advice-icon">
+            💡
+          </div>
+
+          <div class="advice-content">
+
+            <span>
+              Ons advies
+            </span>
+
+            <p>
+              {{ article.ourAdvice }}
+            </p>
+
+          </div>
+
+        </aside>
+
+      }
+
+    </div>
+
+  </div>
+
+
+  <!-- CTA -->
+  <section class="article-cta">
+
+    <div>
+
+      <span>
+        Klaar om zelf aan de slag te gaan?
+      </span>
+
+      <h2>
+        Huur een LEGO-set en bouw mee!
+      </h2>
+
+      <p>
+        Ontdek onze collectie LEGO-sets en kies jouw volgende
+        bouwavontuur.
+      </p>
+
+    </div>
+
+    <a
+        routerLink="/catalogus"
+        class="cta-button"
+    >
+      Bekijk de sets
+      <span>→</span>
+    </a>
+
+  </section>
+
+</article>
+  }
+
+<app-footer></app-footer>

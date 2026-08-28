@@ -1,33 +1,50 @@
-<div class="editor">
-
-  <!-- TOPBAR -->
+<div class="editor-page">
 
   <header class="editor-header">
 
     <div>
-      <span class="eyebrow">Nieuws</span>
+      <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancel()"
+      >
+        Terug
+      </button>
+      <span class="eyebrow">
+        Nieuws
+      </span>
 
       <h1>
-        Nieuw artikel
+        {{ isEditMode ? 'Nieuwsartikel bewerken' : 'Nieuw nieuwsartikel' }}
       </h1>
+
+      <p>
+        Maak een nieuwsartikel voor Valley Road Bricks.
+      </p>
     </div>
 
-    <div class="editor-actions">
+
+    <div class="header-actions">
 
       <button
           type="button"
-          class="btn-secondary">
-        Voorbeeld
+          class="btn-secondary"
+          (click)="cancel()"
+      >
+        Annuleren
       </button>
 
       <button
           type="button"
           class="btn-primary"
-          [disabled]="saving"
-          (click)="saveArticle()">
-
-        {{ saving ? 'Opslaan...' : 'Opslaan' }}
-
+          [disabled]="isSaving"
+          (click)="save()"
+      >
+        @if (isSaving) {
+          Opslaan...
+        } @else {
+          {{ isEditMode ? 'Wijzigingen opslaan' : 'Artikel opslaan' }}
+        }
       </button>
 
     </div>
@@ -35,615 +52,930 @@
   </header>
 
 
+  @if (errorMessage) {
+
+    <div class="message error">
+      {{ errorMessage }}
+    </div>
+
+  }
+
+
+  @if (savedMessage) {
+
+    <div class="message success">
+      {{ savedMessage }}
+    </div>
+
+  }
+
+
   <div class="editor-layout">
 
 
-    <!-- LEFT : CANVAS -->
+    <!-- =====================================================
+         Main content
+    ====================================================== -->
 
-    <main class="canvas">
+    <main class="editor-main">
 
 
-      <!-- ARTICLE SETTINGS -->
+      <!-- Basic information -->
 
-      <section class="article-settings">
+      <section class="editor-card">
 
-        <input
-            type="text"
-            [(ngModel)]="article.title"
-            (blur)="generateSlug()"
-            placeholder="Titel van je artikel..."
-            class="article-title-input"
-        />
+        <div class="card-header">
 
-        <input
-            type="text"
-            [(ngModel)]="article.excerpt"
-            placeholder="Korte omschrijving..."
-            class="excerpt-input"
-        />
+          <div>
+            <h2>
+              Basisinformatie
+            </h2>
 
-        <input
-            type="text"
-            [(ngModel)]="article.heroImage"
-            placeholder="URL van hero afbeelding..."
-        />
+            <p>
+              De belangrijkste informatie van het artikel.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label for="category">
+            Type
+          </label>
+
+          <select
+              id="category"
+              [(ngModel)]="newsArticle.type"
+          >
+            <option value="">
+              Selecteer een type
+            </option>
+
+            @for (type of types; track type) {
+              <option [value]="type">
+                {{ type }}
+              </option>
+            }
+          </select>
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Titel
+          </label>
+
+          <input
+              type="text"
+              [(ngModel)]="newsArticle.title"
+              (blur)="generateSlug()"
+              placeholder="Bijvoorbeeld: 5 tips voor een leuker bouwavontuur"
+          />
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Slug
+          </label>
+
+          <input
+              type="text"
+              [(ngModel)]="newsArticle.slug"
+              placeholder="5-tips-voor-een-leuker-bouwavontuur"
+          />
+
+          <small>
+            Dit wordt gebruikt in de URL van het artikel.
+          </small>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Korte omschrijving
+          </label>
+
+          <textarea
+              [(ngModel)]="newsArticle.excerpt"
+              rows="3"
+              placeholder="Een korte introductie van het artikel..."
+          ></textarea>
+
+        </div>
 
       </section>
 
 
-      <!-- BLOCKS -->
+      <!-- Hero -->
 
-      <div
-          class="blocks"
-          cdkDropList
-          cdkDropListOrientation="vertical"
-          (cdkDropListDropped)="drop($event)"
-      >
+      <section class="editor-card">
 
-        @for (block of blocks; track block.id) {
+        <div class="card-header">
 
-          <div
-              class="block"
-              cdkDrag
-              [class.selected]="selectedBlock?.id === block.id"
-              (click)="selectBlock(block)"
-          >
+          <div>
+            <h2>
+              Hero afbeelding
+            </h2>
 
-            <div class="block-toolbar">
+            <p>
+              De afbeelding die bovenaan het artikel wordt weergegeven.
+            </p>
+          </div>
 
-              <span class="drag-handle" cdkDragHandle>
-                ⠿
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Afbeelding
+          </label>
+
+          <app-image-upload
+              (imageUrlReady)="onMainImageUploaded($event)">
+          </app-image-upload>
+
+        </div>
+
+
+        @if (newsArticle.heroImage) {
+
+          <div class="hero-preview">
+
+            <img
+                [src]="newsArticle.heroImage"
+                alt="Hero preview"
+            />
+
+          </div>
+
+        }
+
+      </section>
+
+
+      <!-- Main text -->
+
+      <section class="editor-card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>
+              Artikel
+            </h2>
+
+            <p>
+              De introductie en hoofdtekst van het artikel.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Hoofdtekst
+          </label>
+
+          <textarea
+              [(ngModel)]="newsArticle.text"
+              rows="12"
+              placeholder="Schrijf hier je artikel..."
+          ></textarea>
+
+        </div>
+
+      </section>
+
+
+      <!-- Blocks -->
+
+      <section class="editor-card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>
+              Contentblokken
+            </h2>
+
+            <p>
+              Voeg extra onderdelen toe om het artikel aantrekkelijker te maken.
+            </p>
+          </div>
+
+        </div>
+
+
+        <!-- Existing blocks -->
+
+        <div class="blocks">
+
+          @for (
+            block of newsArticle.blocks;
+            track $index;
+            let i = $index
+              ) {
+
+            <div class="block-editor">
+
+              <div class="block-header">
+
+                <div class="block-type">
+
+                  @switch (block.type) {
+
+                    @case ('text') {
+                      <span>📝</span>
+                      <strong>Tekst</strong>
+                    }
+
+                    @case ('image') {
+                      <span>🖼️</span>
+                      <strong>Afbeelding</strong>
+                    }
+
+                    @case ('quote') {
+                      <span>💬</span>
+                      <strong>Quote</strong>
+                    }
+
+                    @case ('tip') {
+                      <span>💡</span>
+                      <strong>Tip</strong>
+                    }
+
+                  }
+
+                </div>
+
+
+                <div class="block-actions">
+
+                  <button
+                      type="button"
+                      title="Omhoog"
+                      [disabled]="i === 0"
+                      (click)="moveBlockUp(i)"
+                  >
+                    ↑
+                  </button>
+
+                  <button
+                      type="button"
+                      title="Omlaag"
+                      [disabled]="i === newsArticle.blocks.length - 1"
+                      (click)="moveBlockDown(i)"
+                  >
+                    ↓
+                  </button>
+
+                  <button
+                      type="button"
+                      class="delete"
+                      title="Verwijderen"
+                      (click)="removeBlock(i)"
+                  >
+                    🗑
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="block-content">
+
+
+                @switch (block.type) {
+
+
+                  <!-- TEXT -->
+
+                  @case ('text') {
+
+                    <div class="form-group">
+
+                      <label>
+                        Titel
+                      </label>
+
+                      <input
+                          type="text"
+                          [(ngModel)]="block.title"
+                          placeholder="Optionele titel"
+                      />
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                      <label>
+                        Tekst
+                      </label>
+
+                      <textarea
+                          [(ngModel)]="block.text"
+                          rows="6"
+                          placeholder="Schrijf je tekst..."
+                      ></textarea>
+
+                    </div>
+
+                  }
+
+
+                  <!-- IMAGE -->
+
+                  @case ('image') {
+
+                    <div class="form-group">
+
+                      <label>
+                        Afbeelding URL
+                      </label>
+
+                      <app-image-upload
+                          (imageUrlReady)="onBlockImageUploaded($event, i)">
+                      </app-image-upload>
+
+                    </div>
+
+
+                    @if (block.image) {
+
+                      <img
+                          class="block-image-preview"
+                          [src]="block.image"
+                          [alt]="block.imageAlt || ''"
+                      />
+
+                    }
+
+
+                    <div class="form-group">
+
+                      <label>
+                        Alt-tekst
+                      </label>
+
+                      <input
+                          type="text"
+                          [(ngModel)]="block.imageAlt"
+                          placeholder="Omschrijving van de afbeelding"
+                      />
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                      <label>
+                        Onderschrift
+                      </label>
+
+                      <input
+                          type="text"
+                          [(ngModel)]="block.caption"
+                          placeholder="Optioneel onderschrift"
+                      />
+
+                    </div>
+
+                  }
+
+
+                  <!-- QUOTE -->
+
+                  @case ('quote') {
+
+                    <div class="form-group">
+
+                      <label>
+                        Quote
+                      </label>
+
+                      <textarea
+                          [(ngModel)]="block.text"
+                          rows="4"
+                          placeholder="Schrijf hier een mooie quote..."
+                      ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                      <label>
+                        Auteur / bron
+                      </label>
+
+                      <input
+                          type="text"
+                          [(ngModel)]="block.title"
+                          placeholder="Bijvoorbeeld: Valley Road Bricks"
+                      />
+
+                    </div>
+
+                  }
+
+
+                  <!-- TIP -->
+
+                  @case ('tip') {
+
+                    <div class="form-group">
+
+                      <label>
+                        Titel
+                      </label>
+
+                      <input
+                          type="text"
+                          [(ngModel)]="block.title"
+                          placeholder="Tip van Valley Road Bricks"
+                      />
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                      <label>
+                        Tip
+                      </label>
+
+                      <textarea
+                          [(ngModel)]="block.text"
+                          rows="5"
+                          placeholder="Schrijf hier je tip..."
+                      ></textarea>
+
+                    </div>
+
+                  }
+
+                  @case ('set') {
+
+                    <div class="set-editor">
+
+                      <div class="form-group">
+
+                        <label>
+                          Set ID
+                        </label>
+
+                        <input
+                            type="text"
+                            [(ngModel)]="block.setId"
+                            placeholder="Bijvoorbeeld: 76968"
+                        />
+
+                        <small>
+                          Interne ID van de set.
+                        </small>
+
+                      </div>
+
+
+                      <div class="form-group">
+
+                        <label>
+                          Naam van de set
+                        </label>
+
+                        <input
+                            type="text"
+                            [(ngModel)]="block.setName"
+                            placeholder="Bijvoorbeeld: Dinosaurusfossielen: Tyrannosaurus rex"
+                        />
+
+                      </div>
+
+
+                      <div class="form-group">
+
+                        <label>
+                          Afbeelding
+                        </label>
+
+                        <input
+                            type="text"
+                            [(ngModel)]="block.setImage"
+                            placeholder="assets/img/products/T-Rex/T-Rex-1.webp"
+                        />
+
+                      </div>
+
+
+                      <div class="form-row">
+
+                        <div class="form-group">
+
+                          <label>
+                            LEGO nummer
+                          </label>
+
+                          <input
+                              type="number"
+                              [(ngModel)]="block.legoId"
+                              placeholder="76968"
+                          />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Aantal steentjes
+                          </label>
+
+                          <input
+                              type="number"
+                              [(ngModel)]="block.pieces"
+                              placeholder="3145"
+                          />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Huurprijs per week
+                          </label>
+
+                          <input
+                              type="number"
+                              step="0.01"
+                              [(ngModel)]="block.price"
+                              placeholder="15.00"
+                          />
+
+                        </div>
+
+                      </div>
+
+
+                      <div class="form-group">
+
+                        <label>
+                          Link naar detailpagina
+                        </label>
+
+                        <input
+                            type="text"
+                            [(ngModel)]="block.setLink"
+                            placeholder="/sets/lego-jurassic-world-dinosaurusfossielen-tyrannosaurus-rex-76968"
+                        />
+
+                      </div>
+
+
+                      @if (block.setImage) {
+
+                        <div class="set-preview">
+
+                          <div class="set-preview-image">
+
+                            <img
+                                [src]="block.setImage"
+                                [alt]="block.setName || 'LEGO-set'"
+                            />
+
+                          </div>
+
+                          <div class="set-preview-content">
+
+          <span class="preview-label">
+            LEGO® SET
+          </span>
+
+                            <h3>
+                              {{ block.setName || 'Naam van de set' }}
+                            </h3>
+
+                            <div class="set-preview-meta">
+
+                              @if (block.legoId) {
+                                <span>
+                #{{ block.legoId }}
               </span>
+                              }
 
-              <span class="block-type">
-                {{ block.type }}
+                              @if (block.pieces) {
+                                <span>
+                🧱 {{ block.pieces | number }} steentjes
               </span>
+                              }
 
-              <div class="block-actions">
+                              @if (block.price !== undefined) {
+                                <span>
+                €{{ block.price | number:'1.2-2' }} / week
+              </span>
+                              }
 
-                <button
-                    (click)="moveUp(block); $event.stopPropagation()">
-                  ↑
-                </button>
+                            </div>
 
-                <button
-                    (click)="moveDown(block); $event.stopPropagation()">
-                  ↓
-                </button>
+                            <button
+                                type="button"
+                                disabled
+                            >
+                              Bekijk de set →
+                            </button>
 
-                <button
-                    (click)="duplicateBlock(block); $event.stopPropagation()">
-                  ⧉
-                </button>
+                          </div>
 
-                <button
-                    (click)="removeBlock(block); $event.stopPropagation()">
-                  ×
-                </button>
+                        </div>
+
+                      }
+
+                    </div>
+
+                  }
+
+                  @case ('video') {
+
+                    <div class="video-editor">
+
+                      <div class="form-group">
+
+                        <label>
+                          YouTube URL
+                        </label>
+
+                        <input
+                            type="url"
+                            [(ngModel)]="block.videoUrl"
+                            placeholder="https://www.youtube.com/watch?v=..."
+                        />
+
+                        <small>
+                          Plak hier de volledige YouTube-link.
+                        </small>
+
+                      </div>
+
+
+                      <div class="form-group">
+
+                        <label>
+                          Titel
+                        </label>
+
+                        <input
+                            type="text"
+                            [(ngModel)]="block.videoTitle"
+                            placeholder="Bekijk deze LEGO-set in actie"
+                        />
+
+                      </div>
+
+
+                      <div class="form-group">
+
+                        <label>
+                          Omschrijving
+                        </label>
+
+                        <textarea
+                            [(ngModel)]="block.videoDescription"
+                            rows="3"
+                            placeholder="Een korte omschrijving van de video..."
+                        ></textarea>
+
+                      </div>
+
+
+                      @if (block.videoUrl) {
+
+                        <div class="video-url-preview">
+
+                          ▶️
+
+                          <span>
+          Video toegevoegd
+        </span>
+
+                        </div>
+
+                      }
+
+                    </div>
+
+                  }
+                }
 
               </div>
 
             </div>
 
+          }
 
-            <!-- BLOCK PREVIEW -->
+        </div>
 
-            <div class="block-content">
 
+        <!-- Add block -->
 
-              @switch (block.type) {
+        <div class="add-block">
 
+          <span>
+            Contentblok toevoegen
+          </span>
 
-                @case ('heading') {
 
-                  <h2>
-                    {{ block.data.text }}
-                  </h2>
-
-                }
-
-
-                @case ('text') {
-
-                  <div
-                      class="article-text"
-                      [innerHTML]="block.data.html">
-                  </div>
-
-                }
-
-
-                @case ('image') {
-
-                  @if (block.data.url) {
-
-                    <img
-                        [src]="block.data.url"
-                        [alt]="block.data.alt"
-                    />
-
-                  } @else {
-
-                    <div class="image-placeholder">
-                      🖼️
-                      <span>
-                        Afbeelding toevoegen
-                      </span>
-                    </div>
-
-                  }
-
-                }
-
-
-                @case ('tip') {
-
-                  <div class="tip-block">
-
-                    <div class="tip-icon">
-                      💡
-                    </div>
-
-                    <div>
-
-                      <strong>
-                        {{ block.data.title }}
-                      </strong>
-
-                      <p>
-                        {{ block.data.text }}
-                      </p>
-
-                    </div>
-
-                  </div>
-
-                }
-
-
-                @case ('quote') {
-
-                  <blockquote>
-
-                    "{{ block.data.text }}"
-
-                    @if (block.data.author) {
-                      <cite>
-                        — {{ block.data.author }}
-                      </cite>
-                    }
-
-                  </blockquote>
-
-                }
-
-
-                @case ('set') {
-
-                  <div class="set-block">
-
-                    @if (block.data.image) {
-
-                      <img
-                          [src]="block.data.image"
-                          alt=""
-                      />
-
-                    }
-
-                    <div>
-
-                      <span>
-                        LEGO® set
-                      </span>
-
-                      <h3>
-                        {{ block.data.title || 'LEGO set' }}
-                      </h3>
-
-                      <p>
-                        {{ block.data.description }}
-                      </p>
-
-                    </div>
-
-                  </div>
-
-                }
-
-
-                @case ('columns') {
-
-                  <div class="columns-block">
-
-                    <div [innerHTML]="block.data.left"></div>
-
-                    <div [innerHTML]="block.data.right"></div>
-
-                  </div>
-
-                }
-
-
-                @case ('button') {
-
-                  <div class="button-block">
-
-                    <a [href]="block.data.url">
-                      {{ block.data.text }}
-                    </a>
-
-                  </div>
-
-                }
-
-
-                @case ('divider') {
-
-                  <hr>
-
-                }
-
-              }
-
-            </div>
-
-          </div>
-
-        }
-
-
-        <!-- EMPTY STATE -->
-
-        @if (blocks.length === 0) {
-
-          <div class="empty-editor">
-
-            <div class="empty-icon">
-              ✨
-            </div>
-
-            <h2>
-              Begin je artikel
-            </h2>
-
-            <p>
-              Voeg hieronder je eerste contentblok toe.
-            </p>
+          <div class="block-buttons">
 
             <button
-                class="btn-primary"
-                (click)="addBlock('text')">
+                type="button"
+                (click)="addBlock('text')"
+            >
+              📝 Tekst
+            </button>
 
-              + Tekst toevoegen
+            <button
+                type="button"
+                (click)="addBlock('image')"
+            >
+              🖼️ Afbeelding
+            </button>
 
+            <button
+                type="button"
+                (click)="addBlock('quote')"
+            >
+              💬 Quote
+            </button>
+
+            <button
+                type="button"
+                (click)="addBlock('tip')"
+            >
+              💡 Tip
+            </button>
+
+            <button
+                type="button"
+                (click)="addBlock('set')"
+            >
+              🧱 LEGO-set
+            </button>
+
+            <button
+                type="button"
+                (click)="addBlock('video')"
+            >
+              ▶️ YouTube-video
             </button>
 
           </div>
 
-        }
+        </div>
 
-      </div>
+      </section>
 
 
-      <!-- ADD BLOCK -->
+      <!-- Advice -->
 
-      <div class="add-block">
+      <section class="editor-card">
 
-        <span>
-          + Voeg content toe
-        </span>
+        <div class="card-header">
 
-        <div class="block-buttons">
+          <div>
+            <h2>
+              Ons advies
+            </h2>
 
-          <button (click)="addBlock('heading')">
-            T
-            <span>Titel</span>
-          </button>
-
-          <button (click)="addBlock('text')">
-            ¶
-            <span>Tekst</span>
-          </button>
-
-          <button (click)="addBlock('image')">
-            🖼
-            <span>Afbeelding</span>
-          </button>
-
-          <button (click)="addBlock('tip')">
-            💡
-            <span>Tip</span>
-          </button>
-
-          <button (click)="addBlock('quote')">
-            “
-            <span>Quote</span>
-          </button>
-
-          <button (click)="addBlock('set')">
-            🧱
-            <span>LEGO set</span>
-          </button>
-
-          <button (click)="addBlock('columns')">
-            ▥
-            <span>2 kolommen</span>
-          </button>
-
-          <button (click)="addBlock('button')">
-            ↗
-            <span>Knop</span>
-          </button>
-
-          <button (click)="addBlock('divider')">
-            ―
-            <span>Scheiding</span>
-          </button>
+            <p>
+              Dit wordt onderaan het artikel weergegeven als opvallend adviesblok.
+            </p>
+          </div>
 
         </div>
 
-      </div>
+
+        <div class="form-group">
+
+          <label>
+            Advies
+          </label>
+
+          <textarea
+              [(ngModel)]="newsArticle.ourAdvice"
+              rows="5"
+              placeholder="Bijvoorbeeld: Neem voldoende tijd voor het bouwen..."
+          ></textarea>
+
+        </div>
+
+      </section>
 
     </main>
 
 
-    <!-- RIGHT : PROPERTIES -->
+    <!-- =====================================================
+         Sidebar
+    ====================================================== -->
 
-    <aside class="properties">
+    <aside class="editor-sidebar">
 
-      @if (selectedBlock) {
+      <section class="editor-card">
 
-        <div class="properties-header">
-
-          <span>
-            Contentblok
-          </span>
+        <div class="card-header">
 
           <h2>
-            {{ selectedBlock.type }}
+            Publiceren
           </h2>
 
         </div>
 
 
-        @switch (selectedBlock.type) {
+        <label class="publish-toggle">
+
+          <input
+              type="checkbox"
+              [(ngModel)]="newsArticle.published"
+          />
+
+          <span class="toggle"></span>
+
+          <span class="toggle-label">
+
+            @if (newsArticle.published) {
+              Gepubliceerd
+            } @else {
+              Concept
+            }
+
+          </span>
+
+        </label>
 
 
-          @case ('heading') {
+        <p class="publish-description">
 
-            <label>
-              Titel
-
-              <input
-                  [(ngModel)]="selectedBlock.data.text"
-              />
-
-            </label>
-
-            <label>
-              Niveau
-
-              <select
-                  [(ngModel)]="selectedBlock.data.level">
-
-                <option [value]="2">H2</option>
-                <option [value]="3">H3</option>
-                <option [value]="4">H4</option>
-
-              </select>
-
-            </label>
-
+          @if (newsArticle.published) {
+            Dit artikel is zichtbaar op de website.
+          } @else {
+            Dit artikel wordt opgeslagen als concept.
           }
 
+        </p>
 
-          @case ('text') {
+      </section>
 
-            <label>
-              Tekst
 
-              <textarea
-                  rows="12"
-                  [(ngModel)]="selectedBlock.data.html">
-              </textarea>
+      <!-- Quick overview -->
 
-            </label>
+      <section class="editor-card overview">
 
-            <small>
-              HTML is momenteel toegestaan.
-            </small>
+        <h2>
+          Overzicht
+        </h2>
 
-          }
+        <div class="overview-row">
 
+          <span>
+            Contentblokken
+          </span>
 
-          @case ('image') {
-
-            <label>
-              Afbeelding URL
-
-              <input
-                  [(ngModel)]="selectedBlock.data.url"
-              />
-
-            </label>
-
-            <label>
-              Alt tekst
-
-              <input
-                  [(ngModel)]="selectedBlock.data.alt"
-              />
-
-            </label>
-
-            <label>
-              Onderschrift
-
-              <input
-                  [(ngModel)]="selectedBlock.data.caption"
-              />
-
-            </label>
-
-          }
-
-
-          @case ('tip') {
-
-            <label>
-              Titel
-
-              <input
-                  [(ngModel)]="selectedBlock.data.title"
-              />
-
-            </label>
-
-            <label>
-              Tekst
-
-              <textarea
-                  rows="6"
-                  [(ngModel)]="selectedBlock.data.text">
-              </textarea>
-
-            </label>
-
-          }
-
-
-          @case ('quote') {
-
-            <label>
-              Quote
-
-              <textarea
-                  rows="6"
-                  [(ngModel)]="selectedBlock.data.text">
-              </textarea>
-
-            </label>
-
-            <label>
-              Auteur
-
-              <input
-                  [(ngModel)]="selectedBlock.data.author"
-              />
-
-            </label>
-
-          }
-
-
-          @case ('button') {
-
-            <label>
-              Tekst
-
-              <input
-                  [(ngModel)]="selectedBlock.data.text"
-              />
-
-            </label>
-
-            <label>
-              Link
-
-              <input
-                  [(ngModel)]="selectedBlock.data.url"
-              />
-
-            </label>
-
-          }
-
-
-          @case ('set') {
-
-            <label>
-              Setnaam
-
-              <input
-                  [(ngModel)]="selectedBlock.data.title"
-              />
-
-            </label>
-
-            <label>
-              Afbeelding
-
-              <input
-                  [(ngModel)]="selectedBlock.data.image"
-              />
-
-            </label>
-
-            <label>
-              Beschrijving
-
-              <textarea
-                  [(ngModel)]="selectedBlock.data.description">
-              </textarea>
-
-            </label>
-
-            <label>
-              Link
-
-              <input
-                  [(ngModel)]="selectedBlock.data.url"
-              />
-
-            </label>
-
-          }
-
-
-          @case ('columns') {
-
-            <label>
-              Linkerkolom
-
-              <textarea
-                  rows="8"
-                  [(ngModel)]="selectedBlock.data.left">
-              </textarea>
-
-            </label>
-
-            <label>
-              Rechterkolom
-
-              <textarea
-                  rows="8"
-                  [(ngModel)]="selectedBlock.data.right">
-              </textarea>
-
-            </label>
-
-          }
-
-        }
-
-      } @else {
-
-        <div class="no-selection">
-
-          <span>👆</span>
-
-          <h3>
-            Kies een blok
-          </h3>
-
-          <p>
-            Klik op een contentblok om de inhoud aan te passen.
-          </p>
+          <strong>
+            {{ newsArticle.blocks.length }}
+          </strong>
 
         </div>
 
-      }
+
+        <div class="overview-row">
+
+          <span>
+            Status
+          </span>
+
+          <strong>
+
+            @if (newsArticle.published) {
+              Online
+            } @else {
+              Concept
+            }
+
+          </strong>
+
+        </div>
+
+      </section>
 
     </aside>
 

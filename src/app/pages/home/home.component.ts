@@ -10,12 +10,13 @@ import { FooterComponent } from '../../components/footer/footer.component';
 @Component({
     selector: 'app-home',
     imports: [
-    HeaderComponent,
-    HeroComponent,
-    ProductsComponent,
-    ProcessComponent,
-    FooterComponent
-],
+        HeaderComponent,
+        HeroComponent,
+        ProductsComponent,
+        ProcessComponent,
+        FooterComponent,
+        NewsletterComponent
+    ],
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })

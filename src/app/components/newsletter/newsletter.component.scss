@@ -1,4 +1,5 @@
 @use 'src/styles/variables' as *;
+@use 'src/styles/components/utilities' as *;
 
 .newsletter-section {
   background: linear-gradient(135deg, rgba($primary-green, 0.1) 0%, rgba($secondary-dark, 0.05) 100%);
@@ -8,6 +9,7 @@
 
   .newsletter-content {
     text-align: center;
+    gap: $spacing-xl;
 
     h2 {
       margin-bottom: $spacing-md;
@@ -72,5 +74,12 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+}
+
+.btn {
+  padding: $spacing-md;
+  a {
+    color: $bg-white;
   }
 }

@@ -14,9 +14,7 @@ interface FooterSection {
 
 @Component({
     selector: 'app-footer',
-    imports: [
-        NgOptimizedImage
-    ],
+    imports: [],
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss']
 })

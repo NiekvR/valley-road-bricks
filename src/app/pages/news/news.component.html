@@ -1,0 +1,213 @@
+<app-header></app-header>
+<!-- Hero -->
+<section class="news-hero">
+
+  <div class="hero-content">
+
+    <span class="eyebrow">
+      NIEUWS
+    </span>
+
+    <h1>
+      VAN DE BOUWTAFEL
+    </h1>
+
+    <p class="hero-intro">
+      Inspiratie, tips en verhalen uit de wereld van LEGO® en
+      Valley Road Bricks.
+    </p>
+
+    <p class="hero-description">
+      Nieuwe sets, handige bouwtips, een kijkje achter de schermen
+      en persoonlijke verhalen van ons gezin.
+    </p>
+
+    <div class="hero-slogan">
+      Bouw. Beleef. Geef door.
+    </div>
+
+  </div>
+
+
+  <div class="hero-image">
+
+    <img
+        src="assets/img/VRB-MinasThirit.png"
+        alt="LEGO kasteel gebouwd op de bouwtafel"
+    />
+
+    <span class="hero-heart">
+      ♡
+    </span>
+
+  </div>
+
+</section>
+
+
+<!-- Latest articles -->
+<section class="articles-section">
+
+  <div class="section-header">
+
+    <div>
+      <span class="section-eyebrow">
+        VAN DE BOUWTAFEL
+      </span>
+
+      <h2>
+        Laatste bouwverhalen
+      </h2>
+    </div>
+
+  </div>
+
+
+  <div class="articles-grid">
+    @if (loading) {
+
+      <div class="news-loading">
+        Nieuwsartikelen laden...
+      </div>
+
+    }
+
+    @if (error) {
+
+      <div class="news-error">
+        Er ging iets mis bij het laden van de nieuwsartikelen.
+      </div>
+
+    }
+
+    @if (!loading && !error && articles.length === 0) {
+
+      <div class="news-empty">
+        Er zijn momenteel geen nieuwsartikelen.
+      </div>
+
+    }
+
+    @for (article of articles; track article.id) {
+
+      <article
+          class="article-card"
+          [class.featured]="$index === 0"
+      >
+
+        <a
+            class="article-image"
+            [routerLink]="['/nieuws', article.slug]"
+        >
+
+          <img
+              [src]="article.heroImage"
+              [alt]="article.title"
+          />
+
+          @if (article.type) {
+            <span class="article-category">
+              {{ correctLabel(article.type) }}
+            </span>
+          }
+
+        </a>
+
+
+        <div class="article-content">
+
+          @if (article.publishedAt) {
+            <time>
+              {{ formatPublishedDate(article.publishedAt) }}
+            </time>
+          }
+
+          <h3>
+            <a [routerLink]="['/nieuws', article.slug]">
+              {{ article.title }}
+            </a>
+          </h3>
+
+          <p>
+            {{ article.excerpt }}
+          </p>
+
+          <a
+              class="read-more"
+              [routerLink]="['/nieuws', article.slug]"
+          >
+            Lees verder
+            <span>→</span>
+          </a>
+
+        </div>
+
+      </article>
+
+    }
+
+  </div>
+
+</section>
+
+
+<!-- CTA -->
+<section class="news-cta">
+
+  <div class="cta-character">
+    <img
+        src="assets/img/squigles/squigle-3.png"
+        alt="LEGO Squigle"
+    />
+  </div>
+
+  <div class="cta-content">
+
+    <h2>
+      Klaar voor je volgende bouwavontuur?
+    </h2>
+
+    <p>
+      Ontdek onze collectie en kies jouw favoriete LEGO®-set.
+    </p>
+
+    <a
+        routerLink="/catalogus"
+        class="primary-button"
+    >
+      Bekijk alle sets
+      <span>→</span>
+    </a>
+
+  </div>
+
+
+  <div class="newsletter">
+
+    <h3>
+      Blijf op de hoogte!
+    </h3>
+
+    <p>
+      Ontvang als eerste updates over nieuwe sets,
+      bouwtips en acties.
+    </p>
+
+    <div class="newsletter-form">
+
+      <button class="primary-button">
+        <a href="https://whatsapp.com/channel/0029VbDgl0r1noz7Z4Xvs50T"
+           target="_blank"
+           rel="noopener"
+           class="text-white">
+          Volg ons op WhatsApp
+        </a>
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+<app-footer></app-footer>

@@ -1,226 +1,354 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import {
-    CdkDragDrop,
-    DragDropModule,
-    moveItemInArray
-} from '@angular/cdk/drag-drop';
-import {NewsService} from "../../services/news.service";
+    Component,
+    Input,
+    OnInit,
+    inject
+} from '@angular/core';
 
-export type NewsBlockType =
-    | 'heading'
-    | 'text'
-    | 'image'
-    | 'tip'
-    | 'quote'
-    | 'set'
-    | 'columns'
-    | 'button'
-    | 'divider';
+import {
+    FormsModule
+} from '@angular/forms';
 
-export interface NewsBlock {
-    id: string;
-    type: NewsBlockType;
-    data: any;
-}
+import {
+    ActivatedRoute,
+    Router
+} from '@angular/router';
+
+import {
+    NewsService
+} from '../../services/news.service';
+import {NewsArticle, NewsBlock, NewsBlockType} from "../../models/news-article.model";
+import {ImageUploadComponent} from "../../components/image-upload/image-upload.component";
+import {DecimalPipe} from "@angular/common";
+
 
 @Component({
     selector: 'app-news-editor',
     standalone: true,
     imports: [
-        CommonModule,
         FormsModule,
-        DragDropModule
+        ImageUploadComponent,
+        DecimalPipe
     ],
     templateUrl: './news-editor.component.html',
     styleUrl: './news-editor.component.scss'
 })
-export class NewsEditorComponent {
+export class NewsEditorComponent
+    implements OnInit {
 
     private newsService = inject(NewsService);
+    private route = inject(ActivatedRoute);
+    private router = inject(Router);
 
-    article = {
-        title: '',
-        slug: '',
-        excerpt: '',
-        heroImage: '',
-        published: false
-    };
 
-    blocks: NewsBlock[] = [];
+    @Input()
+    article?: NewsArticle;
 
-    selectedBlock: NewsBlock | null = null;
 
-    saving = false;
+    isSaving = false;
 
-    addBlock(type: NewsBlockType) {
+    errorMessage = '';
 
-        const block: NewsBlock = {
-            id: crypto.randomUUID(),
-            type,
-            data: this.getDefaultData(type)
+    savedMessage = '';
+
+
+    newsArticle!: NewsArticle;
+
+    types = [
+        'newSet', 'tips', 'cleanSort', 'family', 'behindTheScenes', 'newsAndActions'
+    ]
+
+    isEditMode = false;
+
+    loading = false;
+
+
+    ngOnInit(): void {
+
+        const articleId = this.route.snapshot.paramMap.get('id');
+
+        if (articleId) {
+
+            this.isEditMode = true;
+
+            this.loadArticle(articleId);
+
+        } else {
+
+            this.isEditMode = false;
+
+            this.createEmptyArticle();
+
+        }
+
+    }
+
+
+    private createEmptyArticle() {
+
+        this.newsArticle = {
+            type: 'newsAndActions',
+            title: '',
+            slug: '',
+            excerpt: '',
+            text: '',
+            ourAdvice: '',
+            heroImage: '',
+            published: false,
+            blocks: []
         };
 
-        this.blocks.push(block);
-
-        this.selectBlock(block);
     }
 
-    getDefaultData(type: NewsBlockType) {
+    loadArticle(id: string): void {
 
-        switch (type) {
+        this.loading = true;
 
-            case 'heading':
-                return {
-                    text: 'Nieuwe tussenkop',
-                    level: 2
-                };
+        this.newsService.getArticle(id)
+            .subscribe({
 
-            case 'text':
-                return {
-                    html: '<p>Schrijf hier je tekst...</p>'
-                };
+                next: article => {
 
-            case 'image':
-                return {
-                    url: '',
-                    alt: '',
-                    caption: ''
-                };
+                    if (!article) {
+                        this.router.navigate(['/admin/overview']);
+                        return;
+                    }
 
-            case 'tip':
-                return {
-                    title: 'Onze tip',
-                    text: 'Schrijf hier een handige tip.'
-                };
+                    this.newsArticle = {
+                        ...article,
 
-            case 'quote':
-                return {
-                    text: 'Een mooie quote uit het artikel.',
-                    author: ''
-                };
+                        blocks: article.blocks
+                            ? [...article.blocks]
+                            : []
+                    };
 
-            case 'set':
-                return {
-                    setId: '',
-                    title: '',
-                    description: '',
-                    image: '',
-                    url: ''
-                };
+                    this.loading = false;
 
-            case 'columns':
-                return {
-                    left: '<p>Linkerkolom</p>',
-                    right: '<p>Rechterkolom</p>'
-                };
+                },
 
-            case 'button':
-                return {
-                    text: 'Bekijk de set',
-                    url: '#'
-                };
+                error: error => {
 
-            case 'divider':
-                return {};
+                    console.error(
+                        'Error loading article:',
+                        error
+                    );
 
-            default:
-                return {};
-        }
+                    this.loading = false;
+
+                }
+
+            });
+
     }
 
-    selectBlock(block: NewsBlock) {
-        this.selectedBlock = block;
-    }
 
-    removeBlock(block: NewsBlock) {
+    /* -------------------------------------------------------
+       Slug
+    ------------------------------------------------------- */
 
-        const index = this.blocks.indexOf(block);
+    generateSlug(): void {
 
-        if (index !== -1) {
-            this.blocks.splice(index, 1);
-        }
-
-        if (this.selectedBlock?.id === block.id) {
-            this.selectedBlock = null;
-        }
-    }
-
-    duplicateBlock(block: NewsBlock) {
-
-        const index = this.blocks.indexOf(block);
-
-        const copy: NewsBlock = {
-            ...structuredClone(block),
-            id: crypto.randomUUID()
-        };
-
-        this.blocks.splice(index + 1, 0, copy);
-
-        this.selectBlock(copy);
-    }
-
-    drop(event: CdkDragDrop<NewsBlock[]>) {
-
-        moveItemInArray(
-            this.blocks,
-            event.previousIndex,
-            event.currentIndex
-        );
-    }
-
-    moveUp(block: NewsBlock) {
-
-        const index = this.blocks.indexOf(block);
-
-        if (index > 0) {
-            [this.blocks[index - 1], this.blocks[index]] =
-                [this.blocks[index], this.blocks[index - 1]];
-        }
-    }
-
-    moveDown(block: NewsBlock) {
-
-        const index = this.blocks.indexOf(block);
-
-        if (index < this.blocks.length - 1) {
-            [this.blocks[index + 1], this.blocks[index]] =
-                [this.blocks[index], this.blocks[index + 1]];
-        }
-    }
-
-    async saveArticle() {
-
-        if (!this.article.title) {
+        if (!this.newsArticle.title) {
             return;
         }
 
-        this.saving = true;
+        this.newsArticle.slug =
+            this.newsArticle.title
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+
+    }
+
+
+    /* -------------------------------------------------------
+       Blocks
+    ------------------------------------------------------- */
+
+    addBlock(type: NewsBlockType): void {
+
+        const block: NewsBlock = {
+            type
+        };
+
+        switch (type) {
+
+            case 'text':
+                block.title = '';
+                block.text = '';
+                break;
+
+            case 'image':
+                block.image = '';
+                block.imageAlt = '';
+                block.caption = '';
+                break;
+
+            case 'quote':
+                block.text = '';
+                block.title = '';
+                break;
+
+            case 'tip':
+                block.title = 'Tip van Valley Road Bricks';
+                block.text = '';
+                break;
+
+            case 'set':
+                block.setId = '';
+                block.setName = '';
+                block.setImage = '';
+                block.legoId = undefined;
+                block.pieces = undefined;
+                block.price = undefined;
+                block.setLink = '';
+                break;
+
+            case 'video':
+                block.videoUrl = '';
+                block.videoTitle = '';
+                block.videoDescription = '';
+                break;
+        }
+
+        this.newsArticle.blocks.push(block);
+    }
+
+
+    removeBlock(index: number): void {
+
+        this.newsArticle.blocks.splice(index, 1);
+
+    }
+
+
+    moveBlockUp(index: number): void {
+
+        if (index === 0) {
+            return;
+        }
+
+        const blocks = this.newsArticle.blocks;
+
+        [blocks[index - 1], blocks[index]] =
+            [blocks[index], blocks[index - 1]];
+
+    }
+
+
+    moveBlockDown(index: number): void {
+
+        const blocks = this.newsArticle.blocks;
+
+        if (index >= blocks.length - 1) {
+            return;
+        }
+
+        [blocks[index], blocks[index + 1]] =
+            [blocks[index + 1], blocks[index]];
+
+    }
+
+
+    /* -------------------------------------------------------
+       Save
+    ------------------------------------------------------- */
+
+    async save(): Promise<void> {
+
+        this.errorMessage = '';
+        this.savedMessage = '';
+
+        if (!this.validate()) {
+            return;
+        }
+
+        this.isSaving = true;
 
         try {
 
-            await this.newsService.createArticle({
-                ...this.article,
-                blocks: this.blocks
-            });
+            if (this.newsArticle.id) {
 
-            alert('Artikel opgeslagen!');
+                await this.newsService.updateArticle(
+                    this.newsArticle.id,
+                    this.newsArticle
+                );
+
+            } else {
+
+                const id =
+                    await this.newsService.createArticle(
+                        this.newsArticle
+                    );
+
+                this.newsArticle.id = id;
+
+            }
+
+            this.savedMessage =
+                'Artikel succesvol opgeslagen.';
+
+        } catch (error) {
+
+            console.error(
+                'Error saving news article:',
+                error
+            );
+
+            this.errorMessage =
+                'Er ging iets mis bij het opslaan van het artikel.';
 
         } finally {
 
-            this.saving = false;
+            this.isSaving = false;
 
         }
+
     }
 
-    generateSlug() {
 
-        this.article.slug = this.article.title
-            .toLowerCase()
-            .trim()
-            .replace(/[^\w\s-]/g, '')
-            .replace(/\s+/g, '-');
+    private validate(): boolean {
+
+        if (!this.newsArticle.title.trim()) {
+
+            this.errorMessage =
+                'Vul een titel in.';
+
+            return false;
+
+        }
+
+        if (!this.newsArticle.excerpt.trim()) {
+
+            this.errorMessage =
+                'Vul een korte omschrijving in.';
+
+            return false;
+
+        }
+
+        return true;
+
     }
 
+
+    cancel(): void {
+
+        this.router.navigate([
+            '/admin/overview'
+        ]);
+
+    }
+
+    onMainImageUploaded(url: string) {
+        this.newsArticle.heroImage = url;
+        console.log('Afbeelding geüpload, URL:', url);
+    }
+
+    onBlockImageUploaded(url: string, blockIndex: number) {
+        this.newsArticle.blocks[blockIndex].image = url;
+        console.log('Afbeelding geüpload, URL:', url);
+    }
 }
