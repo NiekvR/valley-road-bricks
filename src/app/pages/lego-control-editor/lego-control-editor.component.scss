@@ -1,0 +1,536 @@
+@use 'src/styles/variables' as *;
+
+.control-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+}
+
+.page-header {
+  margin-bottom: $spacing-xl;
+
+  .eyebrow {
+    display: block;
+    margin-bottom: $spacing-sm;
+
+    color: $primary-green;
+
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.08em;
+  }
+
+  h1 {
+    margin: 0 0 $spacing-sm;
+
+    color: $secondary-dark;
+
+    font-size: 30px;
+    font-weight: $font-weight-bold;
+  }
+
+  p {
+    margin: 0;
+
+    color: $text-gray;
+    font-size: $font-size-sm;
+  }
+}
+
+
+.card {
+  background: $bg-white;
+  border: 1px solid $border-gray;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+}
+
+
+.set-selector {
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+
+  max-width: 600px;
+}
+
+
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(400px, 520px);
+  gap: $spacing-xl;
+
+  align-items: start;
+}
+
+
+.bags-card,
+.editor-card {
+  overflow: hidden;
+}
+
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: $spacing-lg;
+
+  border-bottom: 1px solid $border-gray;
+
+  h2 {
+    margin: 0 0 4px;
+
+    color: $secondary-dark;
+
+    font-size: $font-size-lg;
+  }
+
+  span {
+    color: $text-gray;
+    font-size: $font-size-sm;
+  }
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  padding: $spacing-lg;
+
+  label {
+    color: $text-dark;
+
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+  }
+
+  input,
+  select {
+    width: 100%;
+    height: 44px;
+
+    box-sizing: border-box;
+
+    padding: 0 $spacing-md;
+
+    border: 1px solid $border-gray;
+    border-radius: $radius-md;
+
+    background: $bg-white;
+
+    color: $text-dark;
+
+    font-family: $font-family-primary;
+    font-size: $font-size-sm;
+
+    transition: border-color $transition-base,
+    box-shadow $transition-base;
+
+    &:focus {
+      outline: none;
+
+      border-color: $primary-green;
+
+      box-shadow:
+              0 0 0 3px rgba(74, 124, 89, 0.1);
+    }
+  }
+}
+
+
+/* ---------------------------------------------------------
+   Bags
+--------------------------------------------------------- */
+
+.bag-list {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.bag-item {
+  display: flex;
+  align-items: center;
+
+  gap: $spacing-md;
+
+  padding: $spacing-md $spacing-lg;
+
+  border-bottom: 1px solid $border-gray;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: $bg-light;
+  }
+}
+
+
+.bag-number {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  flex: 0 0 48px;
+
+  background: rgba(74, 124, 89, 0.1);
+
+  border-radius: $radius-md;
+
+  color: $primary-green;
+
+  span {
+    font-size: 10px;
+  }
+
+  strong {
+    font-size: $font-size-lg;
+  }
+}
+
+
+.bag-info {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1;
+
+  gap: 4px;
+
+  strong {
+    color: $text-dark;
+    font-size: $font-size-sm;
+  }
+
+  span {
+    color: $text-gray;
+    font-size: $font-size-sm;
+  }
+}
+
+
+.delete-button {
+  border: none;
+  background: transparent;
+
+  color: $error-red;
+
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   Pieces
+--------------------------------------------------------- */
+
+.editor-card {
+  form {
+    padding-bottom: $spacing-lg;
+  }
+}
+
+
+.pieces-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 $spacing-lg $spacing-md;
+
+  h3 {
+    margin: 0;
+
+    color: $text-dark;
+
+    font-size: $font-size-base;
+  }
+}
+
+
+.add-piece-button {
+  border: none;
+
+  background: transparent;
+
+  color: $primary-green;
+
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+
+  cursor: pointer;
+
+  &:hover {
+    color: $primary-green-dark;
+  }
+}
+
+
+.pieces {
+  display: flex;
+  flex-direction: column;
+
+  gap: $spacing-sm;
+
+  padding: 0 $spacing-lg;
+}
+
+
+.piece-row {
+  display: flex;
+  align-items: end;
+
+  gap: $spacing-sm;
+
+  padding: $spacing-sm;
+
+  background: $bg-light;
+
+  border: 1px solid $border-gray;
+  border-radius: $radius-md;
+}
+
+
+.piece-number {
+  width: 24px;
+
+  padding-bottom: 11px;
+
+  color: $text-light;
+
+  font-size: $font-size-sm;
+  text-align: center;
+}
+
+
+.piece-id {
+  flex: 1;
+}
+
+
+.piece-quantity {
+  width: 90px;
+}
+
+
+.piece-id,
+.piece-quantity {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  label {
+    color: $text-gray;
+    font-size: 10px;
+    font-weight: $font-weight-semibold;
+  }
+
+  input {
+    height: 38px;
+
+    box-sizing: border-box;
+
+    padding: 0 $spacing-sm;
+
+    border: 1px solid $border-gray;
+    border-radius: $radius-sm;
+
+    background: $bg-white;
+
+    font-family: $font-family-primary;
+    font-size: $font-size-sm;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-green;
+    }
+  }
+}
+
+
+.remove-piece {
+  width: 32px;
+  height: 38px;
+
+  border: none;
+  border-radius: $radius-sm;
+
+  background: transparent;
+
+  color: $error-red;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(231, 76, 60, 0.08);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   Buttons
+--------------------------------------------------------- */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: $spacing-sm;
+
+  padding: $spacing-lg $spacing-lg 0;
+
+  border-top: 1px solid $border-gray;
+
+  margin-top: $spacing-lg;
+}
+
+
+.btn-primary,
+.btn-secondary {
+  height: 42px;
+
+  padding: 0 $spacing-lg;
+
+  border-radius: $radius-md;
+
+  font-family: $font-family-primary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+
+  cursor: pointer;
+}
+
+
+.btn-primary {
+  border: none;
+
+  background: $primary-green;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background: $primary-green-dark;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+
+.btn-secondary {
+  border: 1px solid $border-gray;
+
+  background: $bg-white;
+
+  color: $text-dark;
+
+  &:hover {
+    background: $bg-light;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   Empty / loading
+--------------------------------------------------------- */
+
+.empty,
+.loading {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: $spacing-sm;
+
+  min-height: 250px;
+
+  padding: $spacing-xl;
+
+  color: $text-gray;
+
+  text-align: center;
+}
+
+
+.empty-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 64px;
+  height: 64px;
+
+  margin-bottom: $spacing-sm;
+
+  border-radius: 50%;
+
+  background: rgba(74, 124, 89, 0.1);
+
+  font-size: 28px;
+}
+
+
+.empty strong {
+  color: $text-dark;
+}
+
+
+/* ---------------------------------------------------------
+   Mobile
+--------------------------------------------------------- */
+
+@media (max-width: $breakpoint-lg) {
+
+  .control-page {
+    padding: $spacing-lg;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: $breakpoint-md) {
+
+  .control-page {
+    padding: $spacing-md;
+  }
+
+  .piece-row {
+    flex-wrap: wrap;
+  }
+
+  .piece-id {
+    min-width: 150px;
+  }
+
+  .piece-quantity {
+    width: 100px;
+  }
+
+}

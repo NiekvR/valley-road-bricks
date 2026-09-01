@@ -42,6 +42,7 @@ export class OverviewComponent implements OnInit {
 
     rental = {
         customerName: '',
+        phoneNumber: '',
         startDate: '',
         endDate: '',
         weeks: 0,
@@ -192,7 +193,8 @@ export class OverviewComponent implements OnInit {
 
         this.rental = {
             customerName: '',
-            startDate: this.formatDate(new Date()),
+            phoneNumber: '',
+            startDate: '',
             endDate: '',
             weeks: 0,
             disassemblyService: false,
@@ -296,9 +298,17 @@ export class OverviewComponent implements OnInit {
             customerName:
             this.rental.customerName,
 
+            phoneNumber: this.rental.phoneNumber,
+
             startDate: this.rental.startDate,
 
             endDate: this.rental.endDate,
+
+            weeks: this.rental.weeks,
+
+            disassemblyService: this.rental.disassemblyService,
+
+            sortingPlates: this.rental.sortingPlates,
 
             status: 'active',
 

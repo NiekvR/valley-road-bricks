@@ -1,0 +1,333 @@
+<div class="control-page">
+
+  <div class="page-header">
+
+    <div>
+      <span class="eyebrow">
+        ADMINISTRATIE
+      </span>
+
+      <h1>
+        LEGO controlegegevens
+      </h1>
+
+      <p>
+        Leg per zakje vast welke steentjes en aantallen
+        in een LEGO-set aanwezig horen te zijn.
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- SET SELECTEREN -->
+
+  <section class="card set-selector">
+
+    <div class="form-group">
+
+      <label for="set">
+        LEGO-set
+      </label>
+
+      <select
+          id="set"
+          [(ngModel)]="selectedSetId"
+          (change)="onSetChange()"
+      >
+
+        <option value="">
+          Selecteer een set
+        </option>
+
+        @for (set of sets; track set.id) {
+
+          <option [value]="set.id">
+            LEGO #{{ set.id }} — {{ set.name }}
+          </option>
+
+        }
+
+      </select>
+
+    </div>
+
+  </section>
+
+
+  @if (selectedSetId) {
+
+    <div class="content-grid">
+
+
+      <!-- BESTAANDE ZAKJES -->
+
+      <section class="card bags-card">
+
+        <div class="card-header">
+
+          <div>
+
+            <h2>
+              Zakjes
+            </h2>
+
+            <span>
+              {{ bags.length }} zakjes ingevoerd
+            </span>
+
+          </div>
+
+        </div>
+
+
+        @if (loading) {
+
+          <div class="loading">
+            Zakjes laden...
+          </div>
+
+        } @else if (!bags.length) {
+
+          <div class="empty">
+
+            <div class="empty-icon">
+              🧱
+            </div>
+
+            <strong>
+              Nog geen zakjes ingevoerd
+            </strong>
+
+            <span>
+              Voeg rechts het eerste zakje toe.
+            </span>
+
+          </div>
+
+        } @else {
+
+          <div class="bag-list">
+
+            @for (bag of bags; track bag.id) {
+
+              <div class="bag-item">
+
+                <div class="bag-number">
+
+                  <span>
+                    Zakje
+                  </span>
+
+                  <strong>
+                    {{ bag.bagNumber }}
+                  </strong>
+
+                </div>
+
+
+                <div class="bag-info">
+
+                  <strong>
+                    {{ bag.pieces.length }}
+                    verschillende steentjes
+                  </strong>
+
+                  <span>
+                    {{ getBagPieceCount(bag) }}
+                    steentjes totaal
+                  </span>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="delete-button"
+                    (click)="deleteBag(bag)"
+                >
+                  Verwijderen
+                </button>
+
+              </div>
+
+            }
+
+          </div>
+
+        }
+
+      </section>
+
+
+      <!-- NIEUW ZAKJE -->
+
+      <section class="card editor-card">
+
+        <div class="card-header">
+
+          <div>
+
+            <h2>
+              Zakje toevoegen
+            </h2>
+
+            <span>
+              Voer de inhoud van één zakje in.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <form
+            [formGroup]="bagForm"
+            (ngSubmit)="saveBag()"
+        >
+
+
+          <!-- ZAKNUMMER -->
+
+          <div class="form-group">
+
+            <label>
+              Zaknummer
+            </label>
+
+            <input
+                type="number"
+                formControlName="bagNumber"
+                min="1"
+            />
+
+          </div>
+
+
+          <!-- STEENTJES -->
+
+          <div class="pieces-header">
+
+            <h3>
+              Steentjes
+            </h3>
+
+            <button
+                type="button"
+                class="add-piece-button"
+                (click)="addPiece()"
+            >
+              + Steentje
+            </button>
+
+          </div>
+
+
+          <div
+              class="pieces"
+              formArrayName="pieces"
+          >
+
+            @for (
+              piece of pieces.controls;
+              track $index;
+              let i = $index
+                ) {
+
+              <div
+                  class="piece-row"
+                  [formGroupName]="i"
+              >
+
+                <div class="piece-number">
+                  {{ i + 1 }}
+                </div>
+
+
+                <div class="piece-id">
+
+                  <label>
+                    Steen ID
+                  </label>
+
+                  <input
+                      type="text"
+                      formControlName="brickId"
+                      placeholder="bijv. 3001"
+                  />
+
+                </div>
+
+
+                <div class="piece-quantity">
+
+                  <label>
+                    Aantal
+                  </label>
+
+                  <input
+                      type="number"
+                      formControlName="quantity"
+                      min="1"
+                  />
+
+                </div>
+
+
+                @if (pieces.length > 1) {
+
+                  <button
+                      type="button"
+                      class="remove-piece"
+                      (click)="removePiece(i)"
+                  >
+                    ×
+                  </button>
+
+                }
+
+              </div>
+
+            }
+
+          </div>
+
+
+          <div class="form-actions">
+
+            <button
+                type="button"
+                class="btn-secondary"
+                (click)="resetForm()"
+            >
+              Wissen
+            </button>
+
+            <button
+                type="submit"
+                class="btn-primary"
+                [disabled]="
+                saving ||
+                bagForm.invalid
+              "
+            >
+
+              @if (saving) {
+                Opslaan...
+              } @else {
+                Zakje opslaan
+              }
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </section>
+
+    </div>
+
+  }
+
+</div>

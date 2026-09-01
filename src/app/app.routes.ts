@@ -13,6 +13,7 @@ import {AdminLoginComponent} from "./admin/admin-login/admin-login.component";
 import {NewsEditorComponent} from "./admin/news-editor/news-editor.component";
 import {NewsDetailComponent} from "./pages/news-detail/news-detail.component";
 import {NewsComponent} from "./pages/news/news.component";
+import {LegoControlEditorComponent} from "./pages/lego-control-editor/lego-control-editor.component";
 
 export const routes: Routes = [
     {
@@ -70,7 +71,7 @@ export const routes: Routes = [
     },
     {
         path: 'admin',
-        // canActivate: [adminGuard],
+        canActivate: [adminGuard],
         children: [
             {
                 path: 'overview',
@@ -91,7 +92,11 @@ export const routes: Routes = [
             {
                 path: 'news/edit/:id',
                 component: NewsEditorComponent,
-            }
+            },
+            {
+                path: 'lego-control',
+                component: LegoControlEditorComponent,
+            },
         ]
     },
 ];

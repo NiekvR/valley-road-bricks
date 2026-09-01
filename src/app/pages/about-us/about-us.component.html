@@ -2,51 +2,83 @@
   <app-header></app-header>
 
   <main class="page-content">
-    <div class="page-header">
-      <h1>Over ons</h1>
-      <p>LEGO-liefhebbers met een simpel idee</p>
+    <section class="about-hero">
+
+      <div class="hero-content">
+
+        <p class="hero-description text-primary">
+          Valley Road Bricks is ontstaan vanuit een simpele gedachte: LEGO bouwen is geweldig, maar je hoeft niet iedere set zelf te bezitten.
+        </p>
+
+        <p class="hero-description">
+          Grote LEGO-sets zijn vaak prachtige bouwprojecten waar je dagen of weken plezier van kunt hebben. Maar na het bouwen staat er soms een enorme doos op zolder, of een model waar je eigenlijk geen plek meer voor hebt.
+        </p>
+
+        <p class="hero-description">
+          Daarom bieden we bijzondere LEGO-sets lokaal te huur aan. Zo kunnen meer mensen genieten van mooie, uitdagende en soms behoorlijk grote sets, zonder telkens de volledige aanschafprijs te betalen.
+        </p>
+
+      </div>
+
+
+      <div class="hero-image">
+
+        <img
+            src="assets/img/valleyroadbricks.png"
+            alt="LEGO kasteel gebouwd op de bouwtafel"
+        />
+
+        <span class="hero-heart">
+      ♡
+    </span>
+
+      </div>
+
+    </section>
+    <div class="rest-text">
+      <app-image-text [image]="'assets/img/over-ons.jpeg'" [mobileImages]="true" imageSide="left">
+        <p>We beginnen bewust klein, met een zorgvuldig gekozen collectie van ongeveer 20 sets. Naarmate we ontdekken welke sets jullie het liefst bouwen, groeit de collectie mee.</p>
+        <h1>Over ons</h1>
+        <p>Wij zijn een gezin van vier uit Doorwerth: twee ouders en twee energieke kinderen met een grote liefde voor LEGO. In ons dagelijks leven houden we van bewegen, buiten zijn en nieuwe dingen ontdekken. Hardlopen, fietsen, of een wandeling in de natuur. Eenmaal thuis hebben we een grote gezamenlijke hobby: LEGO. Bouwen, creeren, spelen. Soms samen aan een grote set aan tafel, soms ieder voor zich aan een eigen project of bouwwerk. </p>
+      </app-image-text>
     </div>
-    <app-image-text [image]="'assets/img/over-ons.jpeg'" [mobileImages]="true">
-      <p>Valley Road Bricks is ontstaan vanuit een simpele gedachte: LEGO bouwen is geweldig, maar je hoeft niet iedere set zelf te bezitten.</p>
-      <p>Grote LEGO-sets zijn vaak prachtige bouwprojecten waar je dagen of weken plezier van kunt hebben. Maar na het bouwen staat er soms een enorme doos op zolder, of een model waar je eigenlijk geen plek meer voor hebt.</p>
-      <p>Daarom bieden we bijzondere LEGO-sets lokaal te huur aan. Zo kunnen meer mensen genieten van mooie, uitdagende en soms behoorlijk grote sets, zonder telkens de volledige aanschafprijs te betalen.</p>
-      <p>We beginnen bewust klein, met een zorgvuldig gekozen collectie van ongeveer 20 sets. Naarmate we ontdekken welke sets jullie het liefst bouwen, groeit de collectie mee.</p>
-      <p class="text-semibold">Bouw. Beleef. Geef door.</p>
-      <p class="text-bold">Welkom bij Valley Road Bricks!</p>
-    </app-image-text>
-<!--    <app-image-text [image]="'assets/img/squigs-2.jpg'" imageSide="right">-->
-<!--      <div class="content-section">-->
-<!--        <div class="step-card">-->
-<!--          <div class="step-number">3</div>-->
-<!--          <h3>Haal lokaal op</h3>-->
-<!--          <p>Op het afgesproken moment staat je set voor je klaar. Je betaalt voor of bij afhalen de huurprijs en de borg.</p>-->
-<!--        </div>-->
 
-<!--        <div class="step-card">-->
-<!--          <div class="step-number">4</div>-->
-<!--          <h3>Bouwen maar!</h3>-->
-<!--          <p>Neem de tijd, bouw alleen of samen en geniet van je LEGO-project.</p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </app-image-text>-->
+    <div class="rest-text">
+<!--      <app-image-text [image]="'assets/img/over-ons.jpeg'" [mobileImages]="true">-->
+        <p>We hebben zelf ook ervaren hoe leuk het is om eens een bijzondere LEGO-set te huren. Het geeft je de kans om een set te bouwen die je misschien niet snel zelf zou kopen. Tegelijkertijd hoef je daarna niet te bedenken waar dat enorme bouwwerk eigenlijk moet blijven staan.</p>
+        <p>Want laten we eerlijk zijn: LEGO kan een fantastische, maar ook behoorlijk dure hobby zijn. En sommige sets zijn misschien wel het allerleukst tijdens het bouwen zelf.
+          Daarom vinden wij het een mooi idee om LEGO met meer mensen te delen. Waarom zou een bijzondere set jarenlang bij één persoon op zolder staan, terwijl meerdere gezinnen en LEGO-liefhebbers er plezier aan kunnen beleven?</p>
+        <p>Met Valley Road Bricks willen we bouwplezier toegankelijker maken in Doorwerth én mooie sets een langer leven geven. Je huurt een set, geniet van het bouwen en geeft hem daarna weer door aan de volgende bouwer.</p>
+        <p class="text-bold text-center">Welkom bij Valley Road Bricks!</p>
+        <p class="text-semibold text-center">Bouw. Beleef. Geef door.</p>
+<!--      </app-image-text>-->
+    </div>
 
-<!--    <app-image-text [image]="'assets/img/squigs-3.jpg'">-->
-<!--      <div class="content-section">-->
-<!--        <div class="step-card">-->
-<!--          <div class="step-number">5</div>-->
-<!--          <h3>Afbreken</h3>-->
-<!--          <p>Zoals altijd is het na het spelen tijd om op te ruimen. Om de volgende LEGO-avonturier ook een fijne ervaring te geven vragen we je hiervoor de bijgevoegde opruim instructies te volgen. Lukt dit niet, heb je er geen zin in, of geen tijd voor? Geen nood, met onze unieke ‘opruimservice’ breken wij de set voor je af zodat deze weer klaar is voor gebruik.</p>-->
-<!--        </div>-->
-<!--        <div class="step-card">-->
-<!--          <div class="step-number">6</div>-->
-<!--          <h3>Breng de set terug</h3>-->
-<!--          <p>Na de afgesproken huurperiode lever je de set weer bij ons in. Wij controleren hem en betalen je borg terug zodra alles in orde is.-->
-<!--            De standaard huurperiode is 14 dagen. Ben je nog niet klaar met bouwen of spelen? Als de set nog beschikbaar is kun je in overleg eventueel verlengen. Laat dit uiterlijk 3 dagen voor het verlopen van de huurperiode aan ons weten. We denken graag met je mee.-->
-<!--          </p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </app-image-text>-->
+    <div class="info-bars">
+      <div class="info-bar">
+        <div class="info-icon"><fa-icon [icon]="faCircleCheck"></fa-icon></div>
+        <div class="info-content">
+          <div class="info-title">Compleet</div>
+          <div class="info-text">en gecontroleerd</div>
+        </div>
+      </div>
 
+      <div class="info-bar">
+        <div class="info-icon"><fa-icon [icon]="faLeaf"></fa-icon></div>
+        <div class="info-content">
+          <div class="info-title">Duurzaam</div>
+          <div class="info-text">en voordelig</div>
+        </div>
+      </div>
+
+      <div class="info-bar">
+        <div class="info-icon"><fa-icon [icon]="faHouseChimneyCrack"></fa-icon></div>
+        <div class="info-content">
+          <div class="info-title">Afbreekservice</div>
+          <div class="info-text">Kies voor gemak</div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <app-footer></app-footer>
