@@ -20,7 +20,7 @@ import {ProductService} from "../../services/product.service";
 import {RentalRequestModalComponent} from "../../components/rental-request.modal/rental-request.modal.component";
 import {Location} from "@angular/common";
 import {RentalsService} from "../../services/rentals.service";
-import {Rental} from "../../models/rental.modal";
+import {Rental} from "../../models/rental.model";
 
 @Component({
   selector: 'app-product-detail',

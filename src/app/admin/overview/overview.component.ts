@@ -6,7 +6,7 @@ import {ProductService} from "../../services/product.service";
 import {RouterLink} from "@angular/router";
 import {map} from "rxjs";
 import {CustomDatepickerComponent } from "../../shared/custom-datepicker/custom-datepicker.component";
-import {Rental} from "../../models/rental.modal";
+import {Rental} from "../../models/rental.model";
 import {RentalsService} from "../../services/rentals.service";
 
 @Component({
@@ -47,7 +47,8 @@ export class OverviewComponent implements OnInit {
         endDate: '',
         weeks: 0,
         disassemblyService: false,
-        sortingPlates: false
+        sortingPlates: false,
+        weeklyPrice: 0
     };
 
     readonly sortingPlatesPrice = 5;
@@ -198,7 +199,8 @@ export class OverviewComponent implements OnInit {
             endDate: '',
             weeks: 0,
             disassemblyService: false,
-            sortingPlates: false
+            sortingPlates: false,
+            weeklyPrice: 0
         };
 
         this.initializeRental()
@@ -293,6 +295,8 @@ export class OverviewComponent implements OnInit {
 
             setId: this.selectedProduct.id!,
 
+            localSetId: this.selectedProduct.localId!,
+
             setName: this.selectedProduct.name,
 
             customerName:
@@ -309,6 +313,14 @@ export class OverviewComponent implements OnInit {
             disassemblyService: this.rental.disassemblyService,
 
             sortingPlates: this.rental.sortingPlates,
+
+            weeklyPrice: this.selectedProduct.price,
+
+            disassemblyPrice: this.disassemblyPrice,
+
+            sortingPlatesPrice: this.sortingPlatesPrice,
+
+            totalPrice: this.rentalPrice,
 
             status: 'active',
 

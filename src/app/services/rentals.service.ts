@@ -5,7 +5,7 @@ import {
     addDoc, query, orderBy, collectionData, doc, docData, updateDoc, where, limit, getDocs
 } from '@angular/fire/firestore';
 import {map, Observable, of} from "rxjs";
-import {Rental} from "../models/rental.modal";
+import {Rental} from "../models/rental.model";
 
 @Injectable({
     providedIn: 'root'
@@ -127,8 +127,7 @@ export class RentalsService {
     getRentals(): Observable<Rental[]> {
 
         const setsQuery = query(
-            this.rentalsCollection,
-            orderBy('name')
+            this.rentalsCollection
         );
         return runInInjectionContext(this.injector, () =>
              collectionData(

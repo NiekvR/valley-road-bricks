@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import {
-    Auth,
+    Auth, onAuthStateChanged,
     signInWithEmailAndPassword,
     signOut,
     user
@@ -35,7 +35,21 @@ export class AuthService {
     }
 
 
-    isLoggedIn(): boolean {
-        return this.auth.currentUser !== null;
+    isLoggedIn(): Observable<boolean> {
+        return new Observable<boolean>((subscriber) => {
+
+            const unsubscribe = onAuthStateChanged(
+                this.auth,
+                (user) => {
+                    subscriber.next(!!user);
+                },
+                (error) => {
+                    subscriber.error(error);
+                }
+            );
+
+            // Wordt aangeroepen wanneer er niet meer geluisterd wordt
+            return unsubscribe;
+        });
     }
 }

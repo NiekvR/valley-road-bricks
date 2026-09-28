@@ -1,0 +1,498 @@
+@use 'src/styles/variables' as *;
+
+.invoice-page {
+  min-height: 100vh;
+  background: $bg-light;
+  padding: $spacing-lg;
+}
+
+
+// --------------------------------------------------
+// ACTIONS
+// --------------------------------------------------
+
+.invoice-actions {
+  max-width: 900px;
+  margin: 0 auto $spacing-lg;
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-sm;
+}
+
+.btn {
+  border: 0;
+  border-radius: $radius-md;
+  padding: 12px 20px;
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: $transition-base;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background: $primary-green;
+  color: $bg-white;
+
+  &:hover {
+    background: $primary-green-dark;
+  }
+}
+
+.btn-secondary {
+  background: $secondary-dark;
+  color: $bg-white;
+
+  &:hover {
+    background: $secondary-dark-light;
+  }
+}
+
+
+// --------------------------------------------------
+// INVOICE
+// --------------------------------------------------
+
+.invoice {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 18mm;
+
+  background: $bg-white;
+  color: $text-dark;
+
+  box-sizing: border-box;
+
+  box-shadow: $shadow-lg;
+}
+
+
+// --------------------------------------------------
+// HEADER
+// --------------------------------------------------
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding-bottom: $spacing-lg;
+  border-bottom: 4px solid $primary-green;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.brand-mark {
+  width: 100px;
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.brand-text {
+
+  h1 {
+    margin: 0;
+
+    color: $secondary-dark;
+
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+  }
+
+  span {
+    display: block;
+    margin-top: 4px;
+
+    color: $primary-green;
+
+    font-size: 13px;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.invoice-title {
+  text-align: right;
+
+  h2 {
+    margin: 0;
+
+    color: $secondary-dark;
+
+    font-size: 28px;
+    font-weight: $font-weight-bold;
+    letter-spacing: 1px;
+  }
+}
+
+.invoice-number {
+  margin-top: 6px;
+
+  color: $text-gray;
+
+  font-size: 13px;
+  font-weight: $font-weight-semibold;
+}
+
+
+// --------------------------------------------------
+// INFO
+// --------------------------------------------------
+
+.invoice-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: $spacing-lg;
+
+  margin-top: $spacing-lg;
+}
+
+.info-block {
+
+  h3 {
+    margin: 0 0 8px;
+
+    color: $primary-green;
+
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  strong {
+    display: block;
+
+    color: $secondary-dark;
+
+    font-size: 14px;
+  }
+
+  p {
+    margin: 6px 0 0;
+
+    color: $text-gray;
+
+    font-size: 13px;
+    line-height: 1.6;
+  }
+}
+
+.info-block.dates {
+  text-align: right;
+}
+
+
+// --------------------------------------------------
+// SET CARD
+// --------------------------------------------------
+
+.set-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: $spacing-lg 0;
+
+  padding: $spacing-md $spacing-lg;
+
+  background: $bg-light;
+
+  border-left: 5px solid $primary-green;
+  border-radius: $radius-md;
+}
+
+.set-card > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  color: $text-light;
+
+  font-size: 11px;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+}
+
+.set-card strong {
+  color: $secondary-dark;
+  font-size: 15px;
+}
+
+.set-id {
+  text-align: right;
+}
+
+
+// --------------------------------------------------
+// LINES
+// --------------------------------------------------
+
+.invoice-lines {
+  margin-top: $spacing-lg;
+}
+
+.line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 70px 100px 100px;
+  gap: $spacing-sm;
+
+  align-items: center;
+
+  padding: 13px 0;
+
+  border-bottom: 1px solid $border-gray;
+
+  font-size: 13px;
+}
+
+.line.header {
+  padding: 10px 0;
+
+  color: $text-gray;
+
+  font-size: 11px;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+
+  border-bottom: 2px solid $secondary-dark;
+}
+
+.description {
+  min-width: 0;
+}
+
+.line-total {
+  text-align: right;
+  font-weight: $font-weight-semibold;
+}
+
+.line > div:not(.description):not(.line-total) {
+  text-align: right;
+}
+
+
+// --------------------------------------------------
+// TOTALS
+// --------------------------------------------------
+
+.totals {
+  width: 320px;
+  margin: $spacing-lg 0 0 auto;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 8px 0;
+
+  color: $text-gray;
+
+  font-size: 14px;
+}
+
+.grand-total {
+  margin-top: 5px;
+  padding: 14px 0;
+
+  color: $secondary-dark;
+
+  border-top: 2px solid $secondary-dark;
+
+  font-size: 19px;
+  font-weight: $font-weight-bold;
+}
+
+.deposit-row {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 8px;
+  padding: 10px 12px;
+
+  background: $bg-light;
+
+  border-radius: $radius-sm;
+
+  color: $text-gray;
+
+  font-size: 13px;
+}
+
+
+// --------------------------------------------------
+// NOTE
+// --------------------------------------------------
+
+.invoice-note {
+  display: flex;
+  gap: $spacing-md;
+
+  margin-top: 30px;
+  padding: $spacing-md;
+
+  background: lighten($primary-green-light, 28%);
+
+  border-radius: $radius-md;
+}
+
+.note-icon {
+  flex-shrink: 0;
+
+  font-size: 24px;
+}
+
+.invoice-note strong {
+  display: block;
+
+  color: $secondary-dark;
+
+  font-size: 13px;
+}
+
+.invoice-note p {
+  margin: 4px 0 0;
+
+  color: $text-gray;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+
+// --------------------------------------------------
+// FOOTER
+// --------------------------------------------------
+
+.invoice-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  margin-top: 40px;
+  padding-top: $spacing-md;
+
+  border-top: 1px solid $border-gray;
+
+  color: $text-gray;
+
+  font-size: 10px;
+}
+
+.invoice-footer > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.invoice-footer strong {
+  color: $secondary-dark;
+}
+
+.footer-slogan {
+  color: $primary-green;
+
+  font-weight: $font-weight-bold;
+}
+
+
+// --------------------------------------------------
+// STATES
+// --------------------------------------------------
+
+.invoice-loading,
+.invoice-error {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: $spacing-lg;
+
+  background: $bg-white;
+
+  border-radius: $radius-lg;
+
+  text-align: center;
+}
+
+.invoice-error {
+  color: $error-red;
+}
+
+
+// --------------------------------------------------
+// PRINT
+// --------------------------------------------------
+
+@media print {
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  .invoice-page {
+    padding: 0;
+    background: white;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .invoice {
+    width: 210mm;
+    min-height: 297mm;
+
+    margin: 0;
+    padding: 18mm;
+
+    box-shadow: none;
+  }
+}
+
+
+// --------------------------------------------------
+// RESPONSIVE PREVIEW
+// --------------------------------------------------
+
+@media (max-width: 900px) {
+
+  .invoice-page {
+    padding: $spacing-sm;
+    overflow-x: auto;
+  }
+
+  .invoice {
+    margin: 0;
+  }
+
+  .invoice-actions {
+    justify-content: stretch;
+
+    .btn {
+      flex: 1;
+    }
+  }
+}
+
+.info-icon {
+  margin: auto;
+}

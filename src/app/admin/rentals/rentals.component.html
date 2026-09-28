@@ -1,0 +1,538 @@
+<div class="rentals-page">
+
+  <!-- Header -->
+
+  <header class="page-header">
+
+    <div>
+      <span class="eyebrow">
+        Administratie
+      </span>
+
+      <h1>
+        Verhuur
+      </h1>
+
+      <p>
+        Bekijk en beheer alle LEGO® verhuurperiodes.
+      </p>
+    </div>
+
+  </header>
+
+
+  <!-- Filters -->
+
+  <section class="toolbar">
+
+    <div class="filters">
+
+      <button
+          type="button"
+          [class.active]="activeFilter === 'all'"
+          (click)="setFilter('all')">
+        Alle
+        <span>{{ rentals.length }}</span>
+      </button>
+
+      <button
+          type="button"
+          [class.active]="activeFilter === 'active'"
+          (click)="setFilter('active')">
+        Actief
+        <span>
+          {{
+            rentals.filter(r => r.status === 'active').length
+          }}
+        </span>
+      </button>
+
+      <button
+          type="button"
+          [class.active]="activeFilter === 'returned'"
+          (click)="setFilter('returned')">
+        Geretourneerd
+      </button>
+
+      <button
+          type="button"
+          [class.active]="activeFilter === 'cancelled'"
+          (click)="setFilter('cancelled')">
+        Geannuleerd
+      </button>
+
+    </div>
+
+
+    <div class="search">
+
+      <span>⌕</span>
+
+      <input
+          type="search"
+          [(ngModel)]="searchTerm"
+          placeholder="Zoek op huurder of set..."
+      />
+
+    </div>
+
+  </section>
+
+
+  <!-- Rentals -->
+
+  <section class="rental-list">
+
+    @if (loading) {
+
+      <div class="empty-state">
+        Verhuur wordt geladen...
+      </div>
+
+    } @else if (filteredRentals.length === 0) {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          🧱
+        </div>
+
+        <h3>
+          Geen verhuur gevonden
+        </h3>
+
+        <p>
+          Er zijn geen verhuurperiodes die aan je selectie voldoen.
+        </p>
+
+      </div>
+
+    } @else {
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+          <tr>
+            <th>Huurder</th>
+            <th>Set</th>
+            <th>Periode</th>
+            <th>Extra's</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+
+          </thead>
+
+          <tbody>
+
+            @for (
+              rental of filteredRentals;
+              track rental.id
+                ) {
+
+              <tr>
+
+                <td>
+                  <div class="customer">
+
+                    <div class="avatar">
+                      {{ rental.customerName.charAt(0) }}
+                    </div>
+
+                    <div>
+                      <strong>
+                        {{ rental.customerName }}
+                      </strong>
+
+                      <small>
+                        {{ rental.phoneNumber }}
+                      </small>
+                    </div>
+
+                  </div>
+                </td>
+
+
+                <td>
+
+                  <div class="set">
+
+                    <strong>
+                      {{ rental.setName }}
+                    </strong>
+
+                    <small>
+                      LEGO #{{ rental.setId }}
+                    </small>
+
+                  </div>
+
+                </td>
+
+
+                <td>
+
+                  <div class="period">
+
+                    <strong>
+                      {{ formatDate(rental.startDate) }}
+                      →
+                      {{ formatDate(rental.endDate) }}
+                    </strong>
+
+                    <small>
+                      {{ rental.weeks }}
+                      {{ rental.weeks === 1 ? 'week' : 'weken' }}
+                    </small>
+
+                  </div>
+
+                </td>
+
+
+                <td>
+
+                  <div class="extras">
+
+                    @if (rental.disassemblyService) {
+                      <span>Afbreekservice</span>
+                    }
+
+                    @if (rental.sortingPlates) {
+                      <span>Sorteerplaten</span>
+                    }
+
+                    @if (
+                      !rental.disassemblyService &&
+                      !rental.sortingPlates
+                        ) {
+                      <small>Geen extra's</small>
+                    }
+
+                  </div>
+
+                </td>
+
+
+                <td>
+
+                  <span
+                      class="status"
+                      [class.active]="rental.status === 'active'"
+                      [class.returned]="rental.status === 'returned'"
+                      [class.cancelled]="rental.status === 'cancelled'">
+
+                    {{ getStatusLabel(rental.status) }}
+
+                  </span>
+
+                </td>
+
+
+                <td>
+
+                  <button
+                      type="button"
+                      class="details-button"
+                      (click)="selectRental(rental)">
+
+                    Details
+
+                    <span>→</span>
+
+                  </button>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  </section>
+
+</div>
+
+
+<!-- Detail modal -->
+
+@if (selectedRental) {
+
+  <div
+      class="modal-backdrop"
+      (click)="closeDetails()">
+
+    <aside
+        class="rental-modal"
+        (click)="$event.stopPropagation()">
+
+      <button
+          type="button"
+          class="close-button"
+          (click)="closeDetails()">
+
+        ×
+
+      </button>
+
+
+      <div class="modal-header">
+
+        <span class="eyebrow">
+          Verhuur #{{ selectedRental.id }}
+        </span>
+
+        <h2>
+          {{ selectedRental.setName }}
+        </h2>
+
+        <span class="set-id">
+          LEGO #{{ selectedRental.setId }}
+        </span>
+
+      </div>
+
+
+      <div class="modal-body">
+
+
+        <!-- Customer -->
+
+        <div class="detail-section">
+
+          <h3>
+            Huurder
+          </h3>
+
+          <div class="customer-detail">
+
+            <div class="avatar large">
+              {{ selectedRental.customerName.charAt(0) }}
+            </div>
+
+            <div>
+
+              <strong>
+                {{ selectedRental.customerName }}
+              </strong>
+
+              <span>
+                {{ selectedRental.phoneNumber }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Period -->
+
+        <div class="detail-section">
+
+          <h3>
+            Huurperiode
+          </h3>
+
+          <div class="date-card">
+
+            <div>
+              <small>Van</small>
+              <strong>
+                {{ formatDate(selectedRental.startDate) }}
+              </strong>
+            </div>
+
+            <span>→</span>
+
+            <div>
+              <small>Tot</small>
+              <strong>
+                {{ formatDate(selectedRental.endDate) }}
+              </strong>
+            </div>
+
+          </div>
+
+          <p class="weeks">
+            {{ selectedRental.weeks }}
+            {{ selectedRental.weeks === 1 ? 'week' : 'weken' }}
+          </p>
+
+        </div>
+
+
+        <!-- Extras -->
+
+        <div class="detail-section">
+
+          <h3>
+            Extra's
+          </h3>
+
+          <div class="extra-list">
+
+            <div
+                class="extra"
+                [class.enabled]="selectedRental.disassemblyService">
+
+              <span>
+                {{ selectedRental.disassemblyService ? '✓' : '–' }}
+              </span>
+
+              <div>
+                <strong>
+                  Afbreekservice
+                </strong>
+
+                @if (selectedRental.disassemblyService) {
+                  <small>
+                    €{{ selectedRental.disassemblyPrice | number:'1.2-2' }}
+                  </small>
+                }
+              </div>
+
+            </div>
+
+
+            <div
+                class="extra"
+                [class.enabled]="selectedRental.sortingPlates">
+
+              <span>
+                {{ selectedRental.sortingPlates ? '✓' : '–' }}
+              </span>
+
+              <div>
+                <strong>
+                  Sorteerplaten
+                </strong>
+
+                @if (selectedRental.sortingPlates) {
+                  <small>
+                    €{{ selectedRental.sortingPlatesPrice | number:'1.2-2' }}
+                  </small>
+                }
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Price -->
+
+        <div class="price-summary">
+
+          <div>
+            <span>
+              Huurprijs
+            </span>
+
+            <strong>
+              €{{
+                selectedRental.weeklyPrice
+                * selectedRental.weeks
+                  | number:'1.2-2'
+              }}
+            </strong>
+          </div>
+
+
+          @if (selectedRental.disassemblyService) {
+
+            <div>
+              <span>
+                Afbreekservice
+              </span>
+
+              <strong>
+                €{{
+                  selectedRental.disassemblyPrice
+                    | number:'1.2-2'
+                }}
+              </strong>
+            </div>
+
+          }
+
+
+          @if (selectedRental.sortingPlates) {
+
+            <div>
+              <span>
+                Sorteerplaten
+              </span>
+
+              <strong>
+                €{{
+                  selectedRental.sortingPlatesPrice
+                    | number:'1.2-2'
+                }}
+              </strong>
+            </div>
+
+          }
+
+
+          <div class="total">
+
+            <span>
+              Totaal
+            </span>
+
+            <strong>
+              €{{
+                calculateTotal(selectedRental)
+                  | number:'1.2-2'
+              }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-footer">
+
+        <button
+            type="button"
+            class="btn-secondary"
+            (click)="closeDetails()">
+
+          Sluiten
+
+        </button>
+
+        <button
+            type="button"
+            class="btn-primary"
+            (click)="openInvoice(selectedRental)">
+
+          Factuur maken
+          <span>→</span>
+
+        </button>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+}

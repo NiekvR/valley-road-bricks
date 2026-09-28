@@ -14,6 +14,8 @@ import {NewsEditorComponent} from "./admin/news-editor/news-editor.component";
 import {NewsDetailComponent} from "./pages/news-detail/news-detail.component";
 import {NewsComponent} from "./pages/news/news.component";
 import {LegoControlEditorComponent} from "./pages/lego-control-editor/lego-control-editor.component";
+import {RentalsComponent} from "./admin/rentals/rentals.component";
+import {InvoiceComponent} from "./admin/invoice/invoice.component";
 
 export const routes: Routes = [
     {
@@ -94,9 +96,17 @@ export const routes: Routes = [
                 component: NewsEditorComponent,
             },
             {
+                path: 'rentals',
+                component: RentalsComponent,
+            },
+            {
                 path: 'lego-control',
                 component: LegoControlEditorComponent,
             },
+            {
+                path: 'invoices/:id',
+                component: InvoiceComponent
+            }
         ]
     },
 ];

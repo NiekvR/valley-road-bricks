@@ -1,0 +1,339 @@
+<div class="invoice-page">
+
+  <!-- Actieknoppen -->
+  <div class="invoice-actions no-print">
+
+    <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="print()"
+    >
+      🖨️ Printen
+    </button>
+
+    <button
+        type="button"
+        class="btn btn-primary"
+        (click)="savePdf()"
+        [disabled]="!invoice"
+    >
+      📄 Opslaan als PDF
+    </button>
+
+  </div>
+
+
+  @if (loading) {
+
+    <div class="invoice-loading no-print">
+      Factuur laden...
+    </div>
+
+  }
+
+
+  @if (error) {
+
+    <div class="invoice-error no-print">
+      {{ error }}
+    </div>
+
+  }
+
+
+  @if (invoice) {
+
+    <div
+      #invoiceElement
+      class="invoice"
+    >
+
+      <!-- HEADER -->
+      <header class="invoice-header">
+
+        <div class="brand">
+
+          <div class="brand-mark">
+            <img src="assets/logo/Logo%20Valley%20Road%20Bricks.svg"
+                 alt="Valley Road Bricks">
+          </div>
+
+          <div class="brand-text">
+
+            <h1>
+              Valley Road Bricks
+            </h1>
+
+            <span>
+              Bouw. Beleef. Geef door.
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="invoice-title">
+
+          <h2>
+            FACTUUR
+          </h2>
+
+          <div class="invoice-number">
+            {{ invoice.invoiceNumber }}
+          </div>
+          <div class="invoice-number">
+            {{ formatPublishedDate(invoice.createdAt) }}
+          </div>
+
+
+        </div>
+
+      </header>
+
+
+      <!-- INFO -->
+      <section class="invoice-info">
+
+        <div class="info-block">
+
+          <h3>
+            Van
+          </h3>
+
+          <strong>
+            Valley Road Bricks
+          </strong>
+
+          <p>
+            Dalweg 74<br>
+            6865 CV Doorwerth<br>
+            Nederland
+          </p>
+
+        </div>
+
+
+        <div class="info-block">
+
+          <h3>
+            Factuur aan
+          </h3>
+
+          <strong>
+            {{ invoice.customerName }}
+          </strong>
+
+          <p>
+            {{ invoice.phoneNumber }}
+          </p>
+
+        </div>
+
+
+        <div class="info-block dates">
+
+          <h3>
+            Huurperiode
+          </h3>
+
+          <p>
+            <strong>Start:</strong>
+            {{ invoice.rentalStartDate | date:'dd-MM-yyyy' }}
+          </p>
+
+          <p>
+            <strong>Einde:</strong>
+            {{ invoice.rentalEndDate | date:'dd-MM-yyyy' }}
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- SET -->
+      <section class="set-card">
+
+        <div>
+
+          <span class="label">
+            LEGO-set
+          </span>
+
+          <strong>
+            {{ invoice.setName }}
+          </strong>
+
+        </div>
+
+        <div class="set-id">
+
+          <span class="label">
+            Setnummer
+          </span>
+
+          <strong>
+            {{ invoice.localSetId }}
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <!-- FACTUURREGELS -->
+      <section class="invoice-lines">
+
+        <div class="line header">
+
+          <div>
+            Omschrijving
+          </div>
+
+          <div>
+            Aantal
+          </div>
+
+          <div>
+            Prijs
+          </div>
+
+          <div>
+            Totaal
+          </div>
+
+        </div>
+
+
+        @for (line of invoice.lines; track $index) {
+
+          <div class="line">
+
+            <div class="description">
+
+              <strong>
+                {{ line.description }}
+              </strong>
+
+            </div>
+
+            <div>
+              {{ line.quantity }}
+            </div>
+
+            <div>
+              {{ formatPrice(line.unitPrice) }}
+            </div>
+
+            <div class="line-total">
+              {{ formatPrice(line.total) }}
+            </div>
+
+          </div>
+
+        }
+
+      </section>
+
+
+      <!-- TOTALEN -->
+      <section class="totals">
+
+        <div class="total-row">
+
+          <span>
+            Subtotaal
+          </span>
+
+          <strong>
+            {{ formatPrice(invoice.subtotal) }}
+          </strong>
+
+        </div>
+
+
+        <div class="total-row grand-total">
+
+          <span>
+            Totaal
+          </span>
+
+          <strong>
+            {{ formatPrice(invoice.total) }}
+          </strong>
+
+        </div>
+
+
+        <div class="deposit-row">
+
+          <span>
+            Borg
+          </span>
+
+          <strong>
+            {{ formatPrice(invoice.deposit) }}
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <!-- EXTRA INFO -->
+      <section class="invoice-note">
+
+        <fa-icon [icon]="faCircleInfo" [size]="'xl'" class="info-icon"></fa-icon>
+
+        <div>
+
+          <strong>
+            Goed om te weten
+          </strong>
+
+          <p>
+            De borg wordt na het retourneren van de set
+            en controle van de onderdelen terugbetaald,
+            mits er geen ongebruikelijke ontbrekende of
+            beschadigde onderdelen zijn.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- FOOTER -->
+      <footer class="invoice-footer">
+
+        <div>
+
+          <strong>
+            Valley Road Bricks
+          </strong>
+
+          <span>
+            LEGO huren voor bouwen, beleven en doorgeven.
+          </span>
+
+        </div>
+
+        <div class="footer-slogan">
+          Bouw. Beleef. Geef door.
+        </div>
+
+        <div>
+          <span>
+            KvK: 73454710<br>
+            Btw-identificatienummer: NL002183111B06
+          </span>
+        </div>
+
+      </footer>
+
+    </div>
+
+  }
+
+</div>

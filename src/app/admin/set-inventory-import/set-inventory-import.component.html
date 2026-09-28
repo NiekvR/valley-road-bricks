@@ -1,0 +1,117 @@
+<section class="inventory-import">
+
+  <header class="inventory-import__header">
+    <h2>LEGO inventaris importeren</h2>
+
+    <p>
+      Upload een XML-inventaris en verrijk de onderdelen
+      automatisch met Rebrickable gegevens.
+    </p>
+  </header>
+
+  <div class="inventory-import__form">
+
+    <label>
+      Setnummer
+
+      <input
+          type="text"
+          placeholder="Bijv. 72152-1"
+          [value]="setId()"
+          (input)="onSetIdChange($event)"
+      />
+    </label>
+
+    <label>
+      XML bestand
+
+      <input
+          type="file"
+          accept=".xml,text/xml"
+          (change)="onFileSelected($event)"
+      />
+    </label>
+
+    <button
+        type="button"
+        [disabled]="loading()"
+        (click)="import()"
+    >
+      @if (loading()) {
+        Bezig met importeren...
+      } @else {
+        Importeren
+      }
+    </button>
+
+  </div>
+
+  @if (error()) {
+    <div class="inventory-import__error">
+      {{ error() }}
+    </div>
+  }
+
+  @if (inventory(); as result) {
+
+    <section class="inventory-result">
+
+      <h3>
+        {{ result.setId }}
+      </h3>
+
+      <p>
+        {{ result.parts.length }} verschillende onderdelen
+      </p>
+
+      <table>
+
+        <thead>
+        <tr>
+          <th>Part</th>
+          <th>Naam</th>
+          <th>Kleur</th>
+          <th>Aantal</th>
+          <th>Bag</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+          @for (part of result.parts; track part.partId + '-' + part.colorId + '-' + $index) {
+
+            <tr>
+
+              <td>
+                {{ part.partId }}
+              </td>
+
+              <td>
+                {{ part.name || 'Onbekend' }}
+              </td>
+
+              <td>
+                {{ part.colorName }}
+              </td>
+
+              <td>
+                {{ part.quantity }}
+              </td>
+
+              <td>
+                {{ part.bag || '-' }}
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </section>
+
+  }
+
+</section>

@@ -1,6 +1,6 @@
 {
   "name": "valley-road-bricks",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Angular ecommerce website for Valley Road Bricks",
   "scripts": {
     "ng": "ng",
@@ -27,6 +27,8 @@
     "@fortawesome/free-regular-svg-icons": "^7.3.1",
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
     "firebase": "11.10.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
     "rxjs": "^7.8.0",
     "tslib": "^2.6.0",
     "zone.js": "^0.15.1"

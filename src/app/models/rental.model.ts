@@ -1,6 +1,7 @@
 export interface Rental {
     id?: number;
     setId: string;
+    localSetId: number
     setName: string;
     customerName: string;
     phoneNumber: string;
@@ -11,4 +12,8 @@ export interface Rental {
     disassemblyService: boolean;
     sortingPlates: boolean;
     createdAt: Date;
+    weeklyPrice: number;
+    disassemblyPrice: number;
+    sortingPlatesPrice: number;
+    totalPrice: number;
 }
