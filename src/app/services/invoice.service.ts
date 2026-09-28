@@ -196,6 +196,7 @@ export class InvoiceService {
 
         const q = query(
             invoicesRef,
+            where('localSetId', '==', localSetId),
             orderBy('createdAt', 'desc'),
             limit(1)
         );
@@ -216,7 +217,7 @@ export class InvoiceService {
             }
         }
 
-        return `${year}${String(localSetId)}${String(nextNumber).padStart(4, '0')}`;
+        return `${year}${String(localSetId).padStart(2, '0')}${String(nextNumber).padStart(2, '0')}`;
     }
 
     /**
